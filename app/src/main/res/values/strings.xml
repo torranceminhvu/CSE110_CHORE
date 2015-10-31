@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">CSE110_CHORES</string>
+    <string name="username">Enter Username</string>
+    <string name="password">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="create">Create</string>
+
+    <string name="chore">Enter Chore</string>
+
+    <string name="choreLabel">Chores</string>
+    <string name="paymentLabel">Payments</string>
+    <string name="eventLabel">Events</string>
+    <string name="calendarLabel">Calendar</string>
+
+    <string name="chorelist">Chores List</string>
+    <string name="choreAddButton">Add Chores</string>
+
+    <string-array name="frequency">
+        <item>Frequency</item>
+        <item>Monthly</item>
+        <item>Bi-weekly</item>
+        <item>Weekly</item>
+        <item>Daily</item>
+    </string-array>
+    
+    
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main_screen">MainScreen</string>
+    <string name="title_activity_chores_screen">ChoresScreen</string>
+    <string name="title_activity_chores_list">ChoresList</string>
+</resources>

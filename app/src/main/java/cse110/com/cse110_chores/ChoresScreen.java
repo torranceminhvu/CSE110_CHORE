@@ -1,0 +1,60 @@
+package cse110.com.cse110_chores;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;import java.lang.Override;import java.lang.String;import cse110.com.cse110_chores.R;
+
+public class ChoresScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    Spinner spinner;
+    public static int add_count = 0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chores_screen);
+
+        spinner= (Spinner) findViewById(R.id.choreSpinner);
+
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.frequency, android.R.layout.simple_spinner_item);
+        spinner.setAdapter(adapter);
+
+        Button addChore = (Button) findViewById(R.id.addChore);
+
+        final EditText choreText = (EditText) findViewById(R.id.chore);
+
+        addChore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v ) {
+                Intent intent = new Intent(v.getContext(), ChoresList.class);
+                String chore = choreText.getText().toString();
+                intent.putExtra("chore", chore);
+                add_count++;
+                intent.putExtra("add_count", add_count);
+
+
+                startActivity(intent);
+            }
+
+        });
+    }
+
+
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+}
