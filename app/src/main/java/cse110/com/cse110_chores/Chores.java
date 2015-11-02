@@ -1,3 +1,5 @@
+package cse110.com.cse110_chores;
+
 /**
  * Created by Matthew on 10/29/2015.
  */
@@ -6,13 +8,14 @@
 public class Chores {
     //priv vars
     int _id;
+    boolean found;
     String name;
     int frequency;
     int groupid;
 
     //empty Constructor
     public Chores(){
-
+        this.found = false;
     }
 
     //constructor
@@ -21,12 +24,14 @@ public class Chores {
         this.name = name;
         this.frequency = frequency;
         this.groupid = groupid;
+        this.found = true;
     }
 
     public Chores(String name, int frequency, int groupid){
         this.name = name;
         this.frequency = frequency;
         this.groupid = groupid;
+        this.found = true;
     }
 
     //get id
@@ -56,5 +61,9 @@ public class Chores {
 
     public int getGroupid(){
         return this.groupid;
+    }
+
+    public boolean getFound(){
+        return this.found;
     }
 }

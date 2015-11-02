@@ -1,3 +1,5 @@
+package cse110.com.cse110_chores;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,18 +15,18 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper{
     //db version
-    private static final int DATABASE_VERSION = 1;
+    private static int DATABASE_VERSION = 1;
 
     //db name
     private static final String DATABASE_NAME = "Tables";
 
-    //Groups table name
+    //cse110.com.cse110_chores.Groups table name
     private static final String TABLE_GROUPS = "Groups";
 
-    //Chores table name
+    //cse110.com.cse110_chores.Chores table name
     private static final String TABLE_CHORES = "Chores";
 
-    //Events table name
+    //cse110.com.cse110_chores.Events table name
     private static final String TABLE_EVENTS = "Events";
 
     //Name table name
@@ -34,16 +36,16 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final String KEY_ID = "id";
 
 
-    //Groups table column names
+    //cse110.com.cse110_chores.Groups table column names
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
 
-    //Chores table column names
+    //cse110.com.cse110_chores.Chores table column names
     private static final String KEY_CHORENAME = "choreName";
     private static final String KEY_FREQUENCY = "frequency";
     private static final String KEY_CHORESGROUPS = "choresGroups";
 
-    //Events table column names
+    //cse110.com.cse110_chores.Events table column names
     private static final String KEY_EVENTNAME = "eventName";
     private static final String KEY_EVENTSTARTDATE = "eventStartDate";
     private static final String KEY_EVENTENDDATE = "eventEndDate";
@@ -51,7 +53,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final String KEY_EVENTENDTIME = "eventEndTime";
     private static final String KEY_EVENTSGROUPS = "eventsGroups";
 
-    //Names table column names
+    //cse110.com.cse110_chores.Names table column names
     private static final String KEY_NAME = "name";
     private static final String KEY_NAMESGROUPS = "nameGroups";
 
@@ -63,17 +65,18 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     //create tables
     @Override
     public void onCreate(SQLiteDatabase db){
-        String CREATE_GROUPS_TABLE = "CREATE TABLE " + TABLE_GROUPS + "("
+        String CREATE_GROUPS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_GROUPS + " ("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_USERNAME + " TEXT,"
-                + KEY_PASSWORD + " TEXT" + ");";
+                + KEY_PASSWORD + " TEXT);";
 
-        String CREATE_CHORES_TABLE = "CREATE TABLE " + TABLE_CHORES + "("
+
+        String CREATE_CHORES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_CHORES + " ("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CHORENAME + " TEXT,"
                 + KEY_FREQUENCY + " TEXT, " + KEY_CHORESGROUPS + " TEXT, "
                 + "FOREIGN KEY(" + KEY_CHORESGROUPS + ") REFERENCES " + TABLE_GROUPS
                 + "(" + KEY_ID + "));";
 
-        String CREATE_EVENTS_TABLE = "CREATE TABLE " + TABLE_EVENTS + "("
+        String CREATE_EVENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_EVENTS + " ("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_EVENTNAME + " TEXT,"
                 + KEY_EVENTSTARTDATE + " TEXT," + KEY_EVENTENDDATE + " TEXT,"
                 + KEY_EVENTSTARTTIME + " TEXT," + KEY_EVENTENDTIME + " TEXT, "
@@ -81,7 +84,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
                 + "FOREIGN KEY(" + KEY_EVENTSGROUPS + ") REFERENCES " + TABLE_GROUPS
                 + "(" + KEY_ID + "));";
 
-        String CREATE_NAMES_TABLE = "CREATE TABLE " + TABLE_NAMES + "("
+        String CREATE_NAMES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAMES + " ("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT, "
                 + KEY_NAMESGROUPS + " TEXT, " + KEY_CHORESGROUPS + " TEXT, "
                 + "FOREIGN KEY(" + KEY_NAMESGROUPS + ") REFERENCES " + TABLE_GROUPS
@@ -124,21 +127,22 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     public Groups getGroup(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_GROUPS, new String[] { KEY_ID,
-                        KEY_USERNAME, KEY_PASSWORD }, KEY_USERNAME + "=?",
-                new String[] { username }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_GROUPS + " WHERE " + KEY_USERNAME
+                + " = ?", new String[]{username});
 
-        return new Groups(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
+        if(cursor != null && cursor.moveToFirst()) {
+            return new Groups(Integer.parseInt(cursor.getString(0)),
+                    cursor.getString(1), cursor.getString(2));
+            }
+        else
+            return new Groups();
     }
 
     //Deleting groups
     public void deleteGroup(Groups group) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_GROUPS, KEY_ID + " = ?",
-                new String[] { String.valueOf(group.getId()) });
+                new String[]{String.valueOf(group.getId())});
         db.close();
     }
 
@@ -162,19 +166,17 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     public Chores getChore(String chorename, int groupid) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_CHORES + " WHERE "
-                + KEY_CHORENAME + " = " + chorename + " AND " + KEY_CHORESGROUPS
-                + " = " + groupid;
+        Cursor cursor = db.rawQuery("SELECT " + KEY_CHORENAME + ", " + KEY_CHORESGROUPS + " FROM "
+                + TABLE_CHORES + " WHERE " + KEY_CHORENAME + " = ? AND " + KEY_CHORESGROUPS
+                + " = ?", new String[]{chorename, String.valueOf(groupid)});
 
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor != null){
-            cursor.moveToFirst();
+        if (cursor != null && cursor.moveToFirst()){
+            return new Chores(Integer.parseInt(cursor.getString(0)),
+                    cursor.getString(1), Integer.parseInt(cursor.getString(2)),
+                    Integer.parseInt(cursor.getString(3)));
         }
-
-        return new Chores(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), Integer.parseInt(cursor.getString(2)),
-                Integer.parseInt(cursor.getString(3)));
+        else
+            return new Chores();
     }
 
     //Get all chores
@@ -182,12 +184,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         List<Chores> chores = new ArrayList<Chores>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_CHORES + " WHERE "
-                + KEY_CHORESGROUPS + " = " + groupid;
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CHORES + " WHERE " + KEY_CHORESGROUPS
+                + " = ?", new String[]{String.valueOf(groupid)});
 
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()){
+        if (cursor != null && cursor.moveToFirst()){
             do{
                 Chores chore = new Chores(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), Integer.parseInt(cursor.getString(2)),
@@ -246,12 +246,12 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        if (cursor != null){
-            cursor.moveToFirst();
+        if (cursor != null && cursor.moveToFirst()){
+            return new Names(Integer.parseInt(cursor.getString(0)),
+                    cursor.getString(1), Integer.parseInt(cursor.getString(2)));
         }
-
-        return new Names(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), Integer.parseInt(cursor.getString(2)));
+        else
+            return new Names();
     }
 
     //Get all chores
@@ -264,7 +264,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        if (cursor.moveToFirst()){
+        if (cursor != null && cursor.moveToFirst()){
             do{
                 Names name = new Names(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), Integer.parseInt(cursor.getString(2)));
@@ -285,5 +285,4 @@ public class DatabaseHandler extends SQLiteOpenHelper{
                 new String[] { String.valueOf(name.getId()) });
         db.close();
     }
-
 }

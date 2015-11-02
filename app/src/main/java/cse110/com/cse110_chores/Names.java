@@ -1,3 +1,5 @@
+package cse110.com.cse110_chores;
+
 /**
  * Created by Matthew on 10/30/2015.
  */
@@ -6,10 +8,11 @@ public class Names {
     int _id;
     String name;
     int groupid;
+    boolean found;
 
     //empty constructor
     public Names(){
-
+        this.found = false;
     }
 
     //constructor
@@ -17,12 +20,14 @@ public class Names {
         this._id = id;
         this.name = name;
         this.groupid = groupid;
+        this.found = true;
     }
 
     //constructor
     public Names(String name, int groupid){
         this.name = name;
         this.groupid = groupid;
+        this.found = true;
     }
 
     //get id
@@ -42,5 +47,9 @@ public class Names {
 
     public int getGroupid(){
         return this.groupid;
+    }
+
+    public boolean getFound(){
+        return this.found;
     }
 }

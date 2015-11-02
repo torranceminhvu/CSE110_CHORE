@@ -1,3 +1,5 @@
+package cse110.com.cse110_chores;
+
 /**
  * Created by Matthew on 10/29/2015.
  */
@@ -10,10 +12,11 @@ public class Events {
     int eventStartTime;
     int eventEndTime;
     int groupid;
+    boolean found;
 
     //empty constructor
     public Events(){
-
+        this.found = false;
     }
 
     //constructor
@@ -26,6 +29,7 @@ public class Events {
         this.eventStartTime = eventStartTime;
         this.eventEndTime = eventEndTime;
         this.groupid = groupid;
+        this.found = true;
     }
 
     //constructor without id
@@ -37,6 +41,7 @@ public class Events {
         this.eventStartTime = eventStartTime;
         this.eventEndTime = eventEndTime;
         this.groupid = groupid;
+        this.found = true;
     }
 
     //get id
@@ -76,5 +81,9 @@ public class Events {
 
     public int getGroupid(){
         return this.groupid;
+    }
+
+    public boolean getFound(){
+        return this.found;
     }
 }
