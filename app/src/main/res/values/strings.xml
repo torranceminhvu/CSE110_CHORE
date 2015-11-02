@@ -18,7 +18,7 @@
 
     <!-- ChoresScreen -->
     <string name="chore">Enter New Chore</string>
-    <string name="choreAddButton">Add Chores</string>
+    <string name="choreAddButton">ADD CHORE</string>
     <string-array name="frequency">
         <item>Frequency</item>
         <item>Monthly</item>
@@ -30,6 +30,7 @@
     <!-- MemberScreen -->
     <string name="memberAddButton">Add Member</string>
     <string name="member">Enter New Member</string>
+    <string name="memberDelete">DELETE</string>
 
 
     
