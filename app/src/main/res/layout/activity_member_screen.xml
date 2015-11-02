@@ -28,7 +28,7 @@ tools:context="cse110.com.cse110_chores.MemberScreen">
     android:layout_below="@id/memberlayout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="Add Member"
+    android:text="@string/memberAddButton"
     android:gravity="center"/>
 
 </RelativeLayout>
