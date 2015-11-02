@@ -8,12 +8,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;import java.lang.Override;import java.lang.String;import cse110.com.cse110_chores.R;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.lang.Override;import java.lang.String;import cse110.com.cse110_chores.R;
 
 public class ChoresScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Spinner spinner;
     public static int add_count = 0;
+    String frequency = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,21 @@ public class ChoresScreen extends AppCompatActivity implements AdapterView.OnIte
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.frequency, android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            Toast.makeText( getBaseContext(), parent.getItemAtPosition(position) + " selected", Toast.LENGTH_SHORT).show();
+                frequency = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         Button addChore = (Button) findViewById(R.id.addChore);
 
         final EditText choreText = (EditText) findViewById(R.id.chore);
@@ -34,18 +53,14 @@ public class ChoresScreen extends AppCompatActivity implements AdapterView.OnIte
             public void onClick(View v ) {
                 Intent intent = new Intent(v.getContext(), ChoresList.class);
                 String chore = choreText.getText().toString();
+                chore = frequency + " " + chore;
                 intent.putExtra("chore", chore);
-                add_count++;
-                intent.putExtra("add_count", add_count);
-
 
                 startActivity(intent);
             }
 
         });
     }
-
-
 
 
     @Override
