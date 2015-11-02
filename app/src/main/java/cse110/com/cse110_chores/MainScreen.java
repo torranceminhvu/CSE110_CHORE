@@ -23,6 +23,17 @@ public class MainScreen extends AppCompatActivity {
 
             }
         });
+
+        Button memberbutton = (Button) findViewById(R.id.memberButton);
+
+        memberbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MemberList.class);
+                startActivityForResult(intent, 0);
+
+            }
+        });
     }
 
 

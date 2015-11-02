@@ -7,8 +7,8 @@
     tools:context="cse110.com.cse110_chores.MainScreen">
 
     <Button
-        android:layout_width="175dip"
-        android:layout_height="175dip"
+        android:layout_width="150dip"
+        android:layout_height="150dip"
         android:id="@+id/payButton"
         android:background="@mipmap/ic_pay"
         android:text="@string/paymentLabel"
@@ -42,8 +42,8 @@
         android:gravity="bottom|center" />
 
     <Button
-        android:layout_width="175dip"
-        android:layout_height="175dip"
+        android:layout_width="150dip"
+        android:layout_height="150dip"
         android:id="@+id/eventsButton"
         android:background="@mipmap/ic_events"
         android:layout_alignParentTop="true"
@@ -52,5 +52,16 @@
         android:text="@string/eventLabel"
         android:layout_above="@+id/payButton"
         android:gravity="bottom|center" />
+
+    <Button
+        android:layout_width="150dip"
+        android:layout_height="150dip"
+        android:id="@+id/memberButton"
+        android:background="@mipmap/ic_addmember"
+        android:text="@string/memberLabel"
+        android:gravity="bottom|center"
+        android:layout_below="@+id/calendarButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

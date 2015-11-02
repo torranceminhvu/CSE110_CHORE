@@ -1,20 +1,24 @@
 <resources>
+    <!-- CreateSearch_Group> -->
     <string name="app_name">CSE110_CHORES</string>
     <string name="username">Enter Username</string>
     <string name="password">Enter Password</string>
     <string name="login">Login</string>
     <string name="create">Create</string>
 
-    <string name="chore">Enter Chore</string>
-
+    <!-- MainScreen -->
     <string name="choreLabel">Chores</string>
     <string name="paymentLabel">Payments</string>
     <string name="eventLabel">Events</string>
     <string name="calendarLabel">Calendar</string>
+    <string name="memberLabel">Add Member</string>
 
+    <!-- ChoresList -->
     <string name="chorelist">Chores List</string>
-    <string name="choreAddButton">Add Chores</string>
 
+    <!-- ChoresScreen -->
+    <string name="chore">Enter New Chore</string>
+    <string name="choreAddButton">Add Chores</string>
     <string-array name="frequency">
         <item>Frequency</item>
         <item>Monthly</item>
@@ -22,7 +26,12 @@
         <item>Weekly</item>
         <item>Daily</item>
     </string-array>
-    
+
+    <!-- MemberScreen -->
+    <string name="memberAddButton">Add Member</string>
+    <string name="member">Enter New Member</string>
+
+
     
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
