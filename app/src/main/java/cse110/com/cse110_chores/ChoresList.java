@@ -21,9 +21,6 @@ public class ChoresList extends AppCompatActivity {
     private ListView choreList;
     MyThumbnailAdapter choreAdapater = null;
     ArrayList<String> choreAL = new ArrayList<String>();
-    int chore_count = 0;
-    int add_count = 0;
-    int i = 0;
     String choreName;
 
     @Override
@@ -45,14 +42,11 @@ public class ChoresList extends AppCompatActivity {
 
         choreName = addChoreIntent.getStringExtra("chore");
 
-        add_count = addChoreIntent.getIntExtra("add_count", add_count);
-
         choreList = (ListView) findViewById(R.id.chorelistview);
 
         //for ( i = chore_count; i < add_count; i++ ) {
-            choreAL.add(choreName);
+        choreAL.add(choreName);
         //}
-        i++;
 
         choreAdapater = new MyThumbnailAdapter(ChoresList.this, R.layout.list_row, choreAL);
         choreList.setAdapter(choreAdapater);
@@ -61,7 +55,6 @@ public class ChoresList extends AppCompatActivity {
     public class MyThumbnailAdapter extends ArrayAdapter<String> {
 
         ArrayList<String> arr;
-        private TextView text;
 
         public MyThumbnailAdapter( Context context, int textViewResourceId, ArrayList<String> objects) {
             super( context, textViewResourceId, objects);
@@ -71,7 +64,7 @@ public class ChoresList extends AppCompatActivity {
         @Override
         public View getView( final int position, View convertView, ViewGroup parent ) {
 
-            View view = null;
+            View view;
             LayoutInflater inflater = getLayoutInflater();
             view = inflater.inflate(R.layout.list_row, parent, false);
             TextView textnumber = (TextView) view.findViewById(R.id.text);

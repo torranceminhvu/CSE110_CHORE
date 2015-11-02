@@ -11,12 +11,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.lang.Override;import java.lang.String;import cse110.com.cse110_chores.R;
+import java.lang.Override;
+import java.lang.String;
+import cse110.com.cse110_chores.R;
 
 public class ChoresScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Spinner spinner;
-    public static int add_count = 0;
     String frequency = "";
 
     @Override
