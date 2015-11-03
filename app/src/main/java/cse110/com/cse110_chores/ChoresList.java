@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ChoresList extends AppCompatActivity {
@@ -27,6 +28,8 @@ public class ChoresList extends AppCompatActivity {
     String name;
     String frequency;
     String display;
+
+    myAdapter theadapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +60,23 @@ public class ChoresList extends AppCompatActivity {
             display = frequency + ":  " + name;
             stringAL.add(display);
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+        /*ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, stringAL);
         choreList.setAdapter(arrayAdapter);
+*/
+        theadapter = new myAdapter(ChoresList.this, R.layout.list_row, stringAL);
+        choreList.setAdapter(theadapter);
     }
 
     /*
+    public class myAdapter extends ArrayAdapter<String> {
+
+        ArrayList<String> arr;
+        private TextView text;
+        public myAdapter(Context context, int textViewResourceId, ArrayList<String> objects ) {
+            super(context, textViewResourceId, objects );
+            this.arr = objects;
+        }
         @Override
         public View getView( final int position, View convertView, ViewGroup parent ) {
 
@@ -75,8 +89,9 @@ public class ChoresList extends AppCompatActivity {
             delete_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    db.deleteChore(choreAL.get(position));
                     arr.remove(position);
-                    choreAdapater.notifyDataSetChanged();
+                    theadapter.notifyDataSetChanged();
                     Toast.makeText(ChoresList.this, "Item deleted", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -84,7 +99,46 @@ public class ChoresList extends AppCompatActivity {
             textnumber.setText( display );
             return view;
         }
+    }*/
+    private class myAdapter extends ArrayAdapter<String> {
+        private int layout;
+        private myAdapter(Context context, int resource, List<String> objects) {
+            super(context, resource, objects);
+            layout = resource;
+        }
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            MyViewHolder mainViewholder = null;
+            if(convertView == null) {
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                convertView = inflater.inflate(layout, parent, false);
+                MyViewHolder myViewHolder = new MyViewHolder();
+                myViewHolder.choreTitle = (TextView) convertView.findViewById(R.id.text);
+                myViewHolder.delete = (Button) convertView.findViewById(R.id.delete_button);
+                myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        db.deleteChore(choreAL.get(position));
+                        choreAL.remove(position);
+                        stringAL.remove(position);
+                        theadapter.notifyDataSetChanged();
+                    }
+                });
+                convertView.setTag(myViewHolder);
+                myViewHolder.choreTitle.setText(getItem(position));
+            }
+            else {
+                mainViewholder = (MyViewHolder) convertView.getTag();
+                mainViewholder.choreTitle.setText(getItem(position));
+            }
+            return convertView;
+        }
+
     }
-*/
+    public class MyViewHolder {
+        TextView choreTitle;
+        Button delete;
+    }
+
 
 }

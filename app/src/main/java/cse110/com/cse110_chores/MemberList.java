@@ -14,6 +14,7 @@ package cse110.com.cse110_chores;
         import android.widget.Toast;
 
         import java.util.ArrayList;
+        import java.util.List;
 
 
 public class MemberList extends AppCompatActivity {
@@ -25,6 +26,8 @@ public class MemberList extends AppCompatActivity {
     DatabaseHandler db;
     Names current;
     String display;
+
+    myAdapter theadapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +59,52 @@ public class MemberList extends AppCompatActivity {
             display = String.valueOf(i+1) + ".  " + memberName;
             stringAL.add(display);
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, stringAL);
-        memberList.setAdapter(arrayAdapter);
+        /*ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, stringAL);*/
+        theadapter = new myAdapter(MemberList.this, R.layout.member_list_row, stringAL);
+        memberList.setAdapter(theadapter);
 
     }
 
+    private class myAdapter extends ArrayAdapter<String> {
+        private int layout;
+        private myAdapter(Context context, int resource, List<String> objects) {
+            super(context, resource, objects);
+            layout = resource;
+        }
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            MyViewHolder mainViewholder = null;
+            if(convertView == null) {
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                convertView = inflater.inflate(layout, parent, false);
+                MyViewHolder myViewHolder = new MyViewHolder();
+                myViewHolder.memberTitle = (TextView) convertView.findViewById(R.id.text);
+                myViewHolder.delete = (Button) convertView.findViewById(R.id.delete_button);
+                myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        db.deleteName(memberAL.get(position));
+                        memberAL.remove(position);
+                        stringAL.remove(position);
+                        theadapter.notifyDataSetChanged();
+                    }
+                });
+                convertView.setTag(myViewHolder);
+                myViewHolder.memberTitle.setText(getItem(position));
+            }
+            else {
+                mainViewholder = (MyViewHolder) convertView.getTag();
+                mainViewholder.memberTitle.setText(getItem(position));
+            }
+            return convertView;
+        }
+
+    }
+    public class MyViewHolder {
+        TextView memberTitle;
+        Button delete;
+    }
     /*
         @Override
         public View getView( final int position, View convertView, ViewGroup parent ) {
