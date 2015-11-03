@@ -10,7 +10,7 @@ public class Chores {
     int _id;
     boolean found;
     String name;
-    int frequency;
+    String frequency;
     int groupid;
 
     //empty Constructor
@@ -19,7 +19,7 @@ public class Chores {
     }
 
     //constructor
-    public Chores(int id, String name, int frequency, int groupid){
+    public Chores(int id, String name, String frequency, int groupid){
         this._id = id;
         this.name = name;
         this.frequency = frequency;
@@ -27,7 +27,7 @@ public class Chores {
         this.found = true;
     }
 
-    public Chores(String name, int frequency, int groupid){
+    public Chores(String name, String frequency, int groupid){
         this.name = name;
         this.frequency = frequency;
         this.groupid = groupid;
@@ -50,12 +50,12 @@ public class Chores {
     }
 
     //get frequency
-    public int getFrequency(){
+    public String getFrequency(){
         return this.frequency;
     }
 
     //set frequency
-    public void setFrequency(int frequency){
+    public void setFrequency(String frequency){
         this.frequency = frequency;
     }
 

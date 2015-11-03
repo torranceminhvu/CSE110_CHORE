@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +19,24 @@ import java.util.ArrayList;
 
 public class ChoresList extends AppCompatActivity {
 
+    DatabaseHandler db;
     private ListView choreList;
-    MyThumbnailAdapter choreAdapater = null;
-    ArrayList<String> choreAL = new ArrayList<String>();
-    String choreName;
+    ArrayList<String> stringAL = new ArrayList<String>();
+    ArrayList<Chores> choreAL = new ArrayList<Chores>();
+    Chores current;
+    String name;
+    String frequency;
+    String display;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chores_list);
+
+        db = new DatabaseHandler(this);
+        Intent get = getIntent();
+        final int groupid = get.getIntExtra("GROUPID", 0);
+        choreList = (ListView) findViewById(R.id.chorelistview);
 
         Button choreAddButton = (Button) findViewById(R.id.choreAddButton);
 
@@ -34,33 +44,25 @@ public class ChoresList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ChoresScreen.class);
+                intent.putExtra("GROUPID", groupid);
                 startActivityForResult(intent, 0);
             }
         });
 
-        Intent addChoreIntent = getIntent();
-
-        choreName = addChoreIntent.getStringExtra("chore");
-
-        choreList = (ListView) findViewById(R.id.chorelistview);
-
-        //for ( i = chore_count; i < add_count; i++ ) {
-        choreAL.add(choreName);
-        //}
-
-        choreAdapater = new MyThumbnailAdapter(ChoresList.this, R.layout.list_row, choreAL);
-        choreList.setAdapter(choreAdapater);
+        choreAL = db.getAllChores(groupid);
+        for (int i = 0; i < choreAL.size(); i++){
+            current = choreAL.get(i);
+            name = current.getName();
+            frequency = current.getFrequency();
+            display = frequency + ":  " + name;
+            stringAL.add(display);
+        }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, stringAL);
+        choreList.setAdapter(arrayAdapter);
     }
 
-    public class MyThumbnailAdapter extends ArrayAdapter<String> {
-
-        ArrayList<String> arr;
-
-        public MyThumbnailAdapter( Context context, int textViewResourceId, ArrayList<String> objects) {
-            super( context, textViewResourceId, objects);
-            this.arr = objects;
-        }
-
+    /*
         @Override
         public View getView( final int position, View convertView, ViewGroup parent ) {
 
@@ -79,10 +81,10 @@ public class ChoresList extends AppCompatActivity {
                 }
             });
 
-            textnumber.setText( choreName );
+            textnumber.setText( display );
             return view;
         }
     }
-
+*/
 
 }

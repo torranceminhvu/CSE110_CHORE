@@ -12,12 +12,16 @@ import android.widget.Spinner;import java.lang.Override;import java.lang.String;
 
 public class MemberScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    public static int add_member_count = 0;
+    DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_screen);
+
+        Intent get = getIntent();
+        final int groupid = get.getIntExtra("GROUPID", 0);
+        db = new DatabaseHandler(this);
 
         Button addMember = (Button) findViewById(R.id.addMember);
 
@@ -28,10 +32,9 @@ public class MemberScreen extends AppCompatActivity implements AdapterView.OnIte
             public void onClick(View v ) {
                 Intent intent = new Intent(v.getContext(), MemberList.class);
                 String member = memberText.getText().toString();
-                intent.putExtra("member", member);
-                add_member_count++;
-                intent.putExtra("add_member_count", add_member_count);
 
+                db.addName(new Names(member, groupid));
+                intent.putExtra("GROUPID", groupid);
 
                 startActivity(intent);
             }

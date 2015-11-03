@@ -172,7 +172,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
         if (cursor != null && cursor.moveToFirst()){
             return new Chores(Integer.parseInt(cursor.getString(0)),
-                    cursor.getString(1), Integer.parseInt(cursor.getString(2)),
+                    cursor.getString(1), cursor.getString(2),
                     Integer.parseInt(cursor.getString(3)));
         }
         else
@@ -180,8 +180,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     }
 
     //Get all chores
-    public List<Chores> getAllChores(int groupid){
-        List<Chores> chores = new ArrayList<Chores>();
+    public ArrayList<Chores> getAllChores(int groupid){
+        ArrayList<Chores> chores = new ArrayList<Chores>();
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CHORES + " WHERE " + KEY_CHORESGROUPS
@@ -190,7 +190,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         if (cursor != null && cursor.moveToFirst()){
             do{
                 Chores chore = new Chores(Integer.parseInt(cursor.getString(0)),
-                        cursor.getString(1), Integer.parseInt(cursor.getString(2)),
+                        cursor.getString(1), cursor.getString(2),
                         Integer.parseInt(cursor.getString(3)));
 
                 chores.add(chore);
@@ -228,7 +228,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_CHORENAME, name.getName());
+        values.put(KEY_NAME, name.getName());
         values.put(KEY_NAMESGROUPS, name.getGroupid());
 
         // Inserting Row
@@ -240,11 +240,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     public Names getName(String name, int groupid) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_NAMES + " WHERE "
-                + KEY_NAME + " = " + name + " AND " + KEY_NAMESGROUPS
-                + " = " + groupid;
-
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery("SELECT " + KEY_NAME + ", " + KEY_NAMESGROUPS + " FROM "
+                + TABLE_NAMES + " WHERE " + KEY_NAME + " = ? AND " + KEY_NAMESGROUPS
+                + " = ?", new String[]{name, String.valueOf(groupid)});
 
         if (cursor != null && cursor.moveToFirst()){
             return new Names(Integer.parseInt(cursor.getString(0)),
@@ -255,14 +253,12 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     }
 
     //Get all chores
-    public List<Names> getAllNames(int groupid){
-        List<Names> names = new ArrayList<Names>();
+    public ArrayList<Names> getAllNames(int groupid){
+        ArrayList<Names> names = new ArrayList<Names>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT  * FROM " + TABLE_NAMES + " WHERE "
-                + KEY_NAMESGROUPS + " = " + groupid;
-
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAMES + " WHERE " + KEY_NAMESGROUPS
+                + " = ?", new String[]{String.valueOf(groupid)});
 
         if (cursor != null && cursor.moveToFirst()){
             do{

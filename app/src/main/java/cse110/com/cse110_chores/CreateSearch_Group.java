@@ -37,6 +37,8 @@ public class CreateSearch_Group extends AppCompatActivity {
                 //successful login
                 else {
                     Intent intent = new Intent(v.getContext(), MainScreen.class);
+                    int groupid = db.getGroup(group).getId();
+                    intent.putExtra("GROUPID", groupid);
                     startActivityForResult(intent, 0);
                 }
             }
@@ -53,6 +55,8 @@ public class CreateSearch_Group extends AppCompatActivity {
                 if (!db.getGroup(group).getFound()){
                     db.addGroup(new Groups(group, pass));
                     Intent intent = new Intent(v.getContext(), MainScreen.class);
+                    int groupid = db.getGroup(group).getId();
+                    intent.putExtra("GROUPID", groupid);
                     startActivityForResult(intent, 0);
                 }
                 //duplicate group

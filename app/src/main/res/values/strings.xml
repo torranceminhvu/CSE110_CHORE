@@ -11,7 +11,7 @@
     <string name="paymentLabel">Payments</string>
     <string name="eventLabel">Events</string>
     <string name="calendarLabel">Calendar</string>
-    <string name="memberLabel">Add Member</string>
+    <string name="memberLabel">Members</string>
 
     <!-- ChoresList -->
     <string name="chorelist">Chores List</string>

@@ -17,6 +17,7 @@ import cse110.com.cse110_chores.R;
 
 public class ChoresScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    DatabaseHandler db;
     Spinner spinner;
     String frequency = "";
 
@@ -25,6 +26,9 @@ public class ChoresScreen extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chores_screen);
 
+        Intent get = getIntent();
+        final int groupid = get.getIntExtra("GROUPID", 0);
+        db = new DatabaseHandler(this);
         spinner= (Spinner) findViewById(R.id.choreSpinner);
 
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.frequency, android.R.layout.simple_spinner_item);
@@ -54,9 +58,9 @@ public class ChoresScreen extends AppCompatActivity implements AdapterView.OnIte
             public void onClick(View v ) {
                 Intent intent = new Intent(v.getContext(), ChoresList.class);
                 String chore = choreText.getText().toString();
-                chore = frequency + " " + chore;
-                intent.putExtra("chore", chore);
+                db.addChore(new Chores(chore, frequency, groupid));
 
+                intent.putExtra("GROUPID", groupid);
                 startActivity(intent);
             }
 

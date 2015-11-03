@@ -19,17 +19,21 @@ package cse110.com.cse110_chores;
 public class MemberList extends AppCompatActivity {
 
     private ListView memberList;
-    MyThumbnailAdapter memberAdapater = null;
-    ArrayList<String> memberAL = new ArrayList<String>();
-    int member_count = 0;
-    int add_member_count = 0;
-    int i = 0;
+    ArrayList<String> stringAL = new ArrayList<String>();
+    ArrayList<Names> memberAL = new ArrayList<Names>();
     String memberName;
+    DatabaseHandler db;
+    Names current;
+    String display;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_list);
+
+        db = new DatabaseHandler(this);
+        Intent get = getIntent();
+        final int groupid = get.getIntExtra("GROUPID", 0);
 
         Button memberAddButton = (Button) findViewById(R.id.memberAddButton);
 
@@ -37,37 +41,28 @@ public class MemberList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MemberScreen.class);
+                intent.putExtra("GROUPID", groupid);
                 startActivityForResult(intent, 0);
             }
         });
 
-        Intent addChoreIntent = getIntent();
-
-        memberName = addChoreIntent.getStringExtra("member");
-
-        add_member_count = addChoreIntent.getIntExtra("add_member_count", add_member_count);
 
         memberList = (ListView) findViewById(R.id.memberlistview);
 
-        //for ( i = member_count; i < add_member_count; i++ ) {
-        memberAL.add(memberName);
-        //}
-        i++;
+        memberAL = db.getAllNames(groupid);
+        for (int i = 0; i < memberAL.size(); i++){
+            current = memberAL.get(i);
+            memberName = current.getName();
+            display = String.valueOf(i+1) + ".  " + memberName;
+            stringAL.add(display);
+        }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, stringAL);
+        memberList.setAdapter(arrayAdapter);
 
-        memberAdapater = new MyThumbnailAdapter(MemberList.this, R.layout.member_list_row, memberAL);
-        memberList.setAdapter(memberAdapater);
     }
 
-    public class MyThumbnailAdapter extends ArrayAdapter<String> {
-
-        ArrayList<String> arr;
-        private TextView text;
-
-        public MyThumbnailAdapter( Context context, int textViewResourceId, ArrayList<String> objects) {
-            super( context, textViewResourceId, objects);
-            this.arr = objects;
-        }
-
+    /*
         @Override
         public View getView( final int position, View convertView, ViewGroup parent ) {
 
@@ -89,7 +84,7 @@ public class MemberList extends AppCompatActivity {
             textnumber.setText( memberName );
             return view;
         }
-    }
+    } */
 
 
 }
