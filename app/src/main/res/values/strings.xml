@@ -32,10 +32,14 @@
     <string name="memberDelete">DELETE</string>
 
 
+    <!-- Menu -->
+    <string name="home">Home</string>
+    <string name="logout">Logout</string>
     
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main_screen">MainScreen</string>
     <string name="title_activity_chores_screen">ChoresScreen</string>
     <string name="title_activity_chores_list">ChoresList</string>
+    <string name="title_activity_blah">blah</string>
 </resources>

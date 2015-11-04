@@ -30,11 +30,11 @@
         </activity>
         <activity
             android:name=".MemberList"
-            android:label="Member List">
+            android:label="Member List" >
         </activity>
         <activity
             android:name=".MemberScreen"
-            android:label="Member Screen">
+            android:label="Member Screen" >
         </activity>
     </application>
 
