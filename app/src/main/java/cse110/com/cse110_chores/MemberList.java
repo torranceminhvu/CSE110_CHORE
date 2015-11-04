@@ -157,6 +157,7 @@ public class MemberList extends AppCompatActivity {
                 startActivity(new Intent(this, MainScreen.class));
                 break;
             case R.id.menu_logout:
+                startActivity(new Intent(this, CreateSearch_Group.class));
                 break;
         }
 

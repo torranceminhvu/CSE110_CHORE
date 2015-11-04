@@ -20,9 +20,9 @@
     <string name="chore">Enter New Chore</string>
     <string name="choreAddButton">ADD CHORE</string>
     <string-array name="frequency">
-        <item>Monthly</item>
-        <item>Bi-weekly</item>
         <item>Weekly</item>
+        <item>Bi-weekly</item>
+        <item>Monthly</item>
         <item>Daily</item>
     </string-array>
 
