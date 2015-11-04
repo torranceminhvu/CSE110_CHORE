@@ -81,7 +81,7 @@ public class MemberList extends AppCompatActivity {
             if(convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 convertView = inflater.inflate(layout, parent, false);
-                MyViewHolder myViewHolder = new MyViewHolder();
+                final MyViewHolder myViewHolder = new MyViewHolder();
                 myViewHolder.memberTitle = (TextView) convertView.findViewById(R.id.text);
                 myViewHolder.delete = (Button) convertView.findViewById(R.id.delete_button);
                 myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +89,17 @@ public class MemberList extends AppCompatActivity {
                     public void onClick(View v) {
                         db.deleteName(memberAL.get(position));
                         memberAL.remove(position);
-                        stringAL.remove(position);
+                        //stringAL.remove(position);
+                        stringAL.clear();
+                        Intent get = getIntent();
+                        final int groupid = get.getIntExtra("GROUPID", 0);
+                        memberAL = db.getAllNames(groupid);
+                        for (int i = 0; i < memberAL.size(); i++) {
+                            current = memberAL.get(i);
+                            memberName = current.getName();
+                            display = String.valueOf(i + 1) + ".  " + memberName;
+                            stringAL.add(display);
+                        }
                         theadapter.notifyDataSetChanged();
                     }
                 });

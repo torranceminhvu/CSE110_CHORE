@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CSE110_CHORE.iml" filepath="$PROJECT_DIR$/CSE110_CHORE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CSE110_CHORES.iml" filepath="$PROJECT_DIR$/CSE110_CHORES.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
