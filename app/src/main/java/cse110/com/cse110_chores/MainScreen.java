@@ -42,6 +42,18 @@ public class MainScreen extends AppCompatActivity {
 
             }
         });
+
+        Button paybutton = (Button) findViewById(R.id.payButton);
+
+        paybutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PaymentList.class);
+                intent.putExtra("GROUPID", groupid);
+                startActivityForResult(intent, 0);
+
+            }
+        });
     }
 
     @Override

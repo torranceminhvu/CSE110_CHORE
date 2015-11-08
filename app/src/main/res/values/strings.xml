@@ -31,6 +31,12 @@
     <string name="member">Enter New Member</string>
     <string name="memberDelete">DELETE</string>
 
+    <!-- PaymentScreen -->
+    <string name="name">Name</string>
+    <string name="amount">$</string>
+    <string name="description">for...</string>
+    <string name="paymentAddButton">Add Payment</string>
+    <string name="paymentDelete">DELETE</string>
 
     <!-- Menu -->
     <string name="home">Home</string>

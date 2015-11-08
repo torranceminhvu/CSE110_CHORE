@@ -36,6 +36,10 @@
             android:name=".MemberScreen"
             android:label="Add Member" >
         </activity>
+        <activity android:name=".PaymentScreen" >
+        </activity>
+        <activity android:name=".PaymentList" >
+        </activity>
     </application>
 
 </manifest>
