@@ -61,5 +61,27 @@ public class PaymentList extends AppCompatActivity {
             layout = resource;
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_home:
+                startActivity(new Intent(this, MainScreen.class));
+                break;
+            case R.id.menu_logout:
+                startActivity(new Intent(this, CreateSearch_Group.class));
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
 
