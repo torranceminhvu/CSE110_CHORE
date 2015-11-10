@@ -33,7 +33,6 @@
 
     <!-- PaymentScreen -->
     <string name="name">Name</string>
-    <string name="amount">$</string>
     <string name="description">for...</string>
     <string name="paymentAddButton">Add Payment</string>
     <string name="paymentDelete">DELETE</string>

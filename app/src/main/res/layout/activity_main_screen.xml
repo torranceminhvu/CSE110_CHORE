@@ -56,7 +56,7 @@
         android:layout_width="150dip"
         android:layout_height="150dip"
         android:id="@+id/memberButton"
-        android:background="@mipmap/ic_addmember"
+        android:background="@mipmap/members"
         android:text="@string/memberLabel"
         android:gravity="bottom|center"
         android:layout_below="@+id/calendarButton"
