@@ -40,10 +40,7 @@ public class PaymentScreen extends AppCompatActivity implements AdapterView.OnIt
                 String amountOwed = amount.getText().toString();
                 String des = description.getText().toString();
 
-                db.addName(new Names(nameOwe, groupid));
-                db.addName(new Names(nameReceive, groupid));
-                db.addName(new Names(amountOwed, groupid));
-                db.addName(new Names(des, groupid));
+                //db.addPayment(new Names(nameOwe, nameReceive, amountOwed, des, groupid));
 
                 intent.putExtra("GROUPID", groupid);
 

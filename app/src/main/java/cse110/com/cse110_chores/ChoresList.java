@@ -71,38 +71,7 @@ public class ChoresList extends AppCompatActivity {
         choreList.setAdapter(theadapter);
     }
 
-    /*
-    public class myAdapter extends ArrayAdapter<String> {
 
-        ArrayList<String> arr;
-        private TextView text;
-        public myAdapter(Context context, int textViewResourceId, ArrayList<String> objects ) {
-            super(context, textViewResourceId, objects );
-            this.arr = objects;
-        }
-        @Override
-        public View getView( final int position, View convertView, ViewGroup parent ) {
-
-            View view;
-            LayoutInflater inflater = getLayoutInflater();
-            view = inflater.inflate(R.layout.list_row, parent, false);
-            TextView textnumber = (TextView) view.findViewById(R.id.text);
-            Button delete_button = (Button) view.findViewById(R.id.delete_button);
-
-            delete_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    db.deleteChore(choreAL.get(position));
-                    arr.remove(position);
-                    theadapter.notifyDataSetChanged();
-                    Toast.makeText(ChoresList.this, "Item deleted", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            textnumber.setText( display );
-            return view;
-        }
-    }*/
     private class myAdapter extends ArrayAdapter<String> {
         private int layout;
         private myAdapter(Context context, int resource, List<String> objects) {

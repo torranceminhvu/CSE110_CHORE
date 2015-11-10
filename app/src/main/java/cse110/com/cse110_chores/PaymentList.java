@@ -25,7 +25,7 @@ public class PaymentList extends AppCompatActivity {
     private ListView paymentList;
     ArrayList<String> stringAL = new ArrayList<String>();
     ArrayList<Names> paymentAL = new ArrayList<Names>();
-    String personOwe, personReceiving;
+    String personOwe;
     DatabaseHandler db;
     Names current;
     String display;
@@ -40,6 +40,7 @@ public class PaymentList extends AppCompatActivity {
         db = new DatabaseHandler(this);
         Intent get = getIntent();
         final int groupid = get.getIntExtra("GROUPID", 0);
+        paymentList = (ListView) findViewById(R.id.paymentListView);
 
         Button paymentAddButton = (Button) findViewById(R.id.paymentAddButton);
 
@@ -51,15 +52,57 @@ public class PaymentList extends AppCompatActivity {
                 startActivityForResult(intent, 0);
             }
         });
+
+        for (int i = 0; i < paymentAL.size(); i++){
+            current = paymentAL.get(i);
+            personOwe = current.getName();
+            display =  personOwe;
+            stringAL.add(display);
+        }
+
+        theadapter = new myAdapter(PaymentList.this, R.layout.list_row, stringAL);
+        paymentList.setAdapter(theadapter);
     }
 
     private class myAdapter extends ArrayAdapter<String> {
         private int layout;
-
         private myAdapter(Context context, int resource, List<String> objects) {
             super(context, resource, objects);
             layout = resource;
         }
+       /* @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            MyViewHolder mainViewholder = null;
+            if(convertView == null) {
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                convertView = inflater.inflate(layout, parent, false);
+                MyViewHolder myViewHolder = new MyViewHolder();
+                myViewHolder.paymentTitle = (TextView) convertView.findViewById(R.id.text);
+                myViewHolder.delete = (Button) convertView.findViewById(R.id.delete_button);
+                myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        db.deleteChore(paymentAL.get(position));
+                        paymentAL.remove(position);
+                        stringAL.remove(position);
+                        theadapter.notifyDataSetChanged();
+                    }
+                });
+                convertView.setTag(myViewHolder);
+                myViewHolder.paymentTitle.setText(getItem(position));
+            }
+            else {
+                mainViewholder = (MyViewHolder) convertView.getTag();
+                mainViewholder.paymentTitle.setText(getItem(position));
+            }
+            return convertView;
+        } */
+
+    }
+
+    public class MyViewHolder {
+        TextView paymentTitle;
+        Button delete;
     }
 
     @Override
