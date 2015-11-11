@@ -35,7 +35,7 @@
     <string name="name">Name</string>
     <string name="description">for...</string>
     <string name="paymentAddButton">Add Payment</string>
-    <string name="paymentDelete">DELETE</string>
+    <string name="paymentDelete">PAID</string>
 
     <!-- Menu -->
     <string name="home">Home</string>
