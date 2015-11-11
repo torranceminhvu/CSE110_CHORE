@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +26,20 @@ public class PaymentList extends AppCompatActivity {
 
     private ListView paymentList;
     ArrayList<String> stringAL = new ArrayList<String>();
-    ArrayList<Names> paymentAL = new ArrayList<Names>();
-    String personOwe;
+    //ArrayList<String> stringALTwo = new ArrayList<String>();
+    ArrayList<Payments> paymentAL = new ArrayList<Payments>();
+    String lineOne;
+    String lineTwo;
     DatabaseHandler db;
-    Names current;
+    Payments current;
     String display;
 
-    myAdapter theadapter = null;
+    String ownee;
+    String owner;
+    String amount;
+    String description;
+
+    PayAdapter theadapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,56 +62,67 @@ public class PaymentList extends AppCompatActivity {
             }
         });
 
+        paymentAL = db.getAllPayments(groupid);
         for (int i = 0; i < paymentAL.size(); i++){
             current = paymentAL.get(i);
-            personOwe = current.getName();
-            display =  personOwe;
+            ownee = current.getOwnee() + " owes ";
+            owner = current.getOwner() + " $ ";
+            amount = current.getAmount();
+            display =  ownee + owner + amount;
+            description = current.getDescription();
             stringAL.add(display);
+            //stringAL.add(description);
         }
 
-        theadapter = new myAdapter(PaymentList.this, R.layout.list_row, stringAL);
+        theadapter = new PayAdapter(PaymentList.this, R.layout.payment_list_row, stringAL );
         paymentList.setAdapter(theadapter);
     }
 
-    private class myAdapter extends ArrayAdapter<String> {
+    private class PayAdapter extends ArrayAdapter<String> {
         private int layout;
-        private myAdapter(Context context, int resource, List<String> objects) {
+        private PayAdapter(Context context, int resource, List<String> objects) {
             super(context, resource, objects);
             layout = resource;
         }
-       /* @Override
+        @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             MyViewHolder mainViewholder = null;
+            final int positionTwo = position + 1;
             if(convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 convertView = inflater.inflate(layout, parent, false);
-                MyViewHolder myViewHolder = new MyViewHolder();
-                myViewHolder.paymentTitle = (TextView) convertView.findViewById(R.id.text);
-                myViewHolder.delete = (Button) convertView.findViewById(R.id.delete_button);
-                myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
+                final MyViewHolder myViewHolder = new MyViewHolder();
+                myViewHolder.lineOne = (TextView) convertView.findViewById(R.id.oweReceiveAmount);
+                myViewHolder.lineTwo = (TextView) convertView.findViewById(R.id.description);
+                myViewHolder.paid = (Button) convertView.findViewById(R.id.paid_button);
+                myViewHolder.paid.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        db.deleteChore(paymentAL.get(position));
+                        db.deletePayment(paymentAL.get(position));
                         paymentAL.remove(position);
                         stringAL.remove(position);
+                        //stringAL.remove(position + 1);
                         theadapter.notifyDataSetChanged();
                     }
                 });
                 convertView.setTag(myViewHolder);
-                myViewHolder.paymentTitle.setText(getItem(position));
+                myViewHolder.lineOne.setText(getItem(position));
+                myViewHolder.lineTwo.setText(paymentAL.get(position).getDescription());
+
             }
             else {
                 mainViewholder = (MyViewHolder) convertView.getTag();
-                mainViewholder.paymentTitle.setText(getItem(position));
+                mainViewholder.lineOne.setText(getItem(position));
+                mainViewholder.lineTwo.setText(paymentAL.get(position).getDescription());
             }
             return convertView;
-        } */
+        }
 
     }
-
     public class MyViewHolder {
-        TextView paymentTitle;
-        Button delete;
+        TextView lineOne;
+        TextView lineTwo;
+        Button paid;
     }
 
     @Override
