@@ -35,12 +35,12 @@ public class PaymentScreen extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), PaymentList.class);
-                String nameOwe = personOwes.getText().toString();
-                String nameReceive = personReceiving.getText().toString();
-                String amountOwed = amount.getText().toString();
+                String ownee = personOwes.getText().toString();
+                String owner = personReceiving.getText().toString();
+                String amounts = amount.getText().toString();
                 String des = description.getText().toString();
 
-                //db.addPayment(new Names(nameOwe, nameReceive, amountOwed, des, groupid));
+                db.addPayment(new Payments(owner, ownee, amounts, des, groupid));
 
                 intent.putExtra("GROUPID", groupid);
 

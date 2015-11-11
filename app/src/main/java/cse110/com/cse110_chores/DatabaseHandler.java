@@ -32,6 +32,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     //Name table name
     private static final String TABLE_NAMES = "Names";
 
+    //Payment table name
+    private static final String TABLE_PAYMENTS = "Payments";
+
     //id column name
     private static final String KEY_ID = "id";
 
@@ -57,6 +60,13 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final String KEY_NAME = "name";
     private static final String KEY_NAMESGROUPS = "nameGroups";
 
+    //Payments tables' columns
+    private static final String KEY_OWNER = "owner";
+    private static final String KEY_OWNEE = "ownee";
+    private static final String KEY_AMOUNT = "amount";
+    private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_PAYMENTSGROUPS = "paymentsGroups";
+
     //constructor
     public DatabaseHandler(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -80,20 +90,25 @@ public class DatabaseHandler extends SQLiteOpenHelper{
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_EVENTNAME + " TEXT,"
                 + KEY_EVENTSTARTDATE + " TEXT," + KEY_EVENTENDDATE + " TEXT,"
                 + KEY_EVENTSTARTTIME + " TEXT," + KEY_EVENTENDTIME + " TEXT, "
-                + KEY_EVENTSGROUPS + " TEXT, " + KEY_CHORESGROUPS + " TEXT, "
-                + "FOREIGN KEY(" + KEY_EVENTSGROUPS + ") REFERENCES " + TABLE_GROUPS
-                + "(" + KEY_ID + "));";
+                + KEY_EVENTSGROUPS + " TEXT, " + "FOREIGN KEY(" + KEY_EVENTSGROUPS + ") REFERENCES "
+                + TABLE_GROUPS + "(" + KEY_ID + "));";
 
         String CREATE_NAMES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAMES + " ("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT, "
-                + KEY_NAMESGROUPS + " TEXT, " + KEY_CHORESGROUPS + " TEXT, "
-                + "FOREIGN KEY(" + KEY_NAMESGROUPS + ") REFERENCES " + TABLE_GROUPS
-                + "(" + KEY_ID + "));";
+                + KEY_NAMESGROUPS + " TEXT, " + "FOREIGN KEY(" + KEY_NAMESGROUPS + ") REFERENCES "
+                + TABLE_GROUPS + "(" + KEY_ID + "));";
+
+        String CREATE_PAYMENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PAYMENTS + " ("
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_OWNER + " TEXT, "
+                + KEY_OWNEE + " TEXT, " + KEY_AMOUNT + " TEXT, " + KEY_DESCRIPTION + " TEXT, "
+                + KEY_PAYMENTSGROUPS + " TEXT, " + "FOREIGN KEY(" + KEY_PAYMENTSGROUPS + ") REFERENCES "
+                + TABLE_GROUPS + "(" + KEY_ID + "));";
 
         db.execSQL(CREATE_GROUPS_TABLE);
         db.execSQL(CREATE_CHORES_TABLE);
         db.execSQL(CREATE_EVENTS_TABLE);
         db.execSQL(CREATE_NAMES_TABLE);
+        db.execSQL(CREATE_PAYMENTS_TABLE);
     }
 
     //upgrade db
@@ -104,6 +119,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHORES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAMES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAYMENTS);
 
         //create table again
         onCreate(db);
@@ -278,7 +294,59 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     public void deleteName(Names name) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAMES, KEY_ID + " = ?",
-                new String[] { String.valueOf(name.getId()) });
+                new String[]{String.valueOf(name.getId())});
         db.close();
     }
+
+
+
+    //Adding new payments
+    public void addPayment(Payments payment) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_OWNER, payment.getOwner());
+        values.put(KEY_OWNEE, payment.getOwnee());
+        values.put(KEY_AMOUNT, payment.getAmount());
+        values.put(KEY_DESCRIPTION, payment.getDescription());
+        values.put(KEY_PAYMENTSGROUPS, payment.getGroupid());
+
+        // Inserting Row
+        db.insert(TABLE_PAYMENTS, null, values);
+        db.close(); // Closing database connection
+    }
+
+    //Get all payments
+    public ArrayList<Payments> getAllPayments(int groupid){
+        ArrayList<Payments> payments = new ArrayList<Payments>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PAYMENTS + " WHERE " + KEY_PAYMENTSGROUPS
+                + " = ?", new String[]{String.valueOf(groupid)});
+
+        if (cursor != null && cursor.moveToFirst()){
+            do{
+                Payments payment = new Payments(Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                        cursor.getString(4), Integer.parseInt(cursor.getString(5)));
+
+                payments.add(payment);
+            }while (cursor.moveToNext());
+        }
+
+        return payments;
+    }
+
+    //Updating payments
+
+    //Deleting payments
+    public void deletePayment(Payments payment) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PAYMENTS, KEY_ID + " = ?",
+                new String[] { String.valueOf(payment.getId()) });
+        db.close();
+    }
+
+
 }
+
