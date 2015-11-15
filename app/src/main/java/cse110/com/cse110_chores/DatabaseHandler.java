@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper{
     //db version
-    private static int DATABASE_VERSION = 3;
+    private static int DATABASE_VERSION = 4;
 
     //db name
     private static final String DATABASE_NAME = "Tables";
@@ -34,6 +34,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
     //Payment table name
     private static final String TABLE_PAYMENTS = "Payments";
+
+    private static final String TABLE_CHORENAME = "Chorename";
 
     //id column name
     private static final String KEY_ID = "id";
@@ -66,6 +68,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final String KEY_AMOUNT = "amount";
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_PAYMENTSGROUPS = "paymentsGroups";
+
+    private static final String KEY_CHORE = "chore";
+    private static final String KEY_I = "i";
+    private static final String KEY_CHORENAMESGROUPS = "choreNamesGroups";
 
     //constructor
     public DatabaseHandler(Context context){
@@ -104,11 +110,17 @@ public class DatabaseHandler extends SQLiteOpenHelper{
                 + KEY_PAYMENTSGROUPS + " TEXT, " + "FOREIGN KEY(" + KEY_PAYMENTSGROUPS + ") REFERENCES "
                 + TABLE_GROUPS + "(" + KEY_ID + "));";
 
+        String CREATE_CHORENAMES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_CHORENAME + " ("
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CHORE + " TEXT, " + KEY_I + " TEXT, "
+                + KEY_CHORENAMESGROUPS + " TEXT, " + "FOREIGN KEY(" + KEY_CHORENAMESGROUPS + ") REFERENCES "
+                + TABLE_GROUPS + "(" + KEY_ID + "));";
+
         db.execSQL(CREATE_GROUPS_TABLE);
         db.execSQL(CREATE_CHORES_TABLE);
         db.execSQL(CREATE_EVENTS_TABLE);
         db.execSQL(CREATE_NAMES_TABLE);
         db.execSQL(CREATE_PAYMENTS_TABLE);
+        db.execSQL(CREATE_CHORENAMES_TABLE);
     }
 
     //upgrade db
@@ -120,6 +132,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAMES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAYMENTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHORENAME);
 
         //create table again
         onCreate(db);
@@ -149,7 +162,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         if(cursor != null && cursor.moveToFirst()) {
             return new Groups(Integer.parseInt(cursor.getString(0)),
                     cursor.getString(1), cursor.getString(2));
-            }
+        }
         else
             return new Groups();
     }
@@ -348,5 +361,78 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     }
 
 
+    //Adding new chorenames
+    public void addChoreName(ChoreName choreName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_CHORE, choreName.getChoreName());
+        values.put(KEY_I, choreName.geti());
+        values.put(KEY_CHORENAMESGROUPS, choreName.getGroupid());
+
+        // Inserting Row
+        db.insert(TABLE_CHORENAME, null, values);
+        db.close(); // Closing database connection
+    }
+
+    //Reading names
+    public ChoreName getChoreName(String choreName, int groupid) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT " + KEY_CHORE + ", " + KEY_CHORENAMESGROUPS + " FROM "
+                + TABLE_CHORENAME + " WHERE " + KEY_CHORE + " = ? AND " + KEY_CHORENAMESGROUPS
+                + " = ?", new String[]{choreName, String.valueOf(groupid)});
+
+        if (cursor != null && cursor.moveToFirst()){
+            return new ChoreName(Integer.parseInt(cursor.getString(0)),
+                    cursor.getString(1), Integer.parseInt(cursor.getString(2)),
+                    Integer.parseInt(cursor.getString(3)));
+        }
+        else
+            return new ChoreName();
+    }
+
+    //Get all chores
+    public ArrayList<ChoreName> getAllChoreNames(int groupid){
+        ArrayList<ChoreName> ChoreNames = new ArrayList<ChoreName>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CHORENAME + " WHERE " + KEY_CHORENAMESGROUPS
+                + " = ?", new String[]{String.valueOf(groupid)});
+
+        if (cursor != null && cursor.moveToFirst()){
+            do{
+                ChoreName choreName = new ChoreName(Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1), Integer.parseInt(cursor.getString(2)),
+                        Integer.parseInt(cursor.getString(3)));
+
+                ChoreNames.add(choreName);
+            }while (cursor.moveToNext());
+        }
+
+        return ChoreNames;
+    }
+
+    //Updating names
+    public void updateChoreName(ChoreName choreName){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_CHORE, choreName.getChoreName());
+        values.put(KEY_I, choreName.geti());
+        values.put(KEY_CHORENAMESGROUPS, choreName.getGroupid());
+
+        db.update(TABLE_CHORENAME, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(choreName.getId()) });
+        db.close();
+    }
+
+    //Deleting names
+    public void deleteChoreName(ChoreName choreName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAMES, KEY_ID + " = ?",
+                new String[]{String.valueOf(choreName.getId())});
+        db.close();
+    }
 }
 
