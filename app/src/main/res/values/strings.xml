@@ -15,6 +15,7 @@
 
     <!-- ChoresList -->
     <string name="chorelist">Chores List</string>
+    <string name="assignChore">Assign Chore</string>
 
     <!-- ChoresScreen -->
     <string name="chore">Enter New Chore</string>
