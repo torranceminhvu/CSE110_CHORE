@@ -11,6 +11,8 @@ import android.widget.Toast;
 public class CreateSearch_Group extends AppCompatActivity {
     DatabaseHandler db;
 
+    //should work now
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
