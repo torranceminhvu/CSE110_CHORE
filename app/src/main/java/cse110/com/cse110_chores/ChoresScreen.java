@@ -41,7 +41,7 @@ public class ChoresScreen extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            Toast.makeText( getBaseContext(), parent.getItemAtPosition(position) + " selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), parent.getItemAtPosition(position) + " selected", Toast.LENGTH_SHORT).show();
                 frequency = parent.getItemAtPosition(position).toString();
             }
 
@@ -67,6 +67,18 @@ public class ChoresScreen extends AppCompatActivity implements AdapterView.OnIte
                 startActivity(intent);
             }
 
+        });
+
+
+
+        // Added button to assign chore
+        Button assignChore = (Button) findViewById(R.id.assignChore);
+
+        assignChore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
         });
     }
 
