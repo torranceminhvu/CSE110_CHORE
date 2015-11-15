@@ -39,6 +39,7 @@ public class CreateSearch_Group extends AppCompatActivity {
                     Intent intent = new Intent(v.getContext(), MainScreen.class);
                     int groupid = db.getGroup(group).getId();
                     intent.putExtra("GROUPID", groupid);
+                    // send title to mainscreen
                     intent.putExtra("groupText", group );
                     startActivityForResult(intent, 0);
                 }
@@ -58,6 +59,8 @@ public class CreateSearch_Group extends AppCompatActivity {
                     Intent intent = new Intent(v.getContext(), MainScreen.class);
                     int groupid = db.getGroup(group).getId();
                     intent.putExtra("GROUPID", groupid);
+                    // send title to mainscreen
+                    intent.putExtra("groupText", group );
                     startActivityForResult(intent, 0);
                 }
                 //duplicate group
