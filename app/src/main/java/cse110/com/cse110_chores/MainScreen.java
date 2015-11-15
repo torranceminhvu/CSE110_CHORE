@@ -1,6 +1,8 @@
 package cse110.com.cse110_chores;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,17 +10,28 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SpinnerAdapter;
 
 public class MainScreen extends AppCompatActivity {
-    //todo: display group name by getting intent
+    //todo: display group name by getting intent    DONE!!!!
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_screen);
+
         Intent get = getIntent();
         final int groupid = get.getIntExtra("GROUPID", 0);
 
+        // display group name
+        setTitle(get.getStringExtra("groupText"));
+
+        setContentView(R.layout.activity_main_screen);
+
+
+
+
+        //action.getSupportActionBar().setDisplayShowTitleEnabled(true);
+        //getSupportActionBar().setTitle(groupid);
         Button chorebutton = (Button) findViewById(R.id.choreButton);
 
         chorebutton.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +66,18 @@ public class MainScreen extends AppCompatActivity {
                 startActivityForResult(intent, 0);
 
             }
+        });
+
+        Button calendarButton = (Button) findViewById(R.id.calendarButton);
+
+        calendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), CalendarApi.class);
+                //intent.putExtras("GROUPID", groupid);
+                startActivityForResult(intent, 0);
+            }
+
         });
     }
 

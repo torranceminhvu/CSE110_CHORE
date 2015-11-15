@@ -39,6 +39,7 @@ public class CreateSearch_Group extends AppCompatActivity {
                     Intent intent = new Intent(v.getContext(), MainScreen.class);
                     int groupid = db.getGroup(group).getId();
                     intent.putExtra("GROUPID", groupid);
+                    intent.putExtra("groupText", group );
                     startActivityForResult(intent, 0);
                 }
             }

@@ -47,4 +47,5 @@
     <string name="title_activity_chores_screen">ChoresScreen</string>
     <string name="title_activity_chores_list">ChoresList</string>
     <string name="title_activity_blah">blah</string>
+    <string name="title_activity_calendar_view">CalendarView</string>
 </resources>

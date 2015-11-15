@@ -36,11 +36,15 @@
             android:name=".MemberScreen"
             android:label="Add Member" >
         </activity>
-        <activity android:name=".PaymentScreen"
+        <activity
+            android:name=".PaymentScreen"
             android:label="Add Payment" >
         </activity>
-        <activity android:name=".PaymentList"
+        <activity
+            android:name=".PaymentList"
             android:label="Payments" >
+        </activity>
+        <activity android:name=".CalendarApi" >
         </activity>
     </application>
 
