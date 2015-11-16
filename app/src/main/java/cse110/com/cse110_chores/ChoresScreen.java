@@ -68,18 +68,6 @@ public class ChoresScreen extends AppCompatActivity implements AdapterView.OnIte
             }
 
         });
-
-
-
-        // Added button to assign chore
-        Button assignChore = (Button) findViewById(R.id.assignChore);
-
-        assignChore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
 

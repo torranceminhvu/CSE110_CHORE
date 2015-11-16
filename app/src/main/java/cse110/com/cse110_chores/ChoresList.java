@@ -28,7 +28,7 @@ public class ChoresList extends AppCompatActivity {
     ArrayList<String> stringAL = new ArrayList<String>();
     ArrayList<Chores> choreAL = new ArrayList<Chores>();
     Chores current;
-    String name;
+    String chore;
     String frequency;
     String display;
 
@@ -58,20 +58,37 @@ public class ChoresList extends AppCompatActivity {
         choreAL = db.getAllChores(groupid);
         for (int i = 0; i < choreAL.size(); i++){
             current = choreAL.get(i);
-            name = current.getName();
+            chore = current.getName();
             frequency = current.getFrequency();
-            display = frequency + ":  " + name;
+            display = frequency + ":  " + chore;
             stringAL.add(display);
         }
-        /*ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, stringAL);
-        choreList.setAdapter(arrayAdapter);
-*/
+
+        // Added button to assign chore
+        Button assignChore = (Button) findViewById(R.id.assignChore);
+
+        assignChore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /* Not sure how you guys want to do it.
+                choreAL = db.getAllChores(groupid);
+                for (int i = 0; i < choreAL.size(); i++){
+                    current = choreAL.get(i);
+                    chore = current.getName();
+                    frequency = current.getFrequency();
+                    display = frequency + ":  " + chore;
+                    stringAL.add(display);
+                }
+                */
+            }
+        });
+
         theadapter = new myAdapter(ChoresList.this, R.layout.list_row, stringAL);
         choreList.setAdapter(theadapter);
     }
 
 
+    // custom adapter to display in listview
     private class myAdapter extends ArrayAdapter<String> {
         private int layout;
         private myAdapter(Context context, int resource, List<String> objects) {

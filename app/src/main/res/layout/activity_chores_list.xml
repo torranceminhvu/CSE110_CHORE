@@ -13,6 +13,15 @@
         android:gravity="center"
         android:text="@string/choreAddButton"/>
 
+    <Button
+        android:id="@+id/assignChore"
+        android:layout_below="@+id/choreAddButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/assignChore"
+        android:gravity="center"/>
+
+
 
     <ListView
         android:id="@+id/chorelistview"

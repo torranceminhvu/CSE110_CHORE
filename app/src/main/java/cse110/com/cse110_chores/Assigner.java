@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Matthew on 11/14/2015.
  */
-public class Assigner {
+public class    Assigner {
     ArrayList<Chores> choreAL = new ArrayList<Chores>();
     ArrayList<Names> nameAL = new ArrayList<Names>();
     ArrayList<ChoreName> choreNameAL = new ArrayList<ChoreName>();

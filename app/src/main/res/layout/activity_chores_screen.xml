@@ -39,11 +39,4 @@
         android:text="@string/choreAddButton"
         android:gravity="center"/>
 
-    <Button
-        android:id="@+id/assignChore"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/assignChore"
-        android:gravity="center"/>
-
 </RelativeLayout>
