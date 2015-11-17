@@ -53,7 +53,10 @@ public class ChoresList extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ChoresScreen.class);
                 intent.putExtra("GROUPID", groupid);
-                startActivityForResult(intent, 0);
+
+                finish();
+                startActivity(intent);
+                return;
             }
         });
 
@@ -165,9 +168,10 @@ public class ChoresList extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_home:
-                startActivity(new Intent(this, MainScreen.class));
+                finish();
                 break;
             case R.id.menu_logout:
+                finish();
                 startActivity(new Intent(this, CreateSearch_Group.class));
                 break;
         }

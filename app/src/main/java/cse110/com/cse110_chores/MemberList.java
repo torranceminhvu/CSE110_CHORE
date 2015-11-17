@@ -49,7 +49,10 @@ public class MemberList extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MemberScreen.class);
                 intent.putExtra("GROUPID", groupid);
-                startActivityForResult(intent, 0);
+
+                finish();
+                startActivity(intent);
+                return;
             }
         });
 
@@ -63,8 +66,7 @@ public class MemberList extends AppCompatActivity {
             display = String.valueOf(i+1) + ".  " + memberName;
             stringAL.add(display);
         }
-        /*ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, stringAL);*/
+
         theadapter = new myAdapter(MemberList.this, R.layout.member_list_row, stringAL);
         memberList.setAdapter(theadapter);
 
@@ -120,29 +122,6 @@ public class MemberList extends AppCompatActivity {
         TextView memberTitle;
         Button delete;
     }
-    /*
-        @Override
-        public View getView( final int position, View convertView, ViewGroup parent ) {
-
-            View view;
-            LayoutInflater inflater = getLayoutInflater();
-            view = inflater.inflate(R.layout.member_list_row, parent, false);
-            TextView textnumber = (TextView) view.findViewById(R.id.text);
-            Button delete_button = (Button) view.findViewById(R.id.delete_button);
-
-            delete_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    arr.remove(position);
-                    memberAdapater.notifyDataSetChanged();
-                    Toast.makeText(MemberList.this, "Item deleted", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            textnumber.setText( memberName );
-            return view;
-        }
-    } */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -156,9 +135,10 @@ public class MemberList extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_home:
-                startActivity(new Intent(this, MainScreen.class));
+                finish();
                 break;
             case R.id.menu_logout:
+                finish();
                 startActivity(new Intent(this, CreateSearch_Group.class));
                 break;
         }

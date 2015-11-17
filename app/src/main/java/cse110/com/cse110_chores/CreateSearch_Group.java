@@ -43,7 +43,10 @@ public class CreateSearch_Group extends AppCompatActivity {
                     intent.putExtra("GROUPID", groupid);
                     // send title to mainscreen
                     intent.putExtra("groupText", group );
-                    startActivityForResult(intent, 0);
+
+                    finish();
+                    startActivity(intent);
+                    return;
                 }
             }
         });
@@ -63,7 +66,10 @@ public class CreateSearch_Group extends AppCompatActivity {
                     intent.putExtra("GROUPID", groupid);
                     // send title to mainscreen
                     intent.putExtra("groupText", group );
-                    startActivityForResult(intent, 0);
+
+                    finish();
+                    startActivity(intent);
+                    return;
                 }
                 //duplicate group
                 else{

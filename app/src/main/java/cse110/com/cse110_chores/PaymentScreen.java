@@ -44,7 +44,9 @@ public class PaymentScreen extends AppCompatActivity implements AdapterView.OnIt
 
                 intent.putExtra("GROUPID", groupid);
 
+                finish();
                 startActivity(intent);
+                return;
             }
 
         });
@@ -72,9 +74,10 @@ public class PaymentScreen extends AppCompatActivity implements AdapterView.OnIt
 
         switch (item.getItemId()) {
             case R.id.menu_home:
-                startActivity(new Intent(this, MainScreen.class));
+                finish();
                 break;
             case R.id.menu_logout:
+                finish();
                 startActivity(new Intent(this, CreateSearch_Group.class));
                 break;
         }

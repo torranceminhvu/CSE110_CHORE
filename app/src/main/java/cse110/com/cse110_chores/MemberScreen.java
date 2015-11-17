@@ -39,7 +39,9 @@ public class MemberScreen extends AppCompatActivity implements AdapterView.OnIte
                 db.addName(new Names(member, groupid));
                 intent.putExtra("GROUPID", groupid);
 
+                finish();
                 startActivity(intent);
+                return;
             }
 
         });
@@ -70,9 +72,10 @@ public class MemberScreen extends AppCompatActivity implements AdapterView.OnIte
 
         switch (item.getItemId()) {
             case R.id.menu_home:
-                startActivity(new Intent(this, MainScreen.class));
+                finish();
                 break;
             case R.id.menu_logout:
+                finish();
                 startActivity(new Intent(this, CreateSearch_Group.class));
                 break;
         }
