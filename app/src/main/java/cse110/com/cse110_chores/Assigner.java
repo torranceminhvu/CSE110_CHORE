@@ -1,6 +1,7 @@
 package cse110.com.cse110_chores;
 
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -25,26 +26,27 @@ public class    Assigner {
         nameAL = db.getAllNames(groupid);
         choreNameCheck = db.getAllChoreNames(groupid);
         int total = nameAL.size();
-
+        Log.e("NAMESAL", String.valueOf(nameAL.size()));
+        Log.e("ChorenameAL", String.valueOf(choreNameAL.size()));
+        if (total == 0){
+            return;
+        }
         if (choreNameCheck.size() != 0){
             for (int i = 0; i < choreNameCheck.size(); i++){
+                Log.e("DELETELOOP", String.valueOf(i));
                 db.deleteChoreName(choreNameCheck.get(i));
             }
         }
 
         for (int i = 0; i <choreAL.size(); i++){
             int j = i;
-            if (j > total) {
+            if (j >= total) {
                 j = i - total;
             }
             ChoreName current = new ChoreName(choreAL.get(i).getName(), 0, groupid);
             current.seti(j);
 
-            choreNameAL.add(current);
-        }
-
-        for (int i = 0; i < choreNameAL.size(); i++){
-            db.addChoreName(choreNameAL.get(i));
+            db.addChoreName(current);
         }
     }
 
@@ -57,9 +59,11 @@ public class    Assigner {
 
     public ArrayList<Names> getAllIndex(){
         ArrayList<Names> result = new ArrayList<Names>();
+        choreNameAL = db.getAllChoreNames(groupid);
+
         for (int i = 0; i < choreNameAL.size(); i++){
             int index = choreNameAL.get(i).geti();
-
+            //Log.e("index", String.valueOf(index));
             Names current = this.getIndex(index);
             result.add(current);
         }

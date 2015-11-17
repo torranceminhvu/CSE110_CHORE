@@ -4,6 +4,7 @@ package cse110.com.cse110_chores;
         import android.content.Intent;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
+        import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.Menu;
         import android.view.MenuInflater;
@@ -100,6 +101,7 @@ public class MemberList extends AppCompatActivity {
                             display = String.valueOf(i + 1) + ".  " + memberName;
                             stringAL.add(display);
                         }
+
                         theadapter.notifyDataSetChanged();
                     }
                 });

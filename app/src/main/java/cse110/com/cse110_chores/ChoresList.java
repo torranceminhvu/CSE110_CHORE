@@ -27,6 +27,8 @@ public class ChoresList extends AppCompatActivity {
     private ListView choreList;
     ArrayList<String> stringAL = new ArrayList<String>();
     ArrayList<Chores> choreAL = new ArrayList<Chores>();
+    ArrayList<Names> namesAL = new ArrayList<Names>();
+    Assigner assigner;
     Chores current;
     String chore;
     String frequency;
@@ -55,13 +57,29 @@ public class ChoresList extends AppCompatActivity {
             }
         });
 
-        choreAL = db.getAllChores(groupid);
-        for (int i = 0; i < choreAL.size(); i++){
-            current = choreAL.get(i);
-            chore = current.getName();
-            frequency = current.getFrequency();
-            display = frequency + ":  " + chore;
-            stringAL.add(display);
+        assigner = new Assigner(db, groupid);
+        namesAL = assigner.getAllIndex();
+
+        if (namesAL.size() == 0) {
+            choreAL = db.getAllChores(groupid);
+            for (int i = 0; i < choreAL.size(); i++) {
+                current = choreAL.get(i);
+                chore = current.getName();
+                frequency = current.getFrequency();
+                display = frequency + ":  " + chore;
+                stringAL.add(display);
+            }
+        } else {
+            choreAL = db.getAllChores(groupid);
+            for (int i = 0; i < choreAL.size(); i++) {
+                current = choreAL.get(i);
+                chore = current.getName();
+                frequency = current.getFrequency();
+                display = frequency + ":  " + chore + "             " + namesAL.get(i).getName();
+                //display = frequency + ":  " + chore;
+                stringAL.add(display);
+            }
+
         }
 
         // Added button to assign chore
@@ -70,20 +88,26 @@ public class ChoresList extends AppCompatActivity {
         assignChore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* Not sure how you guys want to do it.
                 choreAL = db.getAllChores(groupid);
-                for (int i = 0; i < choreAL.size(); i++){
-                    current = choreAL.get(i);
-                    chore = current.getName();
-                    frequency = current.getFrequency();
-                    display = frequency + ":  " + chore;
-                    stringAL.add(display);
+                assigner.assign();
+                namesAL = assigner.getAllIndex();
+                //Log.e("NAMESAL", String.valueOf(namesAL.size()));
+                if (namesAL.size() != 0){
+                    stringAL.clear();
+                    for (int i = 0; i < choreAL.size(); i++) {
+                        current = choreAL.get(i);
+                        chore = current.getName();
+                        frequency = current.getFrequency();
+                        display = frequency + ":  " + chore + "             " + namesAL.get(i).getName();
+                        stringAL.add(display);
+                        theadapter.notifyDataSetChanged();
+                    }
                 }
-                */
             }
         });
 
         theadapter = new myAdapter(ChoresList.this, R.layout.list_row, stringAL);
+
         choreList.setAdapter(theadapter);
     }
 

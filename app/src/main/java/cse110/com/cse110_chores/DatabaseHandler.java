@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper{
     //db version
-    private static int DATABASE_VERSION = 4;
+    private static int DATABASE_VERSION = 5;
 
     //db name
     private static final String DATABASE_NAME = "Tables";
@@ -430,7 +431,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     //Deleting names
     public void deleteChoreName(ChoreName choreName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAMES, KEY_ID + " = ?",
+        Log.e("deleteid", String.valueOf(choreName.getId()));
+        db.delete(TABLE_CHORENAME, KEY_ID + " = ?",
                 new String[]{String.valueOf(choreName.getId())});
         db.close();
     }
