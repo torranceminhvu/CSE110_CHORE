@@ -33,10 +33,9 @@
                 android:gravity="center"
                 android:textColor="#6D8383"
                 android:text="TextView"/>
-    </LinearLayout>
+        </LinearLayout>
 
-
-    <Button
+        <Button
             android:id="@+id/paid_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

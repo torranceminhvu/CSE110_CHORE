@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,12 +124,14 @@ public class ChoresList extends AppCompatActivity {
         }
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            MyViewHolder mainViewholder = null;
+            MyViewHolder mainViewHolder = null;
             if(convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 convertView = inflater.inflate(layout, parent, false);
                 MyViewHolder myViewHolder = new MyViewHolder();
-                myViewHolder.choreTitle = (TextView) convertView.findViewById(R.id.text);
+                myViewHolder.frequencyTextView = (TextView) convertView.findViewById(R.id.frequencyTextView);
+                myViewHolder.choreTextView = (TextView) convertView.findViewById(R.id.choreTextView);
+                myViewHolder.personTextView = (TextView) convertView.findViewById(R.id.personTextView);
                 myViewHolder.delete = (Button) convertView.findViewById(R.id.delete_button);
                 myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -139,18 +143,24 @@ public class ChoresList extends AppCompatActivity {
                     }
                 });
                 convertView.setTag(myViewHolder);
-                myViewHolder.choreTitle.setText(getItem(position));
+                myViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
+                myViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
+                // for getting the persona ssigned to chore myViewHolder.personTextView.setText(choreAL.get(position));
             }
             else {
-                mainViewholder = (MyViewHolder) convertView.getTag();
-                mainViewholder.choreTitle.setText(getItem(position));
+                mainViewHolder = (MyViewHolder) convertView.getTag();
+                mainViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
+                mainViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
+                // for getting the persona ssigned to chore mainViewHolder.personTextView.setText(choreAL.get(position));
             }
             return convertView;
         }
 
     }
     public class MyViewHolder {
-        TextView choreTitle;
+        TextView frequencyTextView;
+        TextView choreTextView;
+        TextView personTextView;
         Button delete;
     }
 

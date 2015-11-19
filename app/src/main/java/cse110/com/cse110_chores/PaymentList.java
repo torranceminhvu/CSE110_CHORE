@@ -89,7 +89,7 @@ public class PaymentList extends AppCompatActivity {
         }
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            MyViewHolder mainViewholder = null;
+            MyViewHolder mainViewHolder = null;
             final int positionTwo = position + 1;
             if(convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -114,9 +114,9 @@ public class PaymentList extends AppCompatActivity {
 
             }
             else {
-                mainViewholder = (MyViewHolder) convertView.getTag();
-                mainViewholder.lineOne.setText(getItem(position));
-                mainViewholder.lineTwo.setText(paymentAL.get(position).getDescription());
+                mainViewHolder = (MyViewHolder) convertView.getTag();
+                mainViewHolder.lineOne.setText(getItem(position));
+                mainViewHolder.lineTwo.setText(paymentAL.get(position).getDescription());
             }
             return convertView;
         }
