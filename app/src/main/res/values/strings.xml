@@ -16,6 +16,12 @@
     <!-- ChoresList -->
     <string name="chorelist">Chores List</string>
     <string name="assignChore">Assign Chores</string>
+    <string-array name="sortedBy">
+        <item>Sort by...</item>
+        <item>Name</item>
+        <item>Chore</item>
+        <item>Frequency</item>
+    </string-array>
 
     <!-- ChoresScreen -->
     <string name="chore">Enter New Chore</string>

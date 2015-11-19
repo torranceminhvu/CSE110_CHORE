@@ -13,17 +13,31 @@
         android:layout_alignParentBottom="true"
         android:text="@string/choreAddButton"/>
 
-    <Button
-        android:id="@+id/assignChore"
+    <LinearLayout
+        android:id="@+id/assignChoreAndSort"
         android:layout_above="@+id/choreAddButton"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/assignChore"
-        android:gravity="center"/>
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/assignChore"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/assignChore"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <Spinner
+            android:id="@+id/sortSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:layout_weight="1"
+            android:gravity="center"/>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/chorelistview"
-        android:layout_above="@+id/assignChore"
+        android:layout_above="@+id/assignChoreAndSort"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
     </ListView>

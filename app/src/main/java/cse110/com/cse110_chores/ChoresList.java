@@ -10,14 +10,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -33,6 +38,9 @@ public class ChoresList extends AppCompatActivity {
     String chore;
     String frequency;
     String display;
+
+    Spinner spinner;
+    String sortedBy = "";
 
     myAdapter theadapter = null;
 
@@ -108,6 +116,27 @@ public class ChoresList extends AppCompatActivity {
                 }
             }
         });
+
+        spinner= (Spinner) findViewById(R.id.sortSpinner);
+
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.sortedBy, android.R.layout.simple_spinner_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Toast.makeText(getBaseContext(), parent.getItemAtPosition(position) + " selected", Toast.LENGTH_SHORT).show();
+                sortedBy = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //Collections.sort(choreAL);
 
         theadapter = new myAdapter(ChoresList.this, R.layout.chores_list_row, stringAL);
 
