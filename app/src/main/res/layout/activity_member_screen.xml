@@ -25,7 +25,7 @@ tools:context="cse110.com.cse110_chores.MemberScreen">
 
 <Button
     android:id="@+id/addMember"
-    android:layout_below="@id/memberlayout"
+    android:layout_alignParentBottom="true"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:text="@string/memberAddButton"

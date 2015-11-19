@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +107,7 @@ public class ChoresList extends AppCompatActivity {
             }
         });
 
-        theadapter = new myAdapter(ChoresList.this, R.layout.list_row, stringAL);
+        theadapter = new myAdapter(ChoresList.this, R.layout.chores_list_row, stringAL);
 
         choreList.setAdapter(theadapter);
     }

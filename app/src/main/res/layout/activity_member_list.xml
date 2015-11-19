@@ -1,25 +1,24 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context="cse110.com.cse110_chores.MemberList">
-
-
-<Button
-    android:id="@+id/memberAddButton"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:text="@string/memberAddButton"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cse110.com.cse110_chores.MemberList">
 
+    <Button
+        android:id="@+id/memberAddButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="@string/memberAddButton"/>
 
-<ListView
-    android:id="@+id/memberlistview"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    <ListView
+        android:layout_above="@+id/memberAddButton"
+        android:id="@+id/memberlistview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    </ListView>
 
-</ListView>
-
-</LinearLayout>
+</RelativeLayout>
 

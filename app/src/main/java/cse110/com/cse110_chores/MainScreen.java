@@ -29,7 +29,6 @@ public class MainScreen extends AppCompatActivity {
 
 
 
-
         //action.getSupportActionBar().setDisplayShowTitleEnabled(true);
         //getSupportActionBar().setTitle(groupid);
         Button chorebutton = (Button) findViewById(R.id.choreButton);
