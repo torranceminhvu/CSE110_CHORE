@@ -139,15 +139,19 @@ public class ChoresList extends AppCompatActivity {
 
         // puts all the member names into a string array
         membersAL = db.getAllNames(groupid);
-        String[] spinnerList = new String[membersAL.size()];
-        for (int i = 0; i < membersAL.size(); i++) {
-            spinnerList[i] = membersAL.get(i).getName();
+        String[] spinnerList = new String[(membersAL.size() + 1)];
+        for (int i = 0; i < (membersAL.size() + 1); i++) {
+            if(i == 0) {
+                spinnerList[i] = "[Sort by...]";
+            }
+            else {
+                spinnerList[i] = membersAL.get(i-1).getName();
+            }
         }
 
         // sets the spinner to hold all the names
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setPrompt("[Sort by...]");
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -158,6 +162,7 @@ public class ChoresList extends AppCompatActivity {
 
                 // finds the index of the name picked
                 namesAL = assigner.getAllIndex();
+
                 //Log.e("NAMESAL", String.valueOf(namesAL.size()));
                 if (namesAL.size() != 0) {
                     int namePos = 0;
@@ -177,10 +182,12 @@ public class ChoresList extends AppCompatActivity {
                 }
 
                 // starts up pop up sorted chores
-                Intent sortedChoresListIntent = new Intent(ChoresList.this, PopUpSortedChores.class);
-                sortedChoresListIntent.putStringArrayListExtra("sortedChoresList", sortedChoresList);
-                startActivity(sortedChoresListIntent);
-                sortedChoresList.clear();
+                if ( !sortedBy.equals("[Sort by...]")) {
+                    Intent sortedChoresListIntent = new Intent(ChoresList.this, PopUpSortedChores.class);
+                    sortedChoresListIntent.putStringArrayListExtra("sortedChoresList", sortedChoresList);
+                    startActivity(sortedChoresListIntent);
+                    sortedChoresList.clear();
+                }
             }
 
             @Override
