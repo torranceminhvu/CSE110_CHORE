@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,11 +34,16 @@ public class ChoresList extends AppCompatActivity {
     ArrayList<String> stringAL = new ArrayList<String>();
     ArrayList<Chores> choreAL = new ArrayList<Chores>();
     ArrayList<Names> namesAL = new ArrayList<Names>();
+    ArrayList<Names> membersAL = new ArrayList<Names>(); // for populating spinner
     Assigner assigner;
     Chores current;
     String chore;
     String frequency;
     String display;
+
+    ArrayList<ChoreName> choreNameCheck = new ArrayList<ChoreName>();
+
+    ArrayList<String> sortedChoresList = new ArrayList<String>();
 
     Spinner spinner;
     String sortedBy = "";
@@ -117,17 +123,53 @@ public class ChoresList extends AppCompatActivity {
             }
         });
 
-        spinner= (Spinner) findViewById(R.id.sortSpinner);
+        // Sets the spinner to hold the names of all the members so they can find all their chores
+        spinner = (Spinner) findViewById(R.id.sortSpinner);
 
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.sortedBy, android.R.layout.simple_spinner_item);
+        // puts all the member names into a string array
+        membersAL = db.getAllNames(groupid);
+        String[] spinnerList = new String[membersAL.size()];
+        for (int i = 0; i < membersAL.size(); i++) {
+            spinnerList[i] = membersAL.get(i).getName();
+        }
+
+        // sets the spinner to hold all the names
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setPrompt("[Sort by...]");
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(getBaseContext(), parent.getItemAtPosition(position) + " selected", Toast.LENGTH_SHORT).show();
                 sortedBy = parent.getItemAtPosition(position).toString();
+
+                // finds the index of the name picked
+                namesAL = assigner.getAllIndex();
+                //Log.e("NAMESAL", String.valueOf(namesAL.size()));
+                if (namesAL.size() != 0) {
+                    int namePos = 0;
+                    foundName:
+                    for (; namePos < namesAL.size(); namePos++) {
+                        if (sortedBy.equals(namesAL.get(namePos).getName()))
+                            break foundName;
+                    }
+                    choreNameCheck = db.getAllChoreNames(groupid);
+                    if (choreNameCheck.size() != 0){
+                        for (int i = 0; i < choreNameCheck.size(); i++) {
+                            if ( namePos == choreNameCheck.get(i).geti() ) {
+                                sortedChoresList.add(choreNameCheck.get(i).getChoreName());
+                            }
+                        }
+                    }
+                }
+
+                // starts up pop up sorted chores
+                Intent sortedChoresListIntent = new Intent(ChoresList.this, PopUpSortedChores.class);
+                sortedChoresListIntent.putStringArrayListExtra("sortedChoresList", sortedChoresList);
+                startActivity(sortedChoresListIntent);
+                sortedChoresList.clear();
             }
 
             @Override
@@ -168,6 +210,7 @@ public class ChoresList extends AppCompatActivity {
                         db.deleteChore(choreAL.get(position));
                         choreAL.remove(position);
                         stringAL.remove(position);
+                        db.deleteChoreName(choreNameCheck.get(position));
                         theadapter.notifyDataSetChanged();
                     }
                 });
