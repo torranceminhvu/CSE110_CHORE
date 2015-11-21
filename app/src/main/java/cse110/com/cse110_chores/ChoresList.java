@@ -22,6 +22,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -41,8 +42,13 @@ public class ChoresList extends AppCompatActivity {
     String frequency;
     String display;
 
-    ArrayList<ChoreName> choreNameCheck = new ArrayList<ChoreName>();
+    // keeping track of days.
+    Calendar calendar;
+    int day;
+    int currDay;
 
+    // for populating the pop up window sort
+    ArrayList<ChoreName> choreNameCheck = new ArrayList<ChoreName>();
     ArrayList<String> sortedChoresList = new ArrayList<String>();
 
     Spinner spinner;
@@ -108,6 +114,11 @@ public class ChoresList extends AppCompatActivity {
                 choreAL = db.getAllChores(groupid);
                 assigner.assign();
                 namesAL = assigner.getAllIndex();
+
+                // for getting the first day set and then comparing with the curr day to increment
+                calendar = Calendar.getInstance();
+                day = calendar.get(Calendar.DAY_OF_YEAR);
+
                 //Log.e("NAMESAL", String.valueOf(namesAL.size()));
                 if (namesAL.size() != 0){
                     stringAL.clear();
@@ -217,13 +228,13 @@ public class ChoresList extends AppCompatActivity {
                 convertView.setTag(myViewHolder);
                 myViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
                 myViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
-                // for getting the persona ssigned to chore myViewHolder.personTextView.setText(choreAL.get(position));
+                myViewHolder.personTextView.setText("");
             }
             else {
                 mainViewHolder = (MyViewHolder) convertView.getTag();
                 mainViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
                 mainViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
-                // for getting the persona ssigned to chore mainViewHolder.personTextView.setText(choreAL.get(position));
+                mainViewHolder.personTextView.setText("");
             }
             return convertView;
         }
@@ -255,7 +266,6 @@ public class ChoresList extends AppCompatActivity {
                 startActivity(new Intent(this, CreateSearch_Group.class));
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
