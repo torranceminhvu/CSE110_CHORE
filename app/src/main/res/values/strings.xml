@@ -22,6 +22,7 @@
         <item>Chore</item>
         <item>Frequency</item>
     </string-array>
+    <string name="sortBy">Sort by</string>
 
     <!-- ChoresScreen -->
     <string name="chore">Enter New Chore</string>
