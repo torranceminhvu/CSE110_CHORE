@@ -4,6 +4,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Matthew on 11/14/2015.
@@ -14,11 +15,49 @@ public class    Assigner {
     ArrayList<ChoreName> choreNameAL = new ArrayList<ChoreName>();
     ArrayList<ChoreName> choreNameCheck = new ArrayList<ChoreName>();
     DatabaseHandler db;
+    Parser parser = new Parser();
     int groupid;
+    Calendar cal = Calendar.getInstance();
 
     public Assigner (DatabaseHandler db, int groupid) {
         this.db = db;
         this.groupid = groupid;
+    }
+
+    public void update(){
+        int day = cal.DAY_OF_YEAR;
+        int daysPassed;
+        int freq;
+        int count;
+        int index;
+        choreNameAL = db.getAllChoreNames(groupid);
+        nameAL = db.getAllNames(groupid);
+        int total = nameAL.size();
+
+        for (int i = 0; i < choreNameAL.size(); i++){
+            daysPassed = day - choreNameAL.get(i).getStartTime();
+            freq = choreNameAL.get(i).getFrequency();
+            count = choreNameAL.get(i).getCounter();
+
+            for (int j = 0; j < daysPassed; j++){
+                if (count < freq){
+                    count++;
+                }
+                else {
+                    count = 0;
+                    index = choreNameAL.get(i).geti();
+                    index++;
+                    if (index == total){
+                        index = 0;
+                    }
+                    choreNameAL.get(i).seti(index);
+                }
+            }
+            choreNameAL.get(i).setCounter(count);
+            choreNameAL.get(i).setStartTime(day - count);
+
+            db.updateChoreName(choreNameAL.get(i));
+        }
     }
 
     public void assign(){
@@ -26,14 +65,13 @@ public class    Assigner {
         nameAL = db.getAllNames(groupid);
         choreNameCheck = db.getAllChoreNames(groupid);
         int total = nameAL.size();
-        Log.e("NAMESAL", String.valueOf(nameAL.size()));
-        Log.e("ChorenameAL", String.valueOf(choreNameAL.size()));
+        int day = cal.DAY_OF_YEAR;
+
         if (total == 0){
             return;
         }
         if (choreNameCheck.size() != 0){
             for (int i = 0; i < choreNameCheck.size(); i++){
-                Log.e("DELETELOOP", String.valueOf(i));
                 db.deleteChoreName(choreNameCheck.get(i));
             }
         }
@@ -43,7 +81,7 @@ public class    Assigner {
             if (j >= total) {
                 j = i - total;
             }
-            ChoreName current = new ChoreName(choreAL.get(i).getName(), 0, groupid);
+            ChoreName current = new ChoreName(choreAL.get(i).getName(), 0, parser.parse(choreAL.get(i)), day, groupid);
             current.seti(j);
 
             db.addChoreName(current);

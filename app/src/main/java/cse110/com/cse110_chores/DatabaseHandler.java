@@ -73,6 +73,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final String KEY_CHORE = "chore";
     private static final String KEY_I = "i";
     private static final String KEY_CHORENAMESGROUPS = "choreNamesGroups";
+    private static final String KEY_COUNTER = "counter";
+    private static final String KEY_FREQ = "freq";
+    private static final String KEY_START = "startTime";
 
     //constructor
     public DatabaseHandler(Context context){
@@ -113,6 +116,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
         String CREATE_CHORENAMES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_CHORENAME + " ("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CHORE + " TEXT, " + KEY_I + " TEXT, "
+                + KEY_COUNTER + " TEXT, " + KEY_FREQ + " TEXT, " + KEY_START + " TEXT, "
                 + KEY_CHORENAMESGROUPS + " TEXT, " + "FOREIGN KEY(" + KEY_CHORENAMESGROUPS + ") REFERENCES "
                 + TABLE_GROUPS + "(" + KEY_ID + "));";
 
@@ -227,6 +231,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             }while (cursor.moveToNext());
         }
 
+        db.close();
         return chores;
     }
 
@@ -299,6 +304,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             }while (cursor.moveToNext());
         }
 
+        db.close();
         return names;
     }
 
@@ -348,6 +354,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             }while (cursor.moveToNext());
         }
 
+        db.close();
         return payments;
     }
 
@@ -369,6 +376,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(KEY_CHORE, choreName.getChoreName());
         values.put(KEY_I, choreName.geti());
+        values.put(KEY_COUNTER, choreName.getCounter());
+        values.put(KEY_FREQ, choreName.getFrequency());
+        values.put(KEY_START, choreName.getStartTime());
         values.put(KEY_CHORENAMESGROUPS, choreName.getGroupid());
 
         // Inserting Row
@@ -387,7 +397,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         if (cursor != null && cursor.moveToFirst()){
             return new ChoreName(Integer.parseInt(cursor.getString(0)),
                     cursor.getString(1), Integer.parseInt(cursor.getString(2)),
-                    Integer.parseInt(cursor.getString(3)));
+                    Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)),
+                    Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)));
         }
         else
             return new ChoreName();
@@ -405,12 +416,14 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             do{
                 ChoreName choreName = new ChoreName(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), Integer.parseInt(cursor.getString(2)),
-                        Integer.parseInt(cursor.getString(3)));
+                        Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)),
+                        Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)));
 
                 ChoreNames.add(choreName);
             }while (cursor.moveToNext());
         }
 
+        db.close();
         return ChoreNames;
     }
 
@@ -421,6 +434,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(KEY_CHORE, choreName.getChoreName());
         values.put(KEY_I, choreName.geti());
+        values.put(KEY_COUNTER, choreName.getCounter());
+        values.put(KEY_FREQ, choreName.getFrequency());
+        values.put(KEY_START, choreName.getStartTime());
         values.put(KEY_CHORENAMESGROUPS, choreName.getGroupid());
 
         db.update(TABLE_CHORENAME, values, KEY_ID + " = ?",

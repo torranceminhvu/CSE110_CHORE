@@ -6,22 +6,39 @@ package cse110.com.cse110_chores;
 public class ChoreName {
     int _id;
     String choreName;
+    int counter = 0;
+    int frequency;
+    int startTime;
     int i;
     int groupid;
 
     public ChoreName(){
     }
 
-    public ChoreName(int _id, String choreName, int i, int groupid){
+    public ChoreName(int _id, String choreName, int i, int counter, int frequency, int startTime, int groupid){
         this._id = _id;
         this.choreName = choreName;
+        this.counter = counter;
         this.i = i;
+        this.frequency = frequency;
+        this.startTime = startTime;
         this.groupid = groupid;
     }
 
-    public ChoreName(String choreName, int i, int groupid){
+    public ChoreName(String choreName, int i, int counter, int frequency, int startTime, int groupid){
         this.choreName = choreName;
         this.i = i;
+        this.frequency = frequency;
+        this.counter = counter;
+        this.startTime = startTime;
+        this.groupid = groupid;
+    }
+
+    public ChoreName(String choreName, int i, int frequency, int startTime, int groupid){
+        this.choreName = choreName;
+        this.i = i;
+        this.frequency = frequency;
+        this.startTime = startTime;
         this.groupid = groupid;
     }
 
@@ -43,5 +60,25 @@ public class ChoreName {
 
     public int getGroupid(){
         return this.groupid;
+    }
+
+    public int getCounter(){
+        return this.counter;
+    }
+
+    public void setCounter(int i){
+        this.counter = i;
+    }
+
+    public int getFrequency() {
+        return this.frequency;
+    }
+
+    public int getStartTime(){
+        return this.startTime;
+    }
+
+    public void setStartTime(int i){
+        this.startTime = i;
     }
 }

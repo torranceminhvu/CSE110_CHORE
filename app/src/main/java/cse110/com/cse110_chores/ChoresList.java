@@ -83,9 +83,10 @@ public class ChoresList extends AppCompatActivity {
         assigner = new Assigner(db, groupid);
         namesAL = assigner.getAllIndex();
 
+
         if (namesAL.size() == 0) {
             choreAL = db.getAllChores(groupid);
-            for (int i = 0; i < choreAL.size(); i++) {
+                for (int i = 0; i < choreAL.size(); i++) {
                 current = choreAL.get(i);
                 chore = current.getName();
                 frequency = current.getFrequency();
@@ -94,15 +95,15 @@ public class ChoresList extends AppCompatActivity {
             }
         } else {
             choreAL = db.getAllChores(groupid);
-            for (int i = 0; i < choreAL.size(); i++) {
+            /* for (int i = 0; i < choreAL.size(); i++) {
                 current = choreAL.get(i);
                 chore = current.getName();
                 frequency = current.getFrequency();
                 display = frequency + ":  " + chore + "             " + namesAL.get(i).getName();
-                //display = frequency + ":  " + chore;
+                display = frequency + ":  " + chore;
                 stringAL.add(display);
             }
-
+            */
         }
 
         // Added button to assign chore
@@ -214,7 +215,7 @@ public class ChoresList extends AppCompatActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             MyViewHolder mainViewHolder = null;
-            if(convertView == null) {
+            if (convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 convertView = inflater.inflate(layout, parent, false);
                 MyViewHolder myViewHolder = new MyViewHolder();
@@ -235,17 +236,19 @@ public class ChoresList extends AppCompatActivity {
                 convertView.setTag(myViewHolder);
                 myViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
                 myViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
-                myViewHolder.personTextView.setText("");
-            }
-            else {
+                if (namesAL.size() != 0) {
+                    myViewHolder.personTextView.setText("Name: " + namesAL.get(position).getName());
+                }
+            } else {
                 mainViewHolder = (MyViewHolder) convertView.getTag();
                 mainViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
                 mainViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
-                mainViewHolder.personTextView.setText("");
+                if (namesAL.size() != 0) {
+                    mainViewHolder.personTextView.setText("Name: " + namesAL.get(position).getName());
+                }
             }
             return convertView;
         }
-
     }
     public class MyViewHolder {
         TextView frequencyTextView;
