@@ -54,7 +54,7 @@ public class    Assigner {
                 }
             }
             choreNameAL.get(i).setCounter(count);
-            choreNameAL.get(i).setStartTime(day - count);
+            choreNameAL.get(i).setStartTime(day);
 
             db.updateChoreName(choreNameAL.get(i));
         }
