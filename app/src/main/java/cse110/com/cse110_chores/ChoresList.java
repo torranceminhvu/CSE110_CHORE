@@ -116,8 +116,10 @@ public class ChoresList extends AppCompatActivity {
                     for (int i = 0; i < choreAL.size(); i++) {
                         display = namesAL.get(i).getName();
                         stringAL.add(display);
-                        choreAdapter.notifyDataSetChanged();
                     }
+                    choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
+                            choreAL, namesAL, choreNameCheck, db, groupid);
+                    choreList.setAdapter(choreAdapter);
                 }
             }
         });
@@ -193,9 +195,9 @@ public class ChoresList extends AppCompatActivity {
                             break foundName;
                     }
                     choreNameCheck = db.getAllChoreNames(groupid);
-                    if (choreNameCheck.size() != 0){
+                    if (choreNameCheck.size() != 0) {
                         for (int i = 0; i < choreNameCheck.size(); i++) {
-                            if ( namePos == choreNameCheck.get(i).geti() ) {
+                            if (namePos == choreNameCheck.get(i).geti()) {
                                 sortedChoresList.add(choreNameCheck.get(i).getChoreName());
                             }
                         }
@@ -203,7 +205,7 @@ public class ChoresList extends AppCompatActivity {
                 }
 
                 // starts up pop up sorted chores
-                if ( !sortedBy.equals("[Sort by...]")) {
+                if (!sortedBy.equals("[Sort by...]")) {
                     Intent sortedChoresListIntent = new Intent(ChoresList.this, PopUpSortedChores.class);
                     sortedChoresListIntent.putStringArrayListExtra("sortedChoresList", sortedChoresList);
                     startActivity(sortedChoresListIntent);
