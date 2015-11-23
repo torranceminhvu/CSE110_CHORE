@@ -59,6 +59,9 @@ public class ChoresList extends AppCompatActivity {
         Intent get = getIntent();
         final int groupid = get.getIntExtra("GROUPID", 0);
         choreList = (ListView) findViewById(R.id.chorelistview);
+        assigner = new Assigner(db, groupid);
+        assigner.update();
+        namesAL = assigner.getAllIndex();
 
         Button choreAddButton = (Button) findViewById(R.id.choreAddButton);
 
@@ -67,6 +70,7 @@ public class ChoresList extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ChoresScreen.class);
                 intent.putExtra("GROUPID", groupid);
+                assigner.unassign();
 
                 finish();
                 startActivity(intent);
@@ -74,8 +78,6 @@ public class ChoresList extends AppCompatActivity {
             }
         });
 
-        assigner = new Assigner(db, groupid);
-        namesAL = assigner.getAllIndex();
 
         if (namesAL.size() == 0) {
             choreAL = db.getAllChores(groupid);
@@ -220,7 +222,7 @@ public class ChoresList extends AppCompatActivity {
                 List<Chores> choreAL, List<Names> namesAL,
                 List<ChoreName> choreNameCheck, DatabaseHandler db )*/
         choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
-                choreAL, namesAL, choreNameCheck, db);
+                choreAL, namesAL, choreNameCheck, db, groupid);
         choreList.setAdapter(choreAdapter);
     }
 

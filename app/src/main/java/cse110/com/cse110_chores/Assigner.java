@@ -24,6 +24,13 @@ public class    Assigner {
         this.groupid = groupid;
     }
 
+    public void unassign(){
+        choreNameAL = db.getAllChoreNames(groupid);
+        for (int i = 0; i < choreNameAL.size(); i++){
+            db.deleteChoreName(choreNameAL.get(i));
+        }
+    }
+
     public void update(){
         int day = cal.DAY_OF_YEAR;
         int daysPassed;
