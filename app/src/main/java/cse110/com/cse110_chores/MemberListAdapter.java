@@ -23,17 +23,21 @@ public class MemberListAdapter extends ArrayAdapter<String> {
     Names current;
     String memberName;
     String display;
+    Assigner assigner;
+    int groupid;
 
     private int layout;
 
     MemberListAdapter(Context context, int resource, List<String> stringAL, List<Names> memberAL,
-                      DatabaseHandler db) {
+                      DatabaseHandler db, int groupid) {
         super(context, resource, stringAL);
         layout = resource;
         this.stringAL = stringAL;
         this.memberAL = memberAL;
         this.db = db;
         this.memberListAdapter = this;
+        this.groupid = groupid;
+        assigner = new Assigner(db, groupid);
     }
 
     @Override
@@ -61,6 +65,7 @@ public class MemberListAdapter extends ArrayAdapter<String> {
                         display = String.valueOf(i + 1) + ".  " + memberName;
                         stringAL.add(display);
                     }
+                    assigner.unassign();
                     memberListAdapter.notifyDataSetChanged();
                 }
             });

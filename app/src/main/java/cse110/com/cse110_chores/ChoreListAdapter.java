@@ -21,10 +21,12 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
     List<ChoreName> choreNameCheck;
     DatabaseHandler db;
     ChoreListAdapter choreAdapter;
+    Assigner assigner;
+    int groupid;
 
     ChoreListAdapter(Context context, int resource, List<String> stringAL,
                      List<Chores> choreAL, List<Names> namesAL,
-                     List<ChoreName> choreNameCheck, DatabaseHandler db) {
+                     List<ChoreName> choreNameCheck, DatabaseHandler db, int groupid) {
         super(context, resource, stringAL);
         layout = resource;
         this.stringAL = stringAL;
@@ -33,6 +35,8 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
         this.choreNameCheck = choreNameCheck;
         this.db = db;
         this.choreAdapter = this;
+        this.groupid = groupid;
+        assigner = new Assigner(db, groupid);
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -51,8 +55,8 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
                     db.deleteChore(choreAL.get(position));
                     choreAL.remove(position);
                     stringAL.remove(position);
-                    namesAL.remove(position);
-                    db.deleteChoreName(choreNameCheck.get(position));
+                    //namesAL.remove(position);
+                    assigner.unassign();
                     choreAdapter.notifyDataSetChanged();
                 }
             });
@@ -82,3 +86,4 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
         Button delete;
     }
 }
+

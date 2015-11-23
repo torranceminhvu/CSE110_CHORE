@@ -1,27 +1,22 @@
 package cse110.com.cse110_chores;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import static android.app.AlertDialog.*;
 
@@ -64,6 +59,9 @@ public class ChoresList extends AppCompatActivity {
         Intent get = getIntent();
         final int groupid = get.getIntExtra("GROUPID", 0);
         choreList = (ListView) findViewById(R.id.chorelistview);
+        assigner = new Assigner(db, groupid);
+        assigner.update();
+        namesAL = assigner.getAllIndex();
 
         Button choreAddButton = (Button) findViewById(R.id.choreAddButton);
 
@@ -72,15 +70,13 @@ public class ChoresList extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ChoresScreen.class);
                 intent.putExtra("GROUPID", groupid);
+                assigner.unassign();
 
                 finish();
                 startActivity(intent);
                 return;
             }
         });
-
-        assigner = new Assigner(db, groupid);
-        namesAL = assigner.getAllIndex();
 
 
         if (namesAL.size() == 0) {
@@ -120,12 +116,9 @@ public class ChoresList extends AppCompatActivity {
                     for (int i = 0; i < choreAL.size(); i++) {
                         display = namesAL.get(i).getName();
                         stringAL.add(display);
+                        choreAdapter.notifyDataSetChanged();
                     }
                 }
-                //choreAdapter.notifyDataSetChanged();
-                choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
-                        choreAL, namesAL, choreNameCheck, db);
-                choreList.setAdapter(choreAdapter);
             }
         });
 
@@ -229,15 +222,15 @@ public class ChoresList extends AppCompatActivity {
                 List<Chores> choreAL, List<Names> namesAL,
                 List<ChoreName> choreNameCheck, DatabaseHandler db )*/
         choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
-                choreAL, namesAL, choreNameCheck, db);
+                choreAL, namesAL, choreNameCheck, db, groupid);
         choreList.setAdapter(choreAdapter);
     }
 
-/*
+    /*
     // custom adapter to display in listview
-    private class ChoreListAdapter extends ArrayAdapter<String> {
+    private class myAdapter extends ArrayAdapter<String> {
         private int layout;
-        private ChoreListAdapter(Context context, int resource, List<String> objects) {
+        private myAdapter(Context context, int resource, List<String> objects) {
             super(context, resource, objects);
             layout = resource;
         }
@@ -260,7 +253,7 @@ public class ChoresList extends AppCompatActivity {
                         stringAL.remove(position);
                         namesAL.remove(position);
                         db.deleteChoreName(choreNameCheck.get(position));
-                        choreAdapter.notifyDataSetChanged();
+                        theadapter.notifyDataSetChanged();
                     }
                 });
                 convertView.setTag(myViewHolder);
@@ -288,7 +281,7 @@ public class ChoresList extends AppCompatActivity {
         TextView personTextView;
         Button delete;
     }
-*/
+    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();

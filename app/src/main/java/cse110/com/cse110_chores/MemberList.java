@@ -30,6 +30,7 @@ public class MemberList extends AppCompatActivity {
     DatabaseHandler db;
     Names current;
     String display;
+    Assigner assigner;
 
     MemberListAdapter memberListAdapter = null;
 
@@ -41,6 +42,7 @@ public class MemberList extends AppCompatActivity {
         db = new DatabaseHandler(this);
         Intent get = getIntent();
         final int groupid = get.getIntExtra("GROUPID", 0);
+        assigner = new Assigner(db, groupid);
 
         Button memberAddButton = (Button) findViewById(R.id.memberAddButton);
 
@@ -49,6 +51,7 @@ public class MemberList extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MemberScreen.class);
                 intent.putExtra("GROUPID", groupid);
+                assigner.unassign();
 
                 finish();
                 startActivity(intent);
@@ -72,7 +75,7 @@ public class MemberList extends AppCompatActivity {
                             List<Names> memberAL,DatabaseHandler db)
          */
         memberListAdapter = new MemberListAdapter(MemberList.this, R.layout.member_list_row,
-                stringAL, memberAL, db);
+                stringAL, memberAL, db, groupid);
         memberList.setAdapter(memberListAdapter);
     }
 
