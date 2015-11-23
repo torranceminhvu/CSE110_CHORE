@@ -1,10 +1,11 @@
 package cse110.com.cse110_chores;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,23 +19,20 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+
+import static android.app.AlertDialog.*;
 
 
 public class ChoresList extends AppCompatActivity {
 
-    DatabaseHandler db;
-    private ListView choreList;
+    DatabaseHandler db; // access our database
+    private ListView choreList; // listview layout where our items go
     ArrayList<String> stringAL = new ArrayList<String>();
-    ArrayList<Chores> choreAL = new ArrayList<Chores>();
-    ArrayList<Names> namesAL = new ArrayList<Names>();
+    ArrayList<Chores> choreAL = new ArrayList<Chores>(); // stores the chores
+    ArrayList<Names> namesAL = new ArrayList<Names>(); // stores the names
     ArrayList<Names> membersAL = new ArrayList<Names>(); // for populating spinner
     Assigner assigner;
     Chores current;
@@ -47,14 +45,15 @@ public class ChoresList extends AppCompatActivity {
     int day;
     int currDay;
 
-    // for populating the pop up window sort
+    // stores the association between chores and names
     ArrayList<ChoreName> choreNameCheck = new ArrayList<ChoreName>();
+    // for populating the pop up window sort
     ArrayList<String> sortedChoresList = new ArrayList<String>();
 
     Spinner spinner;
     String sortedBy = "";
 
-    myAdapter theadapter = null;
+    ChoreListAdapter choreAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,19 +91,13 @@ public class ChoresList extends AppCompatActivity {
                     frequency = current.getFrequency();
                     display = chore + frequency;
                     stringAL.add(display);
-
             }
         } else {
             choreAL = db.getAllChores(groupid);
             for (int i = 0; i < choreAL.size(); i++) {
-                //current = choreAL.get(i);
-                //chore = current.getName();
-                //frequency = current.getFrequency();
-                //display = frequency + ":  " + chore + "             " + namesAL.get(i).getName();
                 display = choreAL.get(i).getName();
                 stringAL.add(display);
             }
-
         }
 
         // Added button to assign chore
@@ -125,15 +118,14 @@ public class ChoresList extends AppCompatActivity {
                 if (namesAL.size() != 0){
                     stringAL.clear();
                     for (int i = 0; i < choreAL.size(); i++) {
-                        //current = choreAL.get(i);
-                        //chore = current.getName();
-                        //frequency = current.getFrequency();
-                        // adds name for StringAL after assigning chores
                         display = namesAL.get(i).getName();
                         stringAL.add(display);
-                        theadapter.notifyDataSetChanged();
                     }
                 }
+                //choreAdapter.notifyDataSetChanged();
+                choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
+                        choreAL, namesAL, choreNameCheck, db);
+                choreList.setAdapter(choreAdapter);
             }
         });
 
@@ -142,7 +134,7 @@ public class ChoresList extends AppCompatActivity {
 
         // puts all the member names into a string array
         membersAL = db.getAllNames(groupid);
-        String[] spinnerList = new String[(membersAL.size() + 1)];
+        final String[] spinnerList = new String[(membersAL.size() + 1)];
         for (int i = 0; i < (membersAL.size() + 1); i++) {
             if(i == 0) {
                 spinnerList[i] = "[Sort by...]";
@@ -151,6 +143,38 @@ public class ChoresList extends AppCompatActivity {
                 spinnerList[i] = membersAL.get(i-1).getName();
             }
         }
+
+        final String[] listOfNames = new String[membersAL.size()];
+        for (int i = 0; i < membersAL.size(); i++) {
+            listOfNames[i] = membersAL.get(i).getName();
+        }
+
+        choreList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ChoresList.this);
+                builder.setTitle("Choose a member");
+                builder.setSingleChoiceItems(listOfNames, -1, new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(ChoresList.this, listOfNames[which], Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setPositiveButton("Confirm", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
+            }
+        });
 
         // sets the spinner to hold all the names
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerList);
@@ -200,22 +224,20 @@ public class ChoresList extends AppCompatActivity {
             }
         });
 
-        theadapter = new myAdapter(ChoresList.this, R.layout.chores_list_row, stringAL);
-        choreList.setAdapter(theadapter);
-
-        choreList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
+        /*
+        private ChoreListAdapter(Context context, int resource, List<String> stringAL,
+                List<Chores> choreAL, List<Names> namesAL,
+                List<ChoreName> choreNameCheck, DatabaseHandler db )*/
+        choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
+                choreAL, namesAL, choreNameCheck, db);
+        choreList.setAdapter(choreAdapter);
     }
 
-
+/*
     // custom adapter to display in listview
-    private class myAdapter extends ArrayAdapter<String> {
+    private class ChoreListAdapter extends ArrayAdapter<String> {
         private int layout;
-        private myAdapter(Context context, int resource, List<String> objects) {
+        private ChoreListAdapter(Context context, int resource, List<String> objects) {
             super(context, resource, objects);
             layout = resource;
         }
@@ -238,7 +260,7 @@ public class ChoresList extends AppCompatActivity {
                         stringAL.remove(position);
                         namesAL.remove(position);
                         db.deleteChoreName(choreNameCheck.get(position));
-                        theadapter.notifyDataSetChanged();
+                        choreAdapter.notifyDataSetChanged();
                     }
                 });
                 convertView.setTag(myViewHolder);
@@ -266,7 +288,7 @@ public class ChoresList extends AppCompatActivity {
         TextView personTextView;
         Button delete;
     }
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();

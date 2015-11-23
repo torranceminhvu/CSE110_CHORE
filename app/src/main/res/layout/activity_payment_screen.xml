@@ -41,7 +41,8 @@
             android:hint="@string/name"
             android:inputType="text"
             android:layout_weight="0.5"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="10dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,7 +57,7 @@
             android:inputType="number"
             android:ems="10"
             android:id="@+id/amount"
-          />
+            />
 
 
     </LinearLayout>
@@ -74,6 +75,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/paymentLayout"
         android:layout_alignEnd="@+id/paymentLayout"
+        android:singleLine="true"
         android:hint="@string/description" />
 
     <Button

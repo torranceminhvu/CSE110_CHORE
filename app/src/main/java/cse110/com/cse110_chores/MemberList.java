@@ -31,7 +31,7 @@ public class MemberList extends AppCompatActivity {
     Names current;
     String display;
 
-    myAdapter theadapter = null;
+    MemberListAdapter memberListAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +67,16 @@ public class MemberList extends AppCompatActivity {
             stringAL.add(display);
         }
 
-        theadapter = new myAdapter(MemberList.this, R.layout.member_list_row, stringAL);
-        memberList.setAdapter(theadapter);
-
+        /*
+            MemberListAdapter(Context context, int resource, List<String> stringAL,
+                            List<Names> memberAL,DatabaseHandler db)
+         */
+        memberListAdapter = new MemberListAdapter(MemberList.this, R.layout.member_list_row,
+                stringAL, memberAL, db);
+        memberList.setAdapter(memberListAdapter);
     }
 
+    /*
     private class myAdapter extends ArrayAdapter<String> {
         private int layout;
         private myAdapter(Context context, int resource, List<String> objects) {
@@ -122,6 +127,7 @@ public class MemberList extends AppCompatActivity {
         TextView memberTitle;
         Button delete;
     }
+    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

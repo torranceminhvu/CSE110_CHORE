@@ -47,9 +47,6 @@ public class MemberScreen extends AppCompatActivity implements AdapterView.OnIte
         });
     }
 
-
-
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
