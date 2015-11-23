@@ -87,23 +87,24 @@ public class ChoresList extends AppCompatActivity {
         if (namesAL.size() == 0) {
             choreAL = db.getAllChores(groupid);
                 for (int i = 0; i < choreAL.size(); i++) {
-                current = choreAL.get(i);
-                chore = current.getName();
-                frequency = current.getFrequency();
-                display = frequency + ":  " + chore;
-                stringAL.add(display);
+                    current = choreAL.get(i);
+                    chore = current.getName();
+                    frequency = current.getFrequency();
+                    display = chore + frequency;
+                    stringAL.add(display);
+
             }
         } else {
             choreAL = db.getAllChores(groupid);
-            /* for (int i = 0; i < choreAL.size(); i++) {
-                current = choreAL.get(i);
-                chore = current.getName();
-                frequency = current.getFrequency();
-                display = frequency + ":  " + chore + "             " + namesAL.get(i).getName();
-                display = frequency + ":  " + chore;
+            for (int i = 0; i < choreAL.size(); i++) {
+                //current = choreAL.get(i);
+                //chore = current.getName();
+                //frequency = current.getFrequency();
+                //display = frequency + ":  " + chore + "             " + namesAL.get(i).getName();
+                display = choreAL.get(i).getName();
                 stringAL.add(display);
             }
-            */
+
         }
 
         // Added button to assign chore
@@ -124,10 +125,11 @@ public class ChoresList extends AppCompatActivity {
                 if (namesAL.size() != 0){
                     stringAL.clear();
                     for (int i = 0; i < choreAL.size(); i++) {
-                        current = choreAL.get(i);
-                        chore = current.getName();
-                        frequency = current.getFrequency();
-                        display = frequency + ":  " + chore + "             " + namesAL.get(i).getName();
+                        //current = choreAL.get(i);
+                        //chore = current.getName();
+                        //frequency = current.getFrequency();
+                        // adds name for StringAL after assigning chores
+                        display = namesAL.get(i).getName();
                         stringAL.add(display);
                         theadapter.notifyDataSetChanged();
                     }
@@ -155,6 +157,7 @@ public class ChoresList extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        // sorts the chore according to the names
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -197,11 +200,15 @@ public class ChoresList extends AppCompatActivity {
             }
         });
 
-        //Collections.sort(choreAL);
-
         theadapter = new myAdapter(ChoresList.this, R.layout.chores_list_row, stringAL);
-
         choreList.setAdapter(theadapter);
+
+        choreList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
 
@@ -229,6 +236,7 @@ public class ChoresList extends AppCompatActivity {
                         db.deleteChore(choreAL.get(position));
                         choreAL.remove(position);
                         stringAL.remove(position);
+                        namesAL.remove(position);
                         db.deleteChoreName(choreNameCheck.get(position));
                         theadapter.notifyDataSetChanged();
                     }
@@ -236,6 +244,7 @@ public class ChoresList extends AppCompatActivity {
                 convertView.setTag(myViewHolder);
                 myViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
                 myViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
+                myViewHolder.personTextView.setText("");
                 if (namesAL.size() != 0) {
                     myViewHolder.personTextView.setText("Name: " + namesAL.get(position).getName());
                 }
@@ -243,6 +252,7 @@ public class ChoresList extends AppCompatActivity {
                 mainViewHolder = (MyViewHolder) convertView.getTag();
                 mainViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
                 mainViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
+                mainViewHolder.personTextView.setText("");
                 if (namesAL.size() != 0) {
                     mainViewHolder.personTextView.setText("Name: " + namesAL.get(position).getName());
                 }

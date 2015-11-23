@@ -34,15 +34,19 @@ public class ChoresScreen extends AppCompatActivity implements AdapterView.OnIte
         db = new DatabaseHandler(this);
         spinner= (Spinner) findViewById(R.id.choreSpinner);
 
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.frequency, android.R.layout.simple_spinner_item);
+        String[] spinnerList = {"Choose frequency", "Weekly", "Bi-Weekly", "Daily", "Monthly"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                Toast.makeText(getBaseContext(), parent.getItemAtPosition(position) + " selected", Toast.LENGTH_SHORT).show();
                 frequency = parent.getItemAtPosition(position).toString();
+                // if frequency wasn't chosen
+                if (!frequency.equals("Choose frequency"))
+                    Toast.makeText(getBaseContext(), parent.getItemAtPosition(position) + " selected", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -59,13 +63,18 @@ public class ChoresScreen extends AppCompatActivity implements AdapterView.OnIte
         addChore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v ) {
-                Intent intent = new Intent(v.getContext(), ChoresList.class);
-                String chore = choreText.getText().toString();
-                db.addChore(new Chores(chore, frequency, groupid));
-                intent.putExtra("GROUPID", groupid);
-                finish();
-                startActivity(intent);
-                return;
+                if (!frequency.equals("Choose frequency")) {
+                    Intent intent = new Intent(v.getContext(), ChoresList.class);
+                    String chore = choreText.getText().toString();
+                    db.addChore(new Chores(chore, frequency, groupid));
+                    intent.putExtra("GROUPID", groupid);
+                    finish();
+                    startActivity(intent);
+                    return;
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "Please Choose a Frequency", Toast.LENGTH_SHORT).show();
+                }
             }
 
         });
