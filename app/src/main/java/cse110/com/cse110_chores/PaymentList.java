@@ -1,35 +1,22 @@
 package cse110.com.cse110_chores;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class PaymentList extends AppCompatActivity {
 
     private ListView paymentList;
     ArrayList<String> stringAL = new ArrayList<String>();
-    //ArrayList<String> stringALTwo = new ArrayList<String>();
     ArrayList<Payments> paymentAL = new ArrayList<Payments>();
-    String lineOne;
-    String lineTwo;
     DatabaseHandler db;
     Payments current;
     String display;
@@ -39,7 +26,7 @@ public class PaymentList extends AppCompatActivity {
     String amount;
     String description;
 
-    PayAdapter theadapter = null;
+    PaymentListAdapter paymentListAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +61,18 @@ public class PaymentList extends AppCompatActivity {
             display =  ownee + owner + amount;
             description = current.getDescription();
             stringAL.add(display);
-            //stringAL.add(description);
         }
 
-        theadapter = new PayAdapter(PaymentList.this, R.layout.payment_list_row, stringAL );
-        paymentList.setAdapter(theadapter);
+        /* private PaymentListAdapter(Context context, int resource, List<String> stringAL,
+                                   List<Payments> paymentAL)
+        */
+        paymentListAdapter = new PaymentListAdapter(PaymentList.this, R.layout.payment_list_row,
+                stringAL, paymentAL, db );
+        paymentList.setAdapter(paymentListAdapter);
     }
 
+
+/*
     private class PayAdapter extends ArrayAdapter<String> {
         private int layout;
         private PayAdapter(Context context, int resource, List<String> objects) {
@@ -104,14 +96,12 @@ public class PaymentList extends AppCompatActivity {
                         db.deletePayment(paymentAL.get(position));
                         paymentAL.remove(position);
                         stringAL.remove(position);
-                        //stringAL.remove(position + 1);
                         theadapter.notifyDataSetChanged();
                     }
                 });
                 convertView.setTag(myViewHolder);
                 myViewHolder.lineOne.setText(getItem(position));
                 myViewHolder.lineTwo.setText(paymentAL.get(position).getDescription());
-
             }
             else {
                 mainViewHolder = (MyViewHolder) convertView.getTag();
@@ -127,6 +117,8 @@ public class PaymentList extends AppCompatActivity {
         TextView lineTwo;
         Button paid;
     }
+
+    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
