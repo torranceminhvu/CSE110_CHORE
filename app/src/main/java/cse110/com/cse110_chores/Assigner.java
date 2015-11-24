@@ -32,7 +32,7 @@ public class    Assigner {
     }
 
     public void update(){
-        int day = cal.DAY_OF_YEAR;
+        int day = cal.get(Calendar.DAY_OF_YEAR);
         int daysPassed;
         int freq;
         int count;
@@ -45,24 +45,27 @@ public class    Assigner {
             daysPassed = day - choreNameAL.get(i).getStartTime();
             freq = choreNameAL.get(i).getFrequency();
             count = choreNameAL.get(i).getCounter();
+            Log.e("freq", String.valueOf(freq));
 
             for (int j = 0; j < daysPassed; j++){
-                if (count < freq){
+                if (count < freq - 1){
                     count++;
                 }
                 else {
                     count = 0;
                     index = choreNameAL.get(i).geti();
+                    Log.e("ind", String.valueOf(index));
                     index++;
                     if (index == total){
                         index = 0;
                     }
+                    Log.e("ind2", String.valueOf(index));
                     choreNameAL.get(i).seti(index);
                 }
             }
             choreNameAL.get(i).setCounter(count);
+            Log.e("counter", String.valueOf(count));
             choreNameAL.get(i).setStartTime(day);
-
             db.updateChoreName(choreNameAL.get(i));
         }
     }
@@ -72,7 +75,7 @@ public class    Assigner {
         nameAL = db.getAllNames(groupid);
         choreNameCheck = db.getAllChoreNames(groupid);
         int total = nameAL.size();
-        int day = cal.DAY_OF_YEAR;
+        int day = cal.get(Calendar.DAY_OF_YEAR);
 
         if (total == 0){
             return;

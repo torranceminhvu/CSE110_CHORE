@@ -65,7 +65,8 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
             myViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
             myViewHolder.personTextView.setText("");
             if (choreNameCheck.size() != 0) {
-                myViewHolder.personTextView.setText("Name: " + namesAL.get(choreNameCheck.get(position).geti()).getName());
+                myViewHolder.personTextView.setText("Name: " + namesAL.get(position).getName()
+                        + "         Day: " + (choreNameCheck.get(position).getCounter() + 1));
             }
         } else {
             mainViewHolder = (MyViewHolder) convertView.getTag();
@@ -73,7 +74,8 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
             mainViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
             mainViewHolder.personTextView.setText("");
             if (choreNameCheck.size() != 0) {
-                mainViewHolder.personTextView.setText("Name: " + namesAL.get(choreNameCheck.get(position).geti()).getName());
+                mainViewHolder.personTextView.setText("Name: " + namesAL.get(position).getName()
+                        + "         Day: " + (choreNameCheck.get(position).getCounter() + 1));
             }
         }
         return convertView;
