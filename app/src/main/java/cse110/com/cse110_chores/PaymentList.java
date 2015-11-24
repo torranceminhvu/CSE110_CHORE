@@ -71,55 +71,6 @@ public class PaymentList extends AppCompatActivity {
         paymentList.setAdapter(paymentListAdapter);
     }
 
-
-/*
-    private class PayAdapter extends ArrayAdapter<String> {
-        private int layout;
-        private PayAdapter(Context context, int resource, List<String> objects) {
-            super(context, resource, objects);
-            layout = resource;
-        }
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            MyViewHolder mainViewHolder = null;
-            final int positionTwo = position + 1;
-            if(convertView == null) {
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                convertView = inflater.inflate(layout, parent, false);
-                final MyViewHolder myViewHolder = new MyViewHolder();
-                myViewHolder.lineOne = (TextView) convertView.findViewById(R.id.oweReceiveAmount);
-                myViewHolder.lineTwo = (TextView) convertView.findViewById(R.id.description);
-                myViewHolder.paid = (Button) convertView.findViewById(R.id.paid_button);
-                myViewHolder.paid.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        db.deletePayment(paymentAL.get(position));
-                        paymentAL.remove(position);
-                        stringAL.remove(position);
-                        theadapter.notifyDataSetChanged();
-                    }
-                });
-                convertView.setTag(myViewHolder);
-                myViewHolder.lineOne.setText(getItem(position));
-                myViewHolder.lineTwo.setText(paymentAL.get(position).getDescription());
-            }
-            else {
-                mainViewHolder = (MyViewHolder) convertView.getTag();
-                mainViewHolder.lineOne.setText(getItem(position));
-                mainViewHolder.lineTwo.setText(paymentAL.get(position).getDescription());
-            }
-            return convertView;
-        }
-
-    }
-    public class MyViewHolder {
-        TextView lineOne;
-        TextView lineTwo;
-        Button paid;
-    }
-
-    */
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();

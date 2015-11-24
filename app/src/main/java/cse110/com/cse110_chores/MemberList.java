@@ -79,59 +79,6 @@ public class MemberList extends AppCompatActivity {
         memberList.setAdapter(memberListAdapter);
     }
 
-    /*
-    private class myAdapter extends ArrayAdapter<String> {
-        private int layout;
-        private myAdapter(Context context, int resource, List<String> objects) {
-            super(context, resource, objects);
-            layout = resource;
-        }
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            MyViewHolder mainViewholder = null;
-            if(convertView == null) {
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                convertView = inflater.inflate(layout, parent, false);
-                final MyViewHolder myViewHolder = new MyViewHolder();
-                myViewHolder.memberTitle = (TextView) convertView.findViewById(R.id.text);
-                myViewHolder.delete = (Button) convertView.findViewById(R.id.delete_button);
-                myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        db.deleteName(memberAL.get(position));
-                        memberAL.remove(position);
-                        //stringAL.remove(position);
-                        stringAL.clear();
-                        Intent get = getIntent();
-                        final int groupid = get.getIntExtra("GROUPID", 0);
-                        memberAL = db.getAllNames(groupid);
-                        for (int i = 0; i < memberAL.size(); i++) {
-                            current = memberAL.get(i);
-                            memberName = current.getName();
-                            display = String.valueOf(i + 1) + ".  " + memberName;
-                            stringAL.add(display);
-                        }
-
-                        theadapter.notifyDataSetChanged();
-                    }
-                });
-                convertView.setTag(myViewHolder);
-                myViewHolder.memberTitle.setText(getItem(position));
-            }
-            else {
-                mainViewholder = (MyViewHolder) convertView.getTag();
-                mainViewholder.memberTitle.setText(getItem(position));
-            }
-            return convertView;
-        }
-
-    }
-    public class MyViewHolder {
-        TextView memberTitle;
-        Button delete;
-    }
-    */
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();

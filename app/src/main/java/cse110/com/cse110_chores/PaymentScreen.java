@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class PaymentScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -34,21 +35,28 @@ public class PaymentScreen extends AppCompatActivity implements AdapterView.OnIt
         addPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), PaymentList.class);
                 String ownee = personOwes.getText().toString();
                 String owner = personReceiving.getText().toString();
                 String amounts = amount.getText().toString();
                 String des = description.getText().toString();
 
-                db.addPayment(new Payments(owner, ownee, amounts, des, groupid));
+                if (ownee.length() > 0 && owner.length() > 0 &&
+                        amounts.length() > 0 && des.length() > 0) {
+                    Intent intent = new Intent(v.getContext(), PaymentList.class);
 
-                intent.putExtra("GROUPID", groupid);
+                    db.addPayment(new Payments(owner, ownee, amounts, des, groupid));
 
-                finish();
-                startActivity(intent);
-                return;
+                    intent.putExtra("GROUPID", groupid);
+
+                    finish();
+                    startActivity(intent);
+                    return;
+                }
+                else {
+                    Toast.makeText(PaymentScreen.this, "Please fill in all text fields",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
-
         });
     }
 

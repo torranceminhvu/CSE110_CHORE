@@ -63,9 +63,9 @@ public class ChoresScreen extends AppCompatActivity implements AdapterView.OnIte
         addChore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v ) {
-                if (!frequency.equals("Choose frequency")) {
+                String chore = choreText.getText().toString();
+                if (!frequency.equals("Choose frequency") && chore.length() > 0) {
                     Intent intent = new Intent(v.getContext(), ChoresList.class);
-                    String chore = choreText.getText().toString();
                     db.addChore(new Chores(chore, frequency, groupid));
                     intent.putExtra("GROUPID", groupid);
                     finish();
@@ -73,7 +73,7 @@ public class ChoresScreen extends AppCompatActivity implements AdapterView.OnIte
                     return;
                 }
                 else {
-                    Toast.makeText(getBaseContext(), "Please Choose a Frequency", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Please select a frequency or enter a chore", Toast.LENGTH_SHORT).show();
                 }
             }
 

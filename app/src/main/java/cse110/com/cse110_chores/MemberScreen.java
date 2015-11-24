@@ -11,7 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;import java.lang.Override;import java.lang.String;import cse110.com.cse110_chores.R;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.lang.Override;import java.lang.String;import cse110.com.cse110_chores.R;
 
 public class MemberScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -33,15 +36,21 @@ public class MemberScreen extends AppCompatActivity implements AdapterView.OnIte
         addMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v ) {
-                Intent intent = new Intent(v.getContext(), MemberList.class);
-                String member = memberText.getText().toString();
+                if (memberText.getText().toString().length() > 0) {
+                    Intent intent = new Intent(v.getContext(), MemberList.class);
+                    String member = memberText.getText().toString();
 
-                db.addName(new Names(member, groupid));
-                intent.putExtra("GROUPID", groupid);
+                    db.addName(new Names(member, groupid));
+                    intent.putExtra("GROUPID", groupid);
 
-                finish();
-                startActivity(intent);
-                return;
+                    finish();
+                    startActivity(intent);
+                    return;
+                }
+                else
+                {
+                    Toast.makeText(MemberScreen.this, "Please enter a name", Toast.LENGTH_SHORT).show();
+                }
             }
 
         });
