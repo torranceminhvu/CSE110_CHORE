@@ -64,16 +64,16 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
             myViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
             myViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
             myViewHolder.personTextView.setText("");
-            if (namesAL.size() != 0) {
-                myViewHolder.personTextView.setText("Name: " + namesAL.get(position).getName());
+            if (choreNameCheck.size() != 0) {
+                myViewHolder.personTextView.setText("Name: " + namesAL.get(choreNameCheck.get(position).geti()).getName());
             }
         } else {
             mainViewHolder = (MyViewHolder) convertView.getTag();
             mainViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
             mainViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
             mainViewHolder.personTextView.setText("");
-            if (namesAL.size() != 0) {
-                mainViewHolder.personTextView.setText("Name: " + namesAL.get(position).getName());
+            if (choreNameCheck.size() != 0) {
+                mainViewHolder.personTextView.setText("Name: " + namesAL.get(choreNameCheck.get(position).geti()).getName());
             }
         }
         return convertView;

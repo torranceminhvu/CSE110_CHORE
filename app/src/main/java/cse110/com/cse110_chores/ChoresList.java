@@ -62,8 +62,9 @@ public class ChoresList extends AppCompatActivity {
         assigner = new Assigner(db, groupid);
         assigner.update();
         namesAL = assigner.getAllIndex();
+        choreNameCheck = db.getAllChoreNames(groupid);
 
-        Button choreAddButton = (Button) findViewById(R.id.choreAddButton);
+        final Button choreAddButton = (Button) findViewById(R.id.choreAddButton);
 
         choreAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,9 +115,10 @@ public class ChoresList extends AppCompatActivity {
                 if (namesAL.size() != 0){
                     stringAL.clear();
                     for (int i = 0; i < choreAL.size(); i++) {
-                        display = namesAL.get(i).getName();
+                        display = namesAL.get(i/namesAL.size()).getName();
                         stringAL.add(display);
                     }
+                    choreNameCheck = db.getAllChoreNames(groupid);
                     choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
                             choreAL, namesAL, choreNameCheck, db, groupid);
                     choreList.setAdapter(choreAdapter);
@@ -153,12 +155,21 @@ public class ChoresList extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(ChoresList.this, listOfNames[which], Toast.LENGTH_SHORT).show();
+                        choreList.setTag(new Integer(which));
                     }
                 });
                 builder.setPositiveButton("Confirm", new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        Integer selected = (Integer) choreList.getTag();
+                        //String oldName = namesAL.get(position/namesAL.size()).getName();
+                        //String choreName = choreAL.get(position).getName();
+                        //ChoreName tempChoreName = db.getChoreName(oldName, groupid);
+                        //tempChoreName.seti(selected);
+                        choreNameCheck.get(position).seti(selected);
+                        choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
+                                choreAL, namesAL, choreNameCheck, db, groupid);
+                        choreList.setAdapter(choreAdapter);
                     }
                 });
                 builder.setNegativeButton("Cancel", new OnClickListener() {
@@ -203,7 +214,6 @@ public class ChoresList extends AppCompatActivity {
                         }
                     }
                 }
-
                 // starts up pop up sorted chores
                 if (!sortedBy.equals("[Sort by...]")) {
                     Intent sortedChoresListIntent = new Intent(ChoresList.this, PopUpSortedChores.class);
@@ -212,7 +222,6 @@ public class ChoresList extends AppCompatActivity {
                     sortedChoresList.clear();
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
