@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -141,6 +142,7 @@ public class ChoresList extends AppCompatActivity {
             }
         }
 
+        // creates a list of names to populate the edit name
         final String[] listOfNames = new String[membersAL.size()];
         for (int i = 0; i < membersAL.size(); i++) {
             listOfNames[i] = membersAL.get(i).getName();
@@ -195,7 +197,7 @@ public class ChoresList extends AppCompatActivity {
                 sortedBy = parent.getItemAtPosition(position).toString();
 
                 // finds the index of the name picked
-                namesAL = assigner.getAllIndex();
+                namesAL = db.getAllNames(groupid);
 
                 //Log.e("NAMESAL", String.valueOf(namesAL.size()));
                 if (namesAL.size() != 0) {
@@ -205,11 +207,13 @@ public class ChoresList extends AppCompatActivity {
                         if (sortedBy.equals(namesAL.get(namePos).getName()))
                             break foundName;
                     }
+                    //Log.e("NAMEFOUND", String.valueOf(namePos));
                     choreNameCheck = db.getAllChoreNames(groupid);
                     if (choreNameCheck.size() != 0) {
                         for (int i = 0; i < choreNameCheck.size(); i++) {
                             if (namePos == choreNameCheck.get(i).geti()) {
                                 sortedChoresList.add(choreNameCheck.get(i).getChoreName());
+                                //Log.e("CHORENAME", choreNameCheck.get(i).getChoreName());
                             }
                         }
                     }
@@ -237,62 +241,6 @@ public class ChoresList extends AppCompatActivity {
         choreList.setAdapter(choreAdapter);
     }
 
-    /*
-    // custom adapter to display in listview
-    private class myAdapter extends ArrayAdapter<String> {
-        private int layout;
-        private myAdapter(Context context, int resource, List<String> objects) {
-            super(context, resource, objects);
-            layout = resource;
-        }
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            MyViewHolder mainViewHolder = null;
-            if (convertView == null) {
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                convertView = inflater.inflate(layout, parent, false);
-                MyViewHolder myViewHolder = new MyViewHolder();
-                myViewHolder.frequencyTextView = (TextView) convertView.findViewById(R.id.frequencyTextView);
-                myViewHolder.choreTextView = (TextView) convertView.findViewById(R.id.choreTextView);
-                myViewHolder.personTextView = (TextView) convertView.findViewById(R.id.personTextView);
-                myViewHolder.delete = (Button) convertView.findViewById(R.id.delete_button);
-                myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        db.deleteChore(choreAL.get(position));
-                        choreAL.remove(position);
-                        stringAL.remove(position);
-                        namesAL.remove(position);
-                        db.deleteChoreName(choreNameCheck.get(position));
-                        theadapter.notifyDataSetChanged();
-                    }
-                });
-                convertView.setTag(myViewHolder);
-                myViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
-                myViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
-                myViewHolder.personTextView.setText("");
-                if (namesAL.size() != 0) {
-                    myViewHolder.personTextView.setText("Name: " + namesAL.get(position).getName());
-                }
-            } else {
-                mainViewHolder = (MyViewHolder) convertView.getTag();
-                mainViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
-                mainViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
-                mainViewHolder.personTextView.setText("");
-                if (namesAL.size() != 0) {
-                    mainViewHolder.personTextView.setText("Name: " + namesAL.get(position).getName());
-                }
-            }
-            return convertView;
-        }
-    }
-    public class MyViewHolder {
-        TextView frequencyTextView;
-        TextView choreTextView;
-        TextView personTextView;
-        Button delete;
-    }
-    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
