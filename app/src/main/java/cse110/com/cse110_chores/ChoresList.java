@@ -164,16 +164,17 @@ public class ChoresList extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Integer selected = (Integer) choreList.getTag();
-                        //String oldName = namesAL.get(position/namesAL.size()).getName();
-                        //String choreName = choreAL.get(position).getName();
-                        //ChoreName tempChoreName = db.getChoreName(oldName, groupid);
-                        //tempChoreName.seti(selected);
+                        //Log.e("Selected", ":" + selected);
+                        //Log.e("position", ":" + position);
                         choreNameCheck.get(position).seti(selected);
                         db.updateChoreName(choreNameCheck.get(position));
                         choreNameCheck = db.getAllChoreNames(groupid);
                         choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
                                 choreAL, namesAL, choreNameCheck, db, groupid);
                         choreList.setAdapter(choreAdapter);
+                        finish();
+                        startActivity(getIntent());
+                        overridePendingTransition(0,0);
                     }
                 });
                 builder.setNegativeButton("Cancel", new OnClickListener() {
