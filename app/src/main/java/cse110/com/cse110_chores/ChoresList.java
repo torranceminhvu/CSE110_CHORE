@@ -169,6 +169,8 @@ public class ChoresList extends AppCompatActivity {
                         //ChoreName tempChoreName = db.getChoreName(oldName, groupid);
                         //tempChoreName.seti(selected);
                         choreNameCheck.get(position).seti(selected);
+                        db.updateChoreName(choreNameCheck.get(position));
+                        choreNameCheck = db.getAllChoreNames(groupid);
                         choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
                                 choreAL, namesAL, choreNameCheck, db, groupid);
                         choreList.setAdapter(choreAdapter);
