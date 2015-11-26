@@ -48,7 +48,9 @@ public class MemberListAdapter extends ArrayAdapter<String> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layout, parent, false);
             final MyViewHolder myViewHolder = new MyViewHolder();
+            // links the textview object to show the member
             myViewHolder.memberTitle = (TextView) convertView.findViewById(R.id.text);
+            // links the delete button to delete the object
             myViewHolder.delete = (Button) convertView.findViewById(R.id.delete_button);
             myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -56,9 +58,6 @@ public class MemberListAdapter extends ArrayAdapter<String> {
                     db.deleteName(memberAL.get(position));
                     memberAL.remove(position);
                     stringAL.clear();
-                        /*Intent get = this.getIntent();
-                        final int groupid = get.getIntExtra("GROUPID", 0);
-                        memberAL = db.getAllNames(groupid);*/
                     for (int i = 0; i < memberAL.size(); i++) {
                         current = memberAL.get(i);
                         memberName = current.getName();
@@ -69,16 +68,20 @@ public class MemberListAdapter extends ArrayAdapter<String> {
                     memberListAdapter.notifyDataSetChanged();
                 }
             });
+
             convertView.setTag(myViewHolder);
+            // sets the texts for the textviews
             myViewHolder.memberTitle.setText(getItem(position));
         } else {
+
             mainViewholder = (MyViewHolder) convertView.getTag();
+            // sets the texts for the textviews
             mainViewholder.memberTitle.setText(getItem(position));
         }
         return convertView;
     }
 
-
+    // class used for setting up the custom display
     class MyViewHolder {
         TextView memberTitle;
         Button delete;

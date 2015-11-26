@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- created by Bailey -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cse110.com.cse110_chores.CalendarApi">
 
+    <!-- creates the calendar display layout -->
     <CalendarView
         android:id="@+id/calendar"
         android:layout_width="match_parent"

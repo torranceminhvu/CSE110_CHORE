@@ -14,6 +14,7 @@ import java.util.List;
  * Created by Bailey on 11/22/15.
  */
 public class ChoreListAdapter extends ArrayAdapter<String> {
+
     private int layout;
     List<String> stringAL;
     List<Chores> choreAL;
@@ -45,9 +46,14 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layout, parent, false);
             MyViewHolder myViewHolder = new MyViewHolder();
+
+            // links the textview object to show the frequency
             myViewHolder.frequencyTextView = (TextView) convertView.findViewById(R.id.frequencyTextView);
+            // links the textview object to show the chore name
             myViewHolder.choreTextView = (TextView) convertView.findViewById(R.id.choreTextView);
+            // links the textview object to show the person who does the chore
             myViewHolder.personTextView = (TextView) convertView.findViewById(R.id.personTextView);
+            // links the delete button to delete the object
             myViewHolder.delete = (Button) convertView.findViewById(R.id.delete_button);
             myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -60,6 +66,8 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
                     choreAdapter.notifyDataSetChanged();
                 }
             });
+
+            // sets the texts for the textviews
             convertView.setTag(myViewHolder);
             myViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
             myViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
@@ -69,6 +77,8 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
                         + "         Day: " + (choreNameCheck.get(position).getCounter() + 1));
             }
         } else {
+
+            // sets the texts for the textviews
             mainViewHolder = (MyViewHolder) convertView.getTag();
             mainViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
             mainViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
@@ -81,6 +91,7 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
         return convertView;
     }
 
+    // class used for setting up the custom display
     public class MyViewHolder {
         TextView frequencyTextView;
         TextView choreTextView;

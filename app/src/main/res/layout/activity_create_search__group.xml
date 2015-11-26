@@ -1,3 +1,4 @@
+<!-- created by Bailey-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -7,16 +8,19 @@
     android:background="#ffffff">
 
 
+    <!-- layout for the login/create page -->
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal">
 
+        <!-- Logo -->
         <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:src="@mipmap/ic_broom" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/toplayout"
         android:layout_centerVertical="true"
@@ -24,6 +28,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <!-- Username text field for user input -->
         <EditText
             android:id="@+id/username"
             android:singleLine="true"
@@ -31,10 +36,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/username"
-            android:background="#17170459"
-            />
-
-
+            android:background="#17170459" />
     </LinearLayout>
 
 
@@ -45,6 +47,7 @@
         android:layout_below="@id/toplayout"
         android:orientation="horizontal">
 
+        <!-- Password text field for user input-->
         <EditText
             android:id="@+id/password"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -61,6 +64,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
+        <!-- button to login -->
         <Button
             android:id="@+id/login"
             android:layout_width="wrap_content"
@@ -68,6 +72,7 @@
             android:layout_weight="1"
             android:text="@string/login"/>
 
+        <!-- button to create an account-->
         <Button
             android:id="@+id/create"
             android:layout_width="wrap_content"
@@ -76,6 +81,4 @@
             android:text="@string/create" />
 
     </LinearLayout>
-
-
 </RelativeLayout>

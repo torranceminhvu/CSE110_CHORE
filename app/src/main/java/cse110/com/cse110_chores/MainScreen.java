@@ -20,6 +20,7 @@ public class MainScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent get = getIntent();
+        // gets the group name from login page
         final int groupid = get.getIntExtra("GROUPID", 0);
 
         // display group name
@@ -27,13 +28,11 @@ public class MainScreen extends AppCompatActivity {
 
         setContentView(R.layout.activity_main_screen);
 
+        // links the button to go to the chore screen
+        Button choreButton = (Button) findViewById(R.id.choreButton);
 
-
-        //action.getSupportActionBar().setDisplayShowTitleEnabled(true);
-        //getSupportActionBar().setTitle(groupid);
-        Button chorebutton = (Button) findViewById(R.id.choreButton);
-
-        chorebutton.setOnClickListener(new View.OnClickListener() {
+        // on click, it will open the chore list activity
+        choreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ChoresList.class);
@@ -43,9 +42,11 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
-        Button memberbutton = (Button) findViewById(R.id.memberButton);
+        // links the button to go to the members screen
+        Button memberButton = (Button) findViewById(R.id.memberButton);
 
-        memberbutton.setOnClickListener(new View.OnClickListener() {
+        // on click, it will open the member list activity
+        memberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MemberList.class);
@@ -55,9 +56,11 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
-        Button paybutton = (Button) findViewById(R.id.payButton);
+        // links the button to go to the payments screen
+        Button payButton = (Button) findViewById(R.id.payButton);
 
-        paybutton.setOnClickListener(new View.OnClickListener() {
+        // on click, it will open the payment list activity
+        payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), PaymentList.class);
@@ -67,8 +70,10 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+        // links the button to go to the calendar
         Button calendarButton = (Button) findViewById(R.id.calendarButton);
 
+        // on clicks, opens a vew of the calendar page
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +85,7 @@ public class MainScreen extends AppCompatActivity {
         });
     }
 
+    // creates a menu drop down
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -87,6 +93,7 @@ public class MainScreen extends AppCompatActivity {
         return true;
     }
 
+    // On the selected item on the menu, it will switch the activities as appropriate
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

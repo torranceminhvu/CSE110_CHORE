@@ -5,11 +5,11 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="CSE 110"
+        android:label="House of Chores"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".CreateSearch_Group"
-            android:label="CSE 110" >
+            android:label="House of Chores" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

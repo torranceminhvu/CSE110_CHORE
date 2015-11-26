@@ -1,3 +1,4 @@
+<!-- created by Bailey-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -5,6 +6,7 @@
     android:orientation="vertical"
     tools:context="cse110.com.cse110_chores.MemberList">
 
+    <!-- Button to go to the add member screen-->
     <Button
         android:id="@+id/memberAddButton"
         android:layout_width="match_parent"
@@ -13,6 +15,7 @@
         android:gravity="center"
         android:text="@string/memberAddButton"/>
 
+    <!-- Listview to display the members -->
     <ListView
         android:layout_above="@+id/memberAddButton"
         android:id="@+id/memberlistview"

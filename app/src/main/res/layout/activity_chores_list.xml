@@ -1,3 +1,4 @@
+<!-- created by Bailey -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -5,6 +6,7 @@
     android:orientation="vertical"
     tools:context="cse110.com.cse110_chores.ChoresList">
 
+    <!-- add chore button for the chore list activity -->
     <Button
         android:id="@+id/choreAddButton"
         android:layout_width="match_parent"
@@ -13,11 +15,13 @@
         android:layout_alignParentBottom="true"
         android:text="@string/choreAddButton"/>
 
+    <!-- sets a layout for assign chore button and a spinner to sort the chores user's name -->
     <LinearLayout
         android:id="@+id/assignChoreAndSort"
         android:layout_above="@+id/choreAddButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
+        <!-- assign chore button -->
         <Button
             android:id="@+id/assignChore"
             android:layout_width="fill_parent"
@@ -26,6 +30,7 @@
             android:layout_weight="1"
             android:gravity="center"/>
 
+        <!-- spinner with the members names -->
         <Spinner
             android:id="@+id/sortSpinner"
             android:layout_width="fill_parent"
@@ -35,6 +40,7 @@
             android:gravity="center"/>
     </LinearLayout>
 
+    <!-- listview to hold all the chores with the frequency and the names -->
     <ListView
         android:id="@+id/chorelistview"
         android:layout_above="@+id/assignChoreAndSort"

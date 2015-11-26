@@ -21,34 +21,38 @@ import java.util.Calendar;
 
 import static android.app.AlertDialog.*;
 
-
+/**
+ * Created by Bailey
+ */
 public class ChoresList extends AppCompatActivity {
 
     DatabaseHandler db; // access our database
     private ListView choreList; // listview layout where our items go
-    ArrayList<String> stringAL = new ArrayList<String>();
+    ArrayList<String> stringAL = new ArrayList<String>(); // holds a copy of the names
     ArrayList<Chores> choreAL = new ArrayList<Chores>(); // stores the chores
     ArrayList<Names> namesAL = new ArrayList<Names>(); // stores the names
     ArrayList<Names> membersAL = new ArrayList<Names>(); // for populating spinner
-    Assigner assigner;
-    Chores current;
-    String chore;
-    String frequency;
-    String display;
+    Assigner assigner; // access our assigner class to assign chores
+    Chores current; // keeps track of the current chore
+    String chore; // grabs the chore name and stores in string
+    String frequency; // grabs the frequency and stores in string
+    String display; // grabs the name to save a copy to the stringAL
 
     // keeping track of days.
     Calendar calendar;
     int day;
-    int currDay;
 
     // stores the association between chores and names
     ArrayList<ChoreName> choreNameCheck = new ArrayList<ChoreName>();
     // for populating the pop up window sort
     ArrayList<String> sortedChoresList = new ArrayList<String>();
 
+    // creates a spinner object to sort the chores by name
     Spinner spinner;
+    // to check what was selected in the spinner
     String sortedBy = "";
 
+    // adapter used to set the chore list screen
     ChoreListAdapter choreAdapter = null;
 
     @Override
@@ -56,24 +60,36 @@ public class ChoresList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chores_list);
 
+        // creates a database to obtain data from database
         db = new DatabaseHandler(this);
         Intent get = getIntent();
         final int groupid = get.getIntExtra("GROUPID", 0);
+
+        // links the listview
         choreList = (ListView) findViewById(R.id.chorelistview);
+
+        // makes a new assigner to assign chore later
         assigner = new Assigner(db, groupid);
+        // updates the assigner every time the activity is opened
         assigner.update();
+
+        // gets all the names' index to check later
         namesAL = assigner.getAllIndex();
+
+        // gets all the chores that are linked with names
         choreNameCheck = db.getAllChoreNames(groupid);
 
+        // button used move to the activity to add chores
         final Button choreAddButton = (Button) findViewById(R.id.choreAddButton);
-
         choreAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // starts a new activity chore screen to add the chore
                 Intent intent = new Intent(v.getContext(), ChoresScreen.class);
                 intent.putExtra("GROUPID", groupid);
                 assigner.unassign();
 
+                // closes the activity after chore is done being added
                 finish();
                 startActivity(intent);
                 return;
@@ -81,6 +97,7 @@ public class ChoresList extends AppCompatActivity {
         });
 
 
+        // checks whether there are any members assigned yet
         if (namesAL.size() == 0) {
             choreAL = db.getAllChores(groupid);
                 for (int i = 0; i < choreAL.size(); i++) {
@@ -98,14 +115,17 @@ public class ChoresList extends AppCompatActivity {
             }
         }
 
-        // Added button to assign chore
+        // Button to assign chore
         Button assignChore = (Button) findViewById(R.id.assignChore);
-
         assignChore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // grabs all the chores from the database
                 choreAL = db.getAllChores(groupid);
+                // assigns the chores
                 assigner.assign();
+                // gets all the names' as indices
                 namesAL = assigner.getAllIndex();
 
                 // for getting the first day set and then comparing with the curr day to increment
@@ -113,12 +133,14 @@ public class ChoresList extends AppCompatActivity {
                 day = calendar.get(Calendar.DAY_OF_YEAR);
 
                 //Log.e("NAMESAL", String.valueOf(namesAL.size()));
+                // Checks whether there are names to assign before assigning the chores
                 if (namesAL.size() != 0){
                     stringAL.clear();
                     for (int i = 0; i < choreAL.size(); i++) {
                         display = namesAL.get(i/namesAL.size()).getName();
                         stringAL.add(display);
                     }
+                    // Grabs the updated chores and resets the activity to show updates
                     choreNameCheck = db.getAllChoreNames(groupid);
                     choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
                             choreAL, namesAL, choreNameCheck, db, groupid);
@@ -148,11 +170,17 @@ public class ChoresList extends AppCompatActivity {
             listOfNames[i] = membersAL.get(i).getName();
         }
 
+        // Enables the listview to be clickable so that user can edit the name of who does the chore
         choreList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                // creates a pop up
                 AlertDialog.Builder builder = new AlertDialog.Builder(ChoresList.this);
+                // sets the title of the pop up to "Choose a member"
                 builder.setTitle("Choose a member");
+                // creates a list of the members and allows them to be selected to change the name
+                // of who does the chore
                 builder.setSingleChoiceItems(listOfNames, -1, new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -160,6 +188,7 @@ public class ChoresList extends AppCompatActivity {
                         choreList.setTag(new Integer(which));
                     }
                 });
+                // confirms the change and updates the activity and the database
                 builder.setPositiveButton("Confirm", new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -177,12 +206,14 @@ public class ChoresList extends AppCompatActivity {
                         overridePendingTransition(0,0);
                     }
                 });
+                // cancels the change
                 builder.setNegativeButton("Cancel", new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
                 });
+                // creates and shows the pop up
                 builder.create().show();
             }
         });
@@ -197,12 +228,14 @@ public class ChoresList extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                // saves the name selected in spinner to sort the chores by who does the chores
                 sortedBy = parent.getItemAtPosition(position).toString();
 
                 // finds the index of the name picked
                 namesAL = db.getAllNames(groupid);
 
                 //Log.e("NAMESAL", String.valueOf(namesAL.size()));
+                // checks whether there are members to sort the names by
                 if (namesAL.size() != 0) {
                     int namePos = 0;
                     foundName:
@@ -211,6 +244,7 @@ public class ChoresList extends AppCompatActivity {
                             break foundName;
                     }
                     //Log.e("NAMEFOUND", String.valueOf(namePos));
+                    // gets the updated choreName list
                     choreNameCheck = db.getAllChoreNames(groupid);
                     if (choreNameCheck.size() != 0) {
                         for (int i = 0; i < choreNameCheck.size(); i++) {
@@ -221,7 +255,7 @@ public class ChoresList extends AppCompatActivity {
                         }
                     }
                 }
-                // starts up pop up sorted chores
+                // starts up pop up sorted chores if a name has been selected
                 if (!sortedBy.equals("[Sort by...]")) {
                     Intent sortedChoresListIntent = new Intent(ChoresList.this, PopUpSortedChores.class);
                     sortedChoresListIntent.putStringArrayListExtra("sortedChoresList", sortedChoresList);
@@ -236,6 +270,7 @@ public class ChoresList extends AppCompatActivity {
         });
 
         /*
+        Just a reminded what parameters are needed
         private ChoreListAdapter(Context context, int resource, List<String> stringAL,
                 List<Chores> choreAL, List<Names> namesAL,
                 List<ChoreName> choreNameCheck, DatabaseHandler db )*/
@@ -244,6 +279,8 @@ public class ChoresList extends AppCompatActivity {
         choreList.setAdapter(choreAdapter);
     }
 
+
+    // creates a menu drop down
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -251,6 +288,8 @@ public class ChoresList extends AppCompatActivity {
         return true;
     }
 
+
+    // On the selected item on the menu, it will switch the activities as appropriate
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

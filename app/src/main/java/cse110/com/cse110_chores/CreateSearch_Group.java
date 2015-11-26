@@ -9,21 +9,27 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class CreateSearch_Group extends AppCompatActivity {
-    DatabaseHandler db;
 
-    //should work now
+    // used to access data from database
+    DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_search__group);
+
+        // links the editTexts where the user types in their ID and password
         final EditText groupText = (EditText) findViewById(R.id.username);
         final EditText passText = (EditText) findViewById(R.id.password);
 
+        // access to the data base
         db = new DatabaseHandler(this);
+
+        // links the buttons login and create
         Button loginbutton = (Button) findViewById(R.id.login);
         Button createbutton = (Button) findViewById(R.id.create);
 
+        // the login button will check for login validity
         loginbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +57,8 @@ public class CreateSearch_Group extends AppCompatActivity {
             }
         });
 
-       createbutton.setOnClickListener(new View.OnClickListener(){
+        // checks whether the username has been taken if not, then it will create a new account
+        createbutton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {

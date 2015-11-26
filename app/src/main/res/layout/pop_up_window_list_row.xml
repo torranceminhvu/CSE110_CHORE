@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- created by Bailey -->
+<!-- textview to hold the chores for the pop up window -->
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/text"

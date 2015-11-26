@@ -1,10 +1,12 @@
 <?xml version= "1.0" encoding="utf-8"?>
+<!-- created by Bailey-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:descendantFocusability="blocksDescendants">
 
+    <!-- layout for the lsitview for chores list-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -15,6 +17,7 @@
             android:orientation="vertical"
             android:layout_weight="0.09">
 
+            <!-- holds the frequency -->
             <TextView
                 android:id="@+id/frequencyTextView"
                 android:layout_width="wrap_content"
@@ -24,6 +27,7 @@
                 android:textColor="#000000"
                 android:text="TextView"/>
 
+            <!-- holds the chore name-->
             <TextView
                 android:id="@+id/choreTextView"
                 android:layout_width="wrap_content"
@@ -33,6 +37,8 @@
                 android:textColor="#000000"
                 android:text="TextView"/>
 
+            <!-- holds the name and also the number of days that has passed since beginning of
+                frequency -->
             <TextView
                 android:id="@+id/personTextView"
                 android:layout_width="wrap_content"
@@ -44,13 +50,13 @@
 
         </LinearLayout>
 
-    <Button
-        android:id="@+id/delete_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:background="@mipmap/ic_redx" />
+        <!-- button to delete the item from the list -->
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@mipmap/ic_redx" />
     </LinearLayout>
-
 </LinearLayout>
 

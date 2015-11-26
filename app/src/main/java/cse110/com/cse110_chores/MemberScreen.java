@@ -36,19 +36,24 @@ public class MemberScreen extends AppCompatActivity implements AdapterView.OnIte
         addMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v ) {
-                if (memberText.getText().toString().length() > 0) {
-                    Intent intent = new Intent(v.getContext(), MemberList.class);
-                    String member = memberText.getText().toString();
 
+                // stores the user input into a string
+                String member = memberText.getText().toString();
+
+                // checks if the user input a member name
+                if (member.length() > 0) {
+                    Intent intent = new Intent(v.getContext(), MemberList.class);
                     db.addName(new Names(member, groupid));
                     intent.putExtra("GROUPID", groupid);
 
+                    // closes the current activity
                     finish();
                     startActivity(intent);
                     return;
                 }
                 else
                 {
+                    // lets the user know that they didn't enter a name
                     Toast.makeText(MemberScreen.this, "Please enter a name", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -66,6 +71,7 @@ public class MemberScreen extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    // creates a menu drop down
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -73,6 +79,7 @@ public class MemberScreen extends AppCompatActivity implements AdapterView.OnIte
         return true;
     }
 
+    // On the selected item on the menu, it will switch the activities as appropriate
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
