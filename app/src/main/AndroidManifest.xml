@@ -46,6 +46,16 @@
         </activity>
         <activity android:name=".CalendarApi" >
         </activity>
+        <activity android:name=".PopUpSortedChores" >
+        </activity>
+        <activity
+            android:name=".EventsScreen"
+            android:label="Add Event">
+        </activity>
+        <activity
+            android:name=".EventsList"
+            android:label="Events">
+        </activity>
     </application>
 
 </manifest>
