@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static android.app.AlertDialog.*;
 
@@ -176,12 +178,12 @@ public class ChoresList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 // creates a pop up
-                AlertDialog.Builder builder = new AlertDialog.Builder(ChoresList.this);
+                AlertDialog.Builder editNameBuilder = new AlertDialog.Builder(ChoresList.this);
                 // sets the title of the pop up to "Choose a member"
-                builder.setTitle("Choose a member");
+                editNameBuilder.setTitle("Choose a member");
                 // creates a list of the members and allows them to be selected to change the name
                 // of who does the chore
-                builder.setSingleChoiceItems(listOfNames, -1, new OnClickListener() {
+                editNameBuilder.setSingleChoiceItems(listOfNames, -1, new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(ChoresList.this, listOfNames[which], Toast.LENGTH_SHORT).show();
@@ -189,12 +191,10 @@ public class ChoresList extends AppCompatActivity {
                     }
                 });
                 // confirms the change and updates the activity and the database
-                builder.setPositiveButton("Confirm", new OnClickListener() {
+                editNameBuilder.setPositiveButton("Confirm", new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Integer selected = (Integer) choreList.getTag();
-                        //Log.e("Selected", ":" + selected);
-                        //Log.e("position", ":" + position);
                         choreNameCheck.get(position).seti(selected);
                         db.updateChoreName(choreNameCheck.get(position));
                         choreNameCheck = db.getAllChoreNames(groupid);
@@ -207,14 +207,14 @@ public class ChoresList extends AppCompatActivity {
                     }
                 });
                 // cancels the change
-                builder.setNegativeButton("Cancel", new OnClickListener() {
+                editNameBuilder.setNegativeButton("Cancel", new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
                 });
                 // creates and shows the pop up
-                builder.create().show();
+                editNameBuilder.create().show();
             }
         });
 
@@ -247,6 +247,7 @@ public class ChoresList extends AppCompatActivity {
                     // gets the updated choreName list
                     choreNameCheck = db.getAllChoreNames(groupid);
                     if (choreNameCheck.size() != 0) {
+                        sortedChoresList.clear();
                         for (int i = 0; i < choreNameCheck.size(); i++) {
                             if (namePos == choreNameCheck.get(i).geti()) {
                                 sortedChoresList.add(choreNameCheck.get(i).getChoreName());
@@ -257,10 +258,24 @@ public class ChoresList extends AppCompatActivity {
                 }
                 // starts up pop up sorted chores if a name has been selected
                 if (!sortedBy.equals("[Sort by...]")) {
-                    Intent sortedChoresListIntent = new Intent(ChoresList.this, PopUpSortedChores.class);
-                    sortedChoresListIntent.putStringArrayListExtra("sortedChoresList", sortedChoresList);
-                    startActivity(sortedChoresListIntent);
-                    sortedChoresList.clear();
+
+                    // to show the list of chores that the selected person is doing
+                    AlertDialog.Builder sortedChoresBuilder = new AlertDialog.Builder(ChoresList.this);
+                    LayoutInflater sortedChoresInflater = getLayoutInflater();
+                    View sortedChoresView = (View) sortedChoresInflater.inflate(R.layout.sorted_chores_list, null);
+
+                    // sets up the view, the title, and the close button
+                    sortedChoresBuilder.setView(sortedChoresView);
+                    sortedChoresBuilder.setTitle(sortedBy + "'s chores");
+                    sortedChoresBuilder.setNegativeButton("Close", null);
+
+
+                    // used to display the chores
+                    ListView sortedChoresListView = (ListView) sortedChoresView.findViewById(R.id.sortedChoresList);
+                    ArrayAdapter<String> sortedChoresAdapter = new ArrayAdapter<String>
+                            (ChoresList.this, android.R.layout.simple_list_item_1, sortedChoresList);
+                    sortedChoresListView.setAdapter(sortedChoresAdapter);
+                    sortedChoresBuilder.create().show();
                 }
             }
             @Override
