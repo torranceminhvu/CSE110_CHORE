@@ -83,6 +83,19 @@ public class MainScreen extends AppCompatActivity {
             }
 
         });
+
+        Button eventButton = (Button) findViewById(R.id.eventsButton);
+
+        // on click, it will open the event list activity
+        eventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), EventsList.class);
+                intent.putExtra("GROUPID", groupid);
+                startActivityForResult(intent, 0);
+            }
+        });
+
     }
 
     // creates a menu drop down

@@ -45,6 +45,13 @@
     <string name="paymentAddButton">Add Payment</string>
     <string name="paymentDelete">PAID</string>
 
+    <!-- EventScreen -->
+    <string name="nameOfEvent">Event Name</string>
+    <string name="dateOfEvent">Date</string>
+    <string name="start">Start Time</string>
+    <string name="end">End Time</string>
+    <string name="desOfEvent">description</string>
+
     <!-- Menu -->
     <string name="home">Home</string>
     <string name="logout">Logout</string>
@@ -56,4 +63,5 @@
     <string name="title_activity_chores_list">ChoresList</string>
     <string name="title_activity_blah">blah</string>
     <string name="title_activity_calendar_view">CalendarView</string>
+    <string name="title_activity_events_screen">EventsScreen</string>
 </resources>
