@@ -3,6 +3,7 @@ package cse110.com.cse110_chores;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,42 +22,44 @@ public class PaymentListAdapter extends ArrayAdapter<String> {
     List<Payments> paymentAL;
     DatabaseHandler db;
     PaymentListAdapter paymentListAdapter;
+    Context currActivity;
 
     private int layout;
-        PaymentListAdapter(Context context, int resource, List<String> stringAL,
-                           List<Payments> paymentAL, DatabaseHandler db) {
-            super(context, resource, stringAL);
-            layout = resource;
-            this.stringAL = stringAL;
-            this.paymentAL = paymentAL;
-            this.db = db;
-            this.paymentListAdapter = this;
-        }
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            MyViewHolder mainViewHolder = null;
-            final int positionTwo = position + 1;
-            if(convertView == null) {
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                convertView = inflater.inflate(layout, parent, false);
-                final MyViewHolder myViewHolder = new MyViewHolder();
-
-                // links the textview object to show the line one text
-                myViewHolder.lineOne = (TextView) convertView.findViewById(R.id.oweReceiveAmount);
-                // links the textview object to show the line two text
-                myViewHolder.lineTwo = (TextView) convertView.findViewById(R.id.description);
-                // links the delete button to delete the object
-                myViewHolder.paid = (Button) convertView.findViewById(R.id.paid_button);
-                myViewHolder.paid.setOnClickListener(new View.OnClickListener() {
+    PaymentListAdapter(Context context, int resource, List<String> stringAL,
+                       List<Payments> paymentAL, DatabaseHandler db) {
+        super(context, resource, stringAL);
+        layout = resource;
+        this.stringAL = stringAL;
+        this.paymentAL = paymentAL;
+        this.db = db;
+        this.paymentListAdapter = this;
+        this.currActivity = context;
+    }
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        MyViewHolder mainViewHolder = null;
+        final int positionTwo = position + 1;
+        if(convertView == null) {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(layout, parent, false);
+            final MyViewHolder myViewHolder = new MyViewHolder();
+            // links the textview object to show the line on text
+            myViewHolder.lineOne = (TextView) convertView.findViewById(R.id.oweReceiveAmount);
+            // links the textview object to show the line two text
+            myViewHolder.lineTwo = (TextView) convertView.findViewById(R.id.description);
+            // links the delete button to delete the object
+            myViewHolder.paid = (Button) convertView.findViewById(R.id.paid_button);
+            myViewHolder.paid.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         // Asks user to confirm delete
-                        /*
-                        AlertDialog.Builder builder = new AlertDialog.Builder();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(currActivity);
                         builder.setTitle("Confirm payment");
                         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                // Removes the payment
                                 db.deletePayment(paymentAL.get(position));
                                 paymentAL.remove(position);
                                 stringAL.remove(position);
@@ -69,11 +72,7 @@ public class PaymentListAdapter extends ArrayAdapter<String> {
                                 // do nothing
                             }
                         });
-                        */
-                        db.deletePayment(paymentAL.get(position));
-                        paymentAL.remove(position);
-                        stringAL.remove(position);
-                        paymentListAdapter.notifyDataSetChanged();
+                        builder.create().show();
                     }
                 });
 
