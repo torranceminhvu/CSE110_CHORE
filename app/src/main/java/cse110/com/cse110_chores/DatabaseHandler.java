@@ -16,7 +16,7 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper{
     //db version
-    private static int DATABASE_VERSION = 6;
+    private static int DATABASE_VERSION = 7;
 
     //db name
     private static final String DATABASE_NAME = "Tables";
@@ -53,8 +53,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
     //cse110.com.cse110_chores.Events table column names
     private static final String KEY_EVENTNAME = "eventName";
-    private static final String KEY_EVENTSTARTDATE = "eventStartDate";
-    private static final String KEY_EVENTENDDATE = "eventEndDate";
+    private static final String KEY_EVENTDATE = "eventDate";
+    private static final String KEY_EVENTDESCRIPTION = "eventDescription";
     private static final String KEY_EVENTSTARTTIME = "eventStartTime";
     private static final String KEY_EVENTENDTIME = "eventEndTime";
     private static final String KEY_EVENTSGROUPS = "eventsGroups";
@@ -98,8 +98,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
         String CREATE_EVENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_EVENTS + " ("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_EVENTNAME + " TEXT,"
-                + KEY_EVENTSTARTDATE + " TEXT," + KEY_EVENTENDDATE + " TEXT,"
+                + KEY_EVENTDATE + " TEXT,"
                 + KEY_EVENTSTARTTIME + " TEXT," + KEY_EVENTENDTIME + " TEXT, "
+                + KEY_EVENTDESCRIPTION + " TEXT, "
                 + KEY_EVENTSGROUPS + " TEXT, " + "FOREIGN KEY(" + KEY_EVENTSGROUPS + ") REFERENCES "
                 + TABLE_GROUPS + "(" + KEY_ID + "));";
 
@@ -249,13 +250,52 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
 
     //Adding new events
+    public void addEvent(Events event) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
-    //Reading events
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, event.getName());
+        values.put(KEY_EVENTDATE, event.getEventDate());
+        values.put(KEY_EVENTSTARTTIME, event.getEventStartTime());
+        values.put(KEY_EVENTENDTIME, event.getEventEndTime());
+        values.put(KEY_EVENTDESCRIPTION, event.getDescription());
+        values.put(KEY_NAMESGROUPS, event.getGroupid());
 
-    //Updating events
+        // Inserting Row
+        db.insert(TABLE_NAMES, null, values);
+        db.close(); // Closing database connection
+    }
+
+    //Get all events
+    public ArrayList<Events> getAllEvents(int groupid) {
+        ArrayList<Events> events = new ArrayList<Events>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_EVENTS + " WHERE " + KEY_EVENTSGROUPS
+                + " = ?", new String[]{String.valueOf(groupid)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Events event = new Events(Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                        cursor.getString(4), cursor.getString(5), Integer.parseInt(cursor.getString(6)));
+
+                events.add(event);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+        return events;
+    }
+
 
     //Deleting events
-
+    public void deleteEvent(Events event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_EVENTS, KEY_ID + " = ?",
+                new String[]{String.valueOf(event.getId())});
+        db.close();
+    }
 
 
     //Adding new names
@@ -307,8 +347,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.close();
         return names;
     }
-
-    //Updating names
 
     //Deleting names
     public void deleteName(Names name) {

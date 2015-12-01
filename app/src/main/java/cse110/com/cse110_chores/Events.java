@@ -7,10 +7,10 @@ public class Events {
     //private vars
     int _id;
     String name;
-    int eventStartDate;
-    int eventEndDate;
-    int eventStartTime;
-    int eventEndTime;
+    String description;
+    String eventDate;
+    String eventStartTime;
+    String eventEndTime;
     int groupid;
     boolean found;
 
@@ -20,26 +20,26 @@ public class Events {
     }
 
     //constructor
-    public Events(int id, String name, int eventStartDate, int eventEndDate, int eventStartTime,
-                  int eventEndTime, int groupid){
+    public Events(int id, String name, String eventDate, String eventStartTime,
+                  String eventEndTime, String description, int groupid){
         this._id = id;
         this.name = name;
-        this.eventStartDate = eventStartDate;
-        this.eventEndDate = eventEndDate;
+        this.eventDate = eventDate;
         this.eventStartTime = eventStartTime;
         this.eventEndTime = eventEndTime;
+        this.description = description;
         this.groupid = groupid;
         this.found = true;
     }
 
     //constructor without id
-    public Events(String name, int eventStartDate, int eventEndDate, int eventStartTime,
-                  int eventEndTime, int groupid) {
+    public Events(String name, String eventDate, String eventStartTime,
+                  String eventEndTime, String description, int groupid) {
         this.name = name;
-        this.eventStartDate = eventStartDate;
-        this.eventEndDate = eventEndDate;
+        this.eventDate = eventDate;
         this.eventStartTime = eventStartTime;
         this.eventEndTime = eventEndTime;
+        this.description = description;
         this.groupid = groupid;
         this.found = true;
     }
@@ -60,22 +60,21 @@ public class Events {
     }
 
     //get eventStartDate
-    public int getEventStartDate(){
-        return this.eventStartDate;
+    public String getEventDate(){
+        return this.eventDate;
     }
 
-    //get eventEndDate
-    public int getEventEndDate(){
-        return this.eventEndDate;
+    public String getDescription(){
+        return this.description;
     }
 
     //get eventStartTime
-    public int getEventStartTime(){
+    public String getEventStartTime(){
         return this.eventStartTime;
     }
 
     //get eventEndTime
-    public int getEventEndTime(){
+    public String getEventEndTime(){
         return this.eventEndTime;
     }
 
