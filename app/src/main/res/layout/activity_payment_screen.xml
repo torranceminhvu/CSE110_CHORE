@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="owes"
+            android:text="@string/owes"
             android:id="@+id/owes"
             android:layout_marginLeft="10dp" />
 
@@ -47,7 +47,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$"
+            android:text="@string/$"
             android:id="@+id/dollarsign"
             android:layout_marginLeft="40dp" />
 
@@ -80,7 +80,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Add Payment"
+        android:text="@string/addPayments"
         android:id="@+id/addPayment"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"

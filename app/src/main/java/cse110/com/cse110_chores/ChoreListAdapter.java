@@ -45,7 +45,10 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        MyViewHolder mainViewHolder = null;
+        MyViewHolder mainViewHolder;
+        String frequency;
+        String chore;
+        String name;
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layout, parent, false);
@@ -74,7 +77,6 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
                             db.deleteChore(choreAL.get(position));
                             choreAL.remove(position);
                             stringAL.remove(position);
-                            //namesAL.remove(position);
                             assigner.unassign();
                             choreAdapter.notifyDataSetChanged();
                         }
@@ -91,25 +93,31 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
 
             // sets the texts for the textviews
             convertView.setTag(myViewHolder);
-            myViewHolder.frequencyTextView.setText("Frequency: " +
-                    choreAL.get(position).getFrequency());
-            myViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
-            myViewHolder.personTextView.setText("");
+            frequency = "Frequency: " + choreAL.get(position).getFrequency();
+            myViewHolder.frequencyTextView.setText(frequency);
+            chore = "Chore: " + choreAL.get(position).getName();
+            myViewHolder.choreTextView.setText(chore);
+            name = "";
+            myViewHolder.personTextView.setText(name);
             if (choreNameCheck.size() != 0) {
-                myViewHolder.personTextView.setText("Name: " + namesAL.get(position).getName()
-                        + "         Day: " + (choreNameCheck.get(position).getCounter() + 1));
+                name = "Name: " + namesAL.get(position).getName() + "         Day: " +
+                        (choreNameCheck.get(position).getCounter() + 1);
+                myViewHolder.personTextView.setText(name);
             }
         } else {
 
             // sets the texts for the textviews
             mainViewHolder = (MyViewHolder) convertView.getTag();
-            mainViewHolder.frequencyTextView.setText("Frequency: " +
-                    choreAL.get(position).getFrequency());
-            mainViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
-            mainViewHolder.personTextView.setText("");
+            frequency = "Frequency: " + choreAL.get(position).getFrequency();
+            mainViewHolder.frequencyTextView.setText(frequency);
+            chore = "Chore: " + choreAL.get(position).getName();
+            mainViewHolder.choreTextView.setText(chore);
+            name = "";
+            mainViewHolder.personTextView.setText(name);
             if (choreNameCheck.size() != 0) {
-                mainViewHolder.personTextView.setText("Name: " + namesAL.get(position).getName()
-                        + "         Day: " + (choreNameCheck.get(position).getCounter() + 1));
+                name = "Name: " + namesAL.get(position).getName() + "         Day: " +
+                        (choreNameCheck.get(position).getCounter() + 1);
+                mainViewHolder.personTextView.setText(name);
             }
         }
         return convertView;

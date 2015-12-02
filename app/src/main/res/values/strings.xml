@@ -44,6 +44,9 @@
     <string name="description">for...</string>
     <string name="paymentAddButton">Add Payment</string>
     <string name="paymentDelete">PAID</string>
+    <string name="addPayments">Add Payment</string>
+    <string name="owes">owes</string>
+    <string name="$">$</string>
 
     <!-- EventScreen -->
     <string name="nameOfEvent">Event Name</string>
@@ -51,6 +54,8 @@
     <string name="start">Start Time</string>
     <string name="end">End Time</string>
     <string name="desOfEvent">description</string>
+    <string name="addEvents">Add Events</string>
+    <string name="to">to</string>
 
     <!-- Menu -->
     <string name="home">Home</string>

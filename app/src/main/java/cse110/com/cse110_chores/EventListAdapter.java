@@ -38,7 +38,10 @@ public class EventListAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        MyViewHolder mainViewHolder = null;
+        MyViewHolder mainViewHolder;
+        String event;
+        String time;
+        String description;
         Log.e("before convertview", "before converview");
         if(convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -81,22 +84,26 @@ public class EventListAdapter extends ArrayAdapter<String> {
 
             convertView.setTag(myViewHolder);
             // sets the texts for the textviews
-            myViewHolder.lineOne.setText("Event: " + getItem(position) +
-                    "  Date: " + eventAL.get(position).getEventDate());
-            myViewHolder.lineTwo.setText("Time: " + eventAL.get(position).getEventStartTime()
-                    + " to " + eventAL.get(position).getEventEndTime());
-            myViewHolder.lineThree.setText("Description: " +
-                    eventAL.get(position).getDescription());
+            event = "Event: " + getItem(position) + "  Date: " +
+                    eventAL.get(position).getEventDate();
+            myViewHolder.lineOne.setText(event);
+            time = "Time: " + eventAL.get(position).getEventStartTime() + " to " +
+                    eventAL.get(position).getEventEndTime();
+            myViewHolder.lineTwo.setText(time);
+            description = "Description: " + eventAL.get(position).getDescription();
+            myViewHolder.lineThree.setText(description);
         } else {
 
             mainViewHolder = (MyViewHolder) convertView.getTag();
             // sets the texts for the textviews
-            mainViewHolder.lineOne.setText("Event: " + getItem(position) +
-                    "  Date: " + eventAL.get(position).getEventDate());
-            mainViewHolder.lineTwo.setText("Time: " + eventAL.get(position).getEventStartTime()
-                    + " to " + eventAL.get(position).getEventEndTime());
-            mainViewHolder.lineThree.setText("Description: " +
-                    eventAL.get(position).getDescription());
+            event = "Event: " + getItem(position) + "  Date: " +
+                    eventAL.get(position).getEventDate();
+            mainViewHolder.lineOne.setText(event);
+            time = "Time: " + eventAL.get(position).getEventStartTime() + " to " +
+                    eventAL.get(position).getEventEndTime();
+            mainViewHolder.lineTwo.setText(time);
+            description = "Description: " + eventAL.get(position).getDescription();
+            mainViewHolder.lineThree.setText(description);
         }
         return convertView;
     }

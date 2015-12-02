@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="to"
+            android:text="@string/to"
             android:id="@+id/to"
             android:layout_weight="0.37"
              />
@@ -77,7 +77,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Add Event"
+        android:text="@string/addEvents"
         android:id="@+id/addEvent"
         android:layout_alignParentBottom="true"
         android:gravity="center"/>

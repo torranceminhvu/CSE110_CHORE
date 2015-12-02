@@ -118,8 +118,7 @@ public class    Assigner {
     public Names getIndex(int index) {
         nameAL = db.getAllNames(groupid);
 
-        Names name = nameAL.get(index);
-        return name;
+        return nameAL.get(index);
     }
 
     // returns a name array that matches the chorename based on the index for each chorename

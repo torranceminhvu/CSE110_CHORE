@@ -188,7 +188,7 @@ public class ChoresList extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(ChoresList.this, listOfNames[which],
                                 Toast.LENGTH_SHORT).show();
-                        choreList.setTag(new Integer(which));
+                        choreList.setTag(Integer.valueOf(which));
                     }
                 });
                 // confirms the change and updates the activity and the database
@@ -263,7 +263,7 @@ public class ChoresList extends AppCompatActivity {
                     AlertDialog.Builder sortedChoresBuilder =
                             new AlertDialog.Builder(ChoresList.this);
                     LayoutInflater sortedChoresInflater = getLayoutInflater();
-                    View sortedChoresView = (View)
+                    View sortedChoresView =
                             sortedChoresInflater.inflate(R.layout.sorted_chores_list, null);
 
                     // sets up the view, the title, and the close button
