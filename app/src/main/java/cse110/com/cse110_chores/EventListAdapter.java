@@ -81,15 +81,19 @@ public class EventListAdapter extends ArrayAdapter<String> {
 
             convertView.setTag(myViewHolder);
             // sets the texts for the textviews
-            myViewHolder.lineOne.setText(getItem(position));
-            myViewHolder.lineTwo.setText(eventAL.get(position).getDescription());
+            myViewHolder.lineOne.setText("Event: " + getItem(position) +
+                    "  Date: " + eventAL.get(position).getEventDate());
+            myViewHolder.lineTwo.setText("Time: " + eventAL.get(position).getEventStartTime()
+                    + " to " + eventAL.get(position).getEventEndTime());
             myViewHolder.lineThree.setText(eventAL.get(position).getDescription());
         } else {
 
             mainViewHolder = (MyViewHolder) convertView.getTag();
             // sets the texts for the textviews
-            mainViewHolder.lineOne.setText(getItem(position));
-            mainViewHolder.lineTwo.setText(eventAL.get(position).getDescription());
+            mainViewHolder.lineOne.setText("Event: " + getItem(position) +
+                    "  Date: " + eventAL.get(position).getEventDate());
+            mainViewHolder.lineTwo.setText("Time: " + eventAL.get(position).getEventStartTime()
+                    + " to " + eventAL.get(position).getEventEndTime());
             mainViewHolder.lineThree.setText(eventAL.get(position).getDescription());
         }
         return convertView;

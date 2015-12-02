@@ -48,8 +48,7 @@
         <EditText
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:inputType="time"
-            android:ems="10"
+            android:inputType="text"
             android:id="@+id/eventStartTime"
             android:hint="@string/start"
             android:layout_weight="0.32" />
@@ -60,14 +59,13 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="to"
             android:id="@+id/to"
-            android:layout_weight="0.5"
-            android:layout_marginLeft="30dp" />
+            android:layout_weight="0.37"
+             />
 
         <EditText
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:inputType="time"
-            android:ems="10"
+            android:inputType="text"
             android:id="@+id/eventEndTime"
             android:hint="@string/end"
             android:layout_weight="0.32"
@@ -82,8 +80,7 @@
         android:text="Add Event"
         android:id="@+id/addEvent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:gravity="center"/>
 
     <EditText
         android:layout_width="wrap_content"

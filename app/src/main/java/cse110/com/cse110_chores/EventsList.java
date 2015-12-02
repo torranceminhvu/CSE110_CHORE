@@ -60,7 +60,7 @@ public class EventsList extends AppCompatActivity {
             date = current.getEventDate();
             startTime = current.getEventStartTime();
             endTime = current.getEventEndTime();
-            display =  event + date + startTime;
+            display =  event;
             description = current.getDescription();
             stringAL.add(display);
         }
