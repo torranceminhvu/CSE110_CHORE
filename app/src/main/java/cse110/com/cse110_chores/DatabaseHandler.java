@@ -16,7 +16,7 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper{
     //db version
-    private static int DATABASE_VERSION = 7;
+    private static int DATABASE_VERSION = 8;
 
     //db name
     private static final String DATABASE_NAME = "Tables";
@@ -262,7 +262,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         values.put(KEY_NAMESGROUPS, event.getGroupid());
 
         // Inserting Row
-        db.insert(TABLE_NAMES, null, values);
+        db.insert(TABLE_EVENTS, null, values);
         db.close(); // Closing database connection
     }
 
