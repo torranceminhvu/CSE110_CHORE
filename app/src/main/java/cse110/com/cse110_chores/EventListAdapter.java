@@ -3,6 +3,7 @@ package cse110.com.cse110_chores;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,11 +35,11 @@ public class EventListAdapter extends ArrayAdapter<String> {
         this.eventListAdapter = this;
         this.currActivity = context;
     }
-    /*
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         MyViewHolder mainViewHolder = null;
-        final int positionTwo = position + 1;
+        Log.e("before convertview", "before converview");
         if(convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layout, parent, false);
@@ -101,5 +102,5 @@ public class EventListAdapter extends ArrayAdapter<String> {
         TextView lineThree;
         Button delete;
     }
-    */
+
 }

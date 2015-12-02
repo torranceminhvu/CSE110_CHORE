@@ -33,7 +33,7 @@ public class EventsScreen extends AppCompatActivity implements AdapterView.OnIte
         final EditText eventEndTime = (EditText) findViewById(R.id.eventEndTime);
         final EditText eventDescription = (EditText) findViewById(R.id.eventDescription);
 
-        /* addEvent.setOnClickListener(new View.OnClickListener() {
+         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String event = eventName.getText().toString();
@@ -60,7 +60,7 @@ public class EventsScreen extends AppCompatActivity implements AdapterView.OnIte
                             Toast.LENGTH_SHORT).show();
                 }
             }
-        }); */
+        });
     }
 
 

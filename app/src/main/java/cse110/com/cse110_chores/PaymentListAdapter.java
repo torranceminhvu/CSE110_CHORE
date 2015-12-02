@@ -38,7 +38,7 @@ public class PaymentListAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         MyViewHolder mainViewHolder = null;
-        final int positionTwo = position + 1;
+
         if(convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layout, parent, false);

@@ -53,21 +53,21 @@ public class EventsList extends AppCompatActivity {
             }
         });
 
-       /* eventAL = db.getAllEvents(groupid);
+        eventAL = db.getAllEvents(groupid);
         for (int i = 0; i < eventAL.size(); i++){
             current = eventAL.get(i);
-            event = current.getEvent();
-            date = current.getDate();
-            starTime = current.getStartTime ();
-            endTime = current.getEndTime();
-            display =  event + date + time;
+            event = current.getName();
+            date = current.getEventDate();
+            startTime = current.getEventStartTime();
+            endTime = current.getEventEndTime();
+            display =  event + date + startTime;
             description = current.getDescription();
             stringAL.add(display);
-        } */
+        }
 
-        /* eventListAdapter = new EventListAdapter(EventsList.this, R.layout.event_list_row,
+        eventListAdapter = new EventListAdapter(EventsList.this, R.layout.event_list_row,
                 stringAL, eventAL, db );
-        eventList.setAdapter(eventListAdapter); */
+        eventList.setAdapter(eventListAdapter);
     }
 
     @Override
@@ -92,5 +92,4 @@ public class EventsList extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }
