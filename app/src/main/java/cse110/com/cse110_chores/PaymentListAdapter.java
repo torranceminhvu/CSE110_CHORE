@@ -78,14 +78,18 @@ public class PaymentListAdapter extends ArrayAdapter<String> {
 
                 convertView.setTag(myViewHolder);
                 // sets the texts for the textviews
-                myViewHolder.lineOne.setText(getItem(position));
-                myViewHolder.lineTwo.setText(paymentAL.get(position).getDescription());
+                myViewHolder.lineOne.setText(getItem(position) + " owes "
+                        + paymentAL.get(position).getOwner() + "    Amount: "
+                        + "$" + paymentAL.get(position).getAmount());
+                myViewHolder.lineTwo.setText("For: " + paymentAL.get(position).getDescription());
             } else {
 
                 mainViewHolder = (MyViewHolder) convertView.getTag();
                 // sets the texts for the textviews
-                mainViewHolder.lineOne.setText(getItem(position));
-                mainViewHolder.lineTwo.setText(paymentAL.get(position).getDescription());
+                mainViewHolder.lineOne.setText(getItem(position) + " owes "
+                        + paymentAL.get(position).getOwner() + "    Amount: "
+                        + "$" + paymentAL.get(position).getAmount());
+                mainViewHolder.lineTwo.setText("For: " + paymentAL.get(position).getDescription());
             }
             return convertView;
         }

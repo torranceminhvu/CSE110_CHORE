@@ -57,10 +57,10 @@ public class PaymentList extends AppCompatActivity {
         paymentAL = db.getAllPayments(groupid);
         for (int i = 0; i < paymentAL.size(); i++){
             current = paymentAL.get(i);
-            ownee = current.getOwnee() + " owes ";
-            owner = current.getOwner() + " $ ";
+            ownee = current.getOwnee();
+            owner = current.getOwner();
             amount = current.getAmount();
-            display =  ownee + owner + amount;
+            display =  ownee;
             description = current.getDescription();
             stringAL.add(display);
         }

@@ -21,6 +21,7 @@
                 android:layout_weight="0.09"
                 android:gravity="center"
                 android:textColor="#000000"
+                android:textSize="16dp"
                 android:text="TextView" />
 
             <TextView
@@ -29,7 +30,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.09"
                 android:gravity="center"
+                android:textSize="16dp"
                 android:textColor="#000000"
+
                 android:text="TextView" />
 
             <TextView
@@ -38,6 +41,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.09"
                 android:gravity="center"
+                android:textSize="16dp"
                 android:textColor="#6D8383"
                 android:text="TextView"/>
         </LinearLayout>
@@ -45,9 +49,10 @@
         <Button
             android:id="@+id/delete_button"
             android:layout_width="30dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@mipmap/ic_redx" />
+            android:background="@mipmap/ic_redx"
+            android:layout_weight="0.007" />
 
     </LinearLayout>
 

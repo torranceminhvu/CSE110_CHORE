@@ -25,6 +25,7 @@
                 android:layout_weight="0.09"
                 android:gravity="center"
                 android:textColor="#000000"
+                android:textSize="16dp"
                 android:text="TextView"/>
 
             <!-- holds the chore name-->
@@ -35,6 +36,7 @@
                 android:layout_weight="0.09"
                 android:gravity="center"
                 android:textColor="#000000"
+                android:textSize="16dp"
                 android:text="TextView"/>
 
             <!-- holds the name and also the number of days that has passed since beginning of
@@ -46,6 +48,7 @@
                 android:layout_weight="0.09"
                 android:gravity="center"
                 android:textColor="#000000"
+                android:textSize="16dp"
                 android:text="TextView"/>
 
         </LinearLayout>
@@ -54,9 +57,10 @@
         <Button
             android:id="@+id/delete_button"
             android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@mipmap/ic_redx" />
+            android:background="@mipmap/ic_redx"
+            android:layout_weight="0.007"/>
     </LinearLayout>
 </LinearLayout>
 

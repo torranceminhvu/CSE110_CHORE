@@ -44,7 +44,8 @@
             android:name=".PaymentList"
             android:label="Payments" >
         </activity>
-        <activity android:name=".CalendarApi" >
+        <activity android:name=".CalendarApi"
+            android:label="Calendar" >
         </activity>
         <activity android:name=".PopUpSortedChores" >
         </activity>

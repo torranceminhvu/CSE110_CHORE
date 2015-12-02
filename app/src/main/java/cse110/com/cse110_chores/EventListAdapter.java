@@ -85,7 +85,8 @@ public class EventListAdapter extends ArrayAdapter<String> {
                     "  Date: " + eventAL.get(position).getEventDate());
             myViewHolder.lineTwo.setText("Time: " + eventAL.get(position).getEventStartTime()
                     + " to " + eventAL.get(position).getEventEndTime());
-            myViewHolder.lineThree.setText(eventAL.get(position).getDescription());
+            myViewHolder.lineThree.setText("Description: " +
+                    eventAL.get(position).getDescription());
         } else {
 
             mainViewHolder = (MyViewHolder) convertView.getTag();
@@ -94,7 +95,8 @@ public class EventListAdapter extends ArrayAdapter<String> {
                     "  Date: " + eventAL.get(position).getEventDate());
             mainViewHolder.lineTwo.setText("Time: " + eventAL.get(position).getEventStartTime()
                     + " to " + eventAL.get(position).getEventEndTime());
-            mainViewHolder.lineThree.setText(eventAL.get(position).getDescription());
+            mainViewHolder.lineThree.setText("Description: " +
+                    eventAL.get(position).getDescription());
         }
         return convertView;
     }
