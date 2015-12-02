@@ -14,11 +14,6 @@ public class Events {
     int groupid;
     boolean found;
 
-    //empty constructor
-    public Events(){
-        this.found = false;
-    }
-
     //constructor
     public Events(int id, String name, String eventDate, String eventStartTime,
                   String eventEndTime, String description, int groupid){
@@ -82,7 +77,4 @@ public class Events {
         return this.groupid;
     }
 
-    public boolean getFound(){
-        return this.found;
-    }
 }

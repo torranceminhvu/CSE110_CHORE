@@ -10,11 +10,6 @@ public class Names {
     int groupid;
     boolean found;
 
-    //empty constructor
-    public Names(){
-        this.found = false;
-    }
-
     //constructor
     public Names(int id, String name, int groupid){
         this._id = id;
@@ -49,7 +44,4 @@ public class Names {
         return this.groupid;
     }
 
-    public boolean getFound(){
-        return this.found;
-    }
 }

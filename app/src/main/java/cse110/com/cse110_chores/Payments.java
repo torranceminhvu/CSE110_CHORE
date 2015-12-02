@@ -13,11 +13,6 @@ public class Payments {
     int groupid;
     boolean found;
 
-    //empty constructor
-    public Payments() {
-        this.found = false;
-    }
-
     //constructor
     public Payments(int id, String owner, String ownee, String amount, String description, int groupid) {
         this._id = id;
@@ -63,9 +58,5 @@ public class Payments {
 
     public int getGroupid() {
         return this.groupid;
-    }
-
-    public boolean getFound() {
-        return this.found;
     }
 }

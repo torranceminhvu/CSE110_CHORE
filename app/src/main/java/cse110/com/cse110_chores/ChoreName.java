@@ -12,24 +12,12 @@ public class ChoreName {
     int i;
     int groupid;
 
-    public ChoreName(){
-    }
-
     public ChoreName(int _id, String choreName, int i, int counter, int frequency, int startTime, int groupid){
         this._id = _id;
         this.choreName = choreName;
         this.counter = counter;
         this.i = i;
         this.frequency = frequency;
-        this.startTime = startTime;
-        this.groupid = groupid;
-    }
-
-    public ChoreName(String choreName, int i, int counter, int frequency, int startTime, int groupid){
-        this.choreName = choreName;
-        this.i = i;
-        this.frequency = frequency;
-        this.counter = counter;
         this.startTime = startTime;
         this.groupid = groupid;
     }

@@ -52,7 +52,6 @@ public class CreateSearch_Group extends AppCompatActivity {
 
                     finish();
                     startActivity(intent);
-                    return;
                 }
             }
         });
@@ -76,7 +75,6 @@ public class CreateSearch_Group extends AppCompatActivity {
 
                     finish();
                     startActivity(intent);
-                    return;
                 }
                 //duplicate group
                 else{

@@ -13,11 +13,6 @@ public class Chores {
     String frequency;
     int groupid;
 
-    //empty Constructor
-    public Chores(){
-        this.found = false;
-    }
-
     //constructor
     public Chores(int id, String name, String frequency, int groupid){
         this._id = id;
@@ -63,7 +58,4 @@ public class Chores {
         return this.groupid;
     }
 
-    public boolean getFound(){
-        return this.found;
-    }
 }

@@ -1,8 +1,5 @@
 package cse110.com.cse110_chores;
 
-import android.provider.ContactsContract;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 

@@ -5,10 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Matthew on 10/29/2015.
@@ -161,27 +158,24 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
     //Reading groups
     public Groups getGroup(String username) {
+        Groups group;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_GROUPS + " WHERE " + KEY_USERNAME
                 + " = ?", new String[]{username});
 
         if(cursor != null && cursor.moveToFirst()) {
-            return new Groups(Integer.parseInt(cursor.getString(0)),
+            group = new Groups(Integer.parseInt(cursor.getString(0)),
                     cursor.getString(1), cursor.getString(2));
         }
         else
-            return new Groups();
-    }
+            group = new Groups();
 
-    //Deleting groups
-    public void deleteGroup(Groups group) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_GROUPS, KEY_ID + " = ?",
-                new String[]{String.valueOf(group.getId())});
-        db.close();
+        if (cursor != null){
+            cursor.close();
+        }
+        return group;
     }
-
 
     //Adding new chores
     public void addChore(Chores chore) {
@@ -217,6 +211,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
                 chores.add(chore);
             }while (cursor.moveToNext());
+        }
+
+        if (cursor != null){
+            cursor.close();
         }
 
         db.close();
@@ -272,6 +270,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             } while (cursor.moveToNext());
         }
 
+        if (cursor != null){
+            cursor.close();
+        }
+
         db.close();
         return events;
     }
@@ -317,6 +319,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
                 names.add(name);
             }while (cursor.moveToNext());
+        }
+
+        if (cursor != null){
+            cursor.close();
         }
 
         db.close();
@@ -368,6 +374,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
                 payments.add(payment);
             }while (cursor.moveToNext());
+        }
+
+        if (cursor != null){
+            cursor.close();
         }
 
         db.close();
@@ -424,6 +434,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
                 ChoreNames.add(choreName);
             }while (cursor.moveToNext());
+        }
+
+        if (cursor != null){
+            cursor.close();
         }
 
         db.close();
