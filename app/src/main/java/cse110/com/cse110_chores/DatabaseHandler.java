@@ -70,6 +70,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_PAYMENTSGROUPS = "paymentsGroups";
 
+    //ChoreNames tables' columns
     private static final String KEY_CHORE = "chore";
     private static final String KEY_I = "i";
     private static final String KEY_CHORENAMESGROUPS = "choreNamesGroups";
@@ -182,7 +183,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     }
 
 
-
     //Adding new chores
     public void addChore(Chores chore) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -197,33 +197,20 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.close(); // Closing database connection
     }
 
-    //Reading chores
-    public Chores getChore(String chorename, int groupid) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT " + KEY_CHORENAME + ", " + KEY_CHORESGROUPS + " FROM "
-                + TABLE_CHORES + " WHERE " + KEY_CHORENAME + " = ? AND " + KEY_CHORESGROUPS
-                + " = ?", new String[]{chorename, String.valueOf(groupid)});
-
-        if (cursor != null && cursor.moveToFirst()){
-            return new Chores(Integer.parseInt(cursor.getString(0)),
-                    cursor.getString(1), cursor.getString(2),
-                    Integer.parseInt(cursor.getString(3)));
-        }
-        else
-            return new Chores();
-    }
-
     //Get all chores
     public ArrayList<Chores> getAllChores(int groupid){
         ArrayList<Chores> chores = new ArrayList<Chores>();
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //find all chores in the current group using the groupid
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CHORES + " WHERE " + KEY_CHORESGROUPS
                 + " = ?", new String[]{String.valueOf(groupid)});
 
+        //loops through all chores found
         if (cursor != null && cursor.moveToFirst()){
             do{
+                //make a new Chores object with the member fields equal to the columns of the table
+                //and store it in an arraylist
                 Chores chore = new Chores(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), cursor.getString(2),
                         Integer.parseInt(cursor.getString(3)));
@@ -236,17 +223,14 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         return chores;
     }
 
-    //Update chores
-
     //Deleting chores
     public void deleteChore(Chores chore) {
         SQLiteDatabase db = this.getWritableDatabase();
+        //uses id of chore to delete the same Chore as input
         db.delete(TABLE_CHORES, KEY_ID + " = ?",
-                new String[] { String.valueOf(chore.getId()) });
+                new String[]{String.valueOf(chore.getId())});
         db.close();
     }
-
-
 
 
     //Adding new events
@@ -271,11 +255,15 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         ArrayList<Events> events = new ArrayList<Events>();
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //find all events in the current group using the groupid
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_EVENTS + " WHERE " + KEY_EVENTSGROUPS
                 + " = ?", new String[]{String.valueOf(groupid)});
 
+        //loops through all events found
         if (cursor != null && cursor.moveToFirst()) {
             do {
+                //make a new Events object with the member fields equal to the columns of the table
+                //and store it in an arraylist
                 Events event = new Events(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), cursor.getString(2), cursor.getString(3),
                         cursor.getString(4), cursor.getString(5), Integer.parseInt(cursor.getString(6)));
@@ -287,7 +275,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.close();
         return events;
     }
-
 
     //Deleting events
     public void deleteEvent(Events event) {
@@ -311,32 +298,20 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.close(); // Closing database connection
     }
 
-    //Reading names
-    public Names getName(String name, int groupid) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT " + KEY_NAME + ", " + KEY_NAMESGROUPS + " FROM "
-                + TABLE_NAMES + " WHERE " + KEY_NAME + " = ? AND " + KEY_NAMESGROUPS
-                + " = ?", new String[]{name, String.valueOf(groupid)});
-
-        if (cursor != null && cursor.moveToFirst()){
-            return new Names(Integer.parseInt(cursor.getString(0)),
-                    cursor.getString(1), Integer.parseInt(cursor.getString(2)));
-        }
-        else
-            return new Names();
-    }
-
     //Get all chores
     public ArrayList<Names> getAllNames(int groupid){
         ArrayList<Names> names = new ArrayList<Names>();
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //find all names in the current group using the groupid
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAMES + " WHERE " + KEY_NAMESGROUPS
                 + " = ?", new String[]{String.valueOf(groupid)});
 
+        //loops though all names found
         if (cursor != null && cursor.moveToFirst()){
             do{
+                //make a new Namess object with the member fields equal to the columns of the table
+                //and store it in an arraylist
                 Names name = new Names(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), Integer.parseInt(cursor.getString(2)));
 
@@ -355,7 +330,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
                 new String[]{String.valueOf(name.getId())});
         db.close();
     }
-
 
 
     //Adding new payments
@@ -379,11 +353,15 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         ArrayList<Payments> payments = new ArrayList<Payments>();
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //find all events in the current group using the groupid
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PAYMENTS + " WHERE " + KEY_PAYMENTSGROUPS
                 + " = ?", new String[]{String.valueOf(groupid)});
 
+        //loops through all payments found
         if (cursor != null && cursor.moveToFirst()){
             do{
+                //make a new Payments object with the member fields equal to the columns of the table
+                //and store it in an arraylist
                 Payments payment = new Payments(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), cursor.getString(2), cursor.getString(3),
                         cursor.getString(4), Integer.parseInt(cursor.getString(5)));
@@ -402,7 +380,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     public void deletePayment(Payments payment) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PAYMENTS, KEY_ID + " = ?",
-                new String[] { String.valueOf(payment.getId()) });
+                new String[]{String.valueOf(payment.getId())});
         db.close();
     }
 
@@ -424,34 +402,21 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.close(); // Closing database connection
     }
 
-    //Reading names
-    public ChoreName getChoreName(String choreName, int groupid) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT " + KEY_CHORE + ", " + KEY_CHORENAMESGROUPS + " FROM "
-                + TABLE_CHORENAME + " WHERE " + KEY_CHORE + " = ? AND " + KEY_CHORENAMESGROUPS
-                + " = ?", new String[]{choreName, String.valueOf(groupid)});
-
-        if (cursor != null && cursor.moveToFirst()){
-            return new ChoreName(Integer.parseInt(cursor.getString(0)),
-                    cursor.getString(1), Integer.parseInt(cursor.getString(2)),
-                    Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)),
-                    Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)));
-        }
-        else
-            return new ChoreName();
-    }
 
     //Get all chores
     public ArrayList<ChoreName> getAllChoreNames(int groupid){
         ArrayList<ChoreName> ChoreNames = new ArrayList<ChoreName>();
         SQLiteDatabase db = this.getReadableDatabase();
 
+        //find all chorenames in the current group using the groupid
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CHORENAME + " WHERE " + KEY_CHORENAMESGROUPS
                 + " = ?", new String[]{String.valueOf(groupid)});
 
+        //loops through all chorenames found
         if (cursor != null && cursor.moveToFirst()){
             do{
+                //make a new ChoreName object with the member fields equal to the columns of the table
+                //and store it in an arraylist
                 ChoreName choreName = new ChoreName(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), Integer.parseInt(cursor.getString(2)),
                         Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)),
@@ -465,10 +430,11 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         return ChoreNames;
     }
 
-    //Updating names
+    //Updating chorenames
     public void updateChoreName(ChoreName choreName){
         SQLiteDatabase db = this.getWritableDatabase();
 
+        //update the columns in the table with the fields of the new inputted chorename
         ContentValues values = new ContentValues();
         values.put(KEY_CHORE, choreName.getChoreName());
         values.put(KEY_I, choreName.geti());
