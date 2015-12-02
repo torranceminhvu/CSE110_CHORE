@@ -48,7 +48,8 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
             MyViewHolder myViewHolder = new MyViewHolder();
 
             // links the textview object to show the frequency
-            myViewHolder.frequencyTextView = (TextView) convertView.findViewById(R.id.frequencyTextView);
+            myViewHolder.frequencyTextView = (TextView)
+                    convertView.findViewById(R.id.frequencyTextView);
             // links the textview object to show the chore name
             myViewHolder.choreTextView = (TextView) convertView.findViewById(R.id.choreTextView);
             // links the textview object to show the person who does the chore
@@ -69,7 +70,8 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
 
             // sets the texts for the textviews
             convertView.setTag(myViewHolder);
-            myViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
+            myViewHolder.frequencyTextView.setText("Frequency: " +
+                    choreAL.get(position).getFrequency());
             myViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
             myViewHolder.personTextView.setText("");
             if (choreNameCheck.size() != 0) {
@@ -80,7 +82,8 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
 
             // sets the texts for the textviews
             mainViewHolder = (MyViewHolder) convertView.getTag();
-            mainViewHolder.frequencyTextView.setText("Frequency: " + choreAL.get(position).getFrequency());
+            mainViewHolder.frequencyTextView.setText("Frequency: " +
+                    choreAL.get(position).getFrequency());
             mainViewHolder.choreTextView.setText("Chore: " + choreAL.get(position).getName());
             mainViewHolder.personTextView.setText("");
             if (choreNameCheck.size() != 0) {

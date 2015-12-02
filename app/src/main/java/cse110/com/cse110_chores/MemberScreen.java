@@ -54,7 +54,8 @@ public class MemberScreen extends AppCompatActivity implements AdapterView.OnIte
                 else
                 {
                     // lets the user know that they didn't enter a name
-                    Toast.makeText(MemberScreen.this, "Please enter a name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MemberScreen.this, "Please enter a name",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
 

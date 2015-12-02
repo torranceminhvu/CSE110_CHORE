@@ -26,7 +26,8 @@ public class CalendarApi extends AppCompatActivity {
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                Toast.makeText(getApplicationContext(), year + "/" + month + "/" + dayOfMonth, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),
+                        year + "/" + month + "/" + dayOfMonth, Toast.LENGTH_LONG).show();
             }
         });
 

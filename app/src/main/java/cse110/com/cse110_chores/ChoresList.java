@@ -144,7 +144,8 @@ public class ChoresList extends AppCompatActivity {
                     }
                     // Grabs the updated chores and resets the activity to show updates
                     choreNameCheck = db.getAllChoreNames(groupid);
-                    choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
+                    choreAdapter = new ChoreListAdapter(ChoresList.this,
+                            R.layout.chores_list_row, stringAL,
                             choreAL, namesAL, choreNameCheck, db, groupid);
                     choreList.setAdapter(choreAdapter);
                 }
@@ -186,7 +187,8 @@ public class ChoresList extends AppCompatActivity {
                 editNameBuilder.setSingleChoiceItems(listOfNames, -1, new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(ChoresList.this, listOfNames[which], Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChoresList.this, listOfNames[which],
+                                Toast.LENGTH_SHORT).show();
                         choreList.setTag(new Integer(which));
                     }
                 });
@@ -198,7 +200,8 @@ public class ChoresList extends AppCompatActivity {
                         choreNameCheck.get(position).seti(selected);
                         db.updateChoreName(choreNameCheck.get(position));
                         choreNameCheck = db.getAllChoreNames(groupid);
-                        choreAdapter = new ChoreListAdapter(ChoresList.this, R.layout.chores_list_row, stringAL,
+                        choreAdapter = new ChoreListAdapter(ChoresList.this,
+                                R.layout.chores_list_row, stringAL,
                                 choreAL, namesAL, choreNameCheck, db, groupid);
                         choreList.setAdapter(choreAdapter);
                         finish();
@@ -219,7 +222,8 @@ public class ChoresList extends AppCompatActivity {
         });
 
         // sets the spinner to hold all the names
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, spinnerList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -260,24 +264,34 @@ public class ChoresList extends AppCompatActivity {
                 if (!sortedBy.equals("[Sort by...]")) {
 
                     // to show the list of chores that the selected person is doing
-                    AlertDialog.Builder sortedChoresBuilder = new AlertDialog.Builder(ChoresList.this);
+                    AlertDialog.Builder sortedChoresBuilder =
+                            new AlertDialog.Builder(ChoresList.this);
                     LayoutInflater sortedChoresInflater = getLayoutInflater();
-                    View sortedChoresView = (View) sortedChoresInflater.inflate(R.layout.sorted_chores_list, null);
+                    View sortedChoresView = (View)
+                            sortedChoresInflater.inflate(R.layout.sorted_chores_list, null);
 
                     // sets up the view, the title, and the close button
                     sortedChoresBuilder.setView(sortedChoresView);
                     sortedChoresBuilder.setTitle(sortedBy + "'s chores");
-                    sortedChoresBuilder.setNegativeButton("Close", null);
-
+                    sortedChoresBuilder.setNegativeButton("Close", new OnClickListener() {
+                        // resets the spinner to [Sorted by...] so that reselectiong of the
+                        // same name would work
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            spinner.setSelection(0);
+                        }
+                    });
 
                     // used to display the chores
-                    ListView sortedChoresListView = (ListView) sortedChoresView.findViewById(R.id.sortedChoresList);
-                    ArrayAdapter<String> sortedChoresAdapter = new ArrayAdapter<String>
-                            (ChoresList.this, android.R.layout.simple_list_item_1, sortedChoresList);
+                    ListView sortedChoresListView = (ListView)
+                            sortedChoresView.findViewById(R.id.sortedChoresList);
+                    ArrayAdapter<String> sortedChoresAdapter = new ArrayAdapter<String>(ChoresList.this,
+                            android.R.layout.simple_list_item_1, sortedChoresList);
                     sortedChoresListView.setAdapter(sortedChoresAdapter);
                     sortedChoresBuilder.create().show();
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
