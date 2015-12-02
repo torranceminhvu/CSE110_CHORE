@@ -254,12 +254,12 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, event.getName());
+        values.put(KEY_EVENTNAME, event.getName());
         values.put(KEY_EVENTDATE, event.getEventDate());
         values.put(KEY_EVENTSTARTTIME, event.getEventStartTime());
         values.put(KEY_EVENTENDTIME, event.getEventEndTime());
         values.put(KEY_EVENTDESCRIPTION, event.getDescription());
-        values.put(KEY_NAMESGROUPS, event.getGroupid());
+        values.put(KEY_EVENTSGROUPS, event.getGroupid());
 
         // Inserting Row
         db.insert(TABLE_EVENTS, null, values);
