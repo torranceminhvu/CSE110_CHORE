@@ -1,6 +1,8 @@
 package cse110.com.cse110_chores;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ public class MemberListAdapter extends ArrayAdapter<String> {
     String memberName;
     String display;
     Assigner assigner;
+    Context currActivity;
     int groupid;
 
     private int layout;
@@ -37,6 +40,7 @@ public class MemberListAdapter extends ArrayAdapter<String> {
         this.db = db;
         this.memberListAdapter = this;
         this.groupid = groupid;
+        this.currActivity = context;
         assigner = new Assigner(db, groupid);
     }
 
@@ -55,17 +59,33 @@ public class MemberListAdapter extends ArrayAdapter<String> {
             myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    db.deleteName(memberAL.get(position));
-                    memberAL.remove(position);
-                    stringAL.clear();
-                    for (int i = 0; i < memberAL.size(); i++) {
-                        current = memberAL.get(i);
-                        memberName = current.getName();
-                        display = String.valueOf(i + 1) + ".  " + memberName;
-                        stringAL.add(display);
-                    }
-                    assigner.unassign();
-                    memberListAdapter.notifyDataSetChanged();
+
+                    // confirmation of delete
+                    AlertDialog.Builder builder = new AlertDialog.Builder(currActivity);
+                    builder.setTitle("Confirm delete");
+                    builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            db.deleteName(memberAL.get(position));
+                            memberAL.remove(position);
+                            stringAL.clear();
+                            for (int i = 0; i < memberAL.size(); i++) {
+                                current = memberAL.get(i);
+                                memberName = current.getName();
+                                display = String.valueOf(i + 1) + ".  " + memberName;
+                                stringAL.add(display);
+                            }
+                            assigner.unassign();
+                            memberListAdapter.notifyDataSetChanged();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    });
+                    builder.create().show();
                 }
             });
 

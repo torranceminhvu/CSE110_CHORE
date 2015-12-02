@@ -1,6 +1,8 @@
 package cse110.com.cse110_chores;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
     DatabaseHandler db;
     ChoreListAdapter choreAdapter;
     Assigner assigner;
+    Context currActivity;
     int groupid;
 
     ChoreListAdapter(Context context, int resource, List<String> stringAL,
@@ -37,6 +40,7 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
         this.db = db;
         this.choreAdapter = this;
         this.groupid = groupid;
+        this.currActivity = context;
         assigner = new Assigner(db, groupid);
     }
     @Override
@@ -59,12 +63,29 @@ public class ChoreListAdapter extends ArrayAdapter<String> {
             myViewHolder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    db.deleteChore(choreAL.get(position));
-                    choreAL.remove(position);
-                    stringAL.remove(position);
-                    //namesAL.remove(position);
-                    assigner.unassign();
-                    choreAdapter.notifyDataSetChanged();
+
+                    // confirmation of delete
+                    AlertDialog.Builder builder = new AlertDialog.Builder(currActivity);
+                    builder.setTitle("Confirm delete");
+                    builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            db.deleteChore(choreAL.get(position));
+                            choreAL.remove(position);
+                            stringAL.remove(position);
+                            //namesAL.remove(position);
+                            assigner.unassign();
+                            choreAdapter.notifyDataSetChanged();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    });
+                    builder.create().show();
                 }
             });
 
