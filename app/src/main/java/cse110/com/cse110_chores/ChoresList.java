@@ -134,7 +134,6 @@ public class ChoresList extends AppCompatActivity {
                 calendar = Calendar.getInstance();
                 day = calendar.get(Calendar.DAY_OF_YEAR);
 
-                //Log.e("NAMESAL", String.valueOf(namesAL.size()));
                 // Checks whether there are names to assign before assigning the chores
                 if (namesAL.size() != 0){
                     stringAL.clear();
@@ -238,7 +237,6 @@ public class ChoresList extends AppCompatActivity {
                 // finds the index of the name picked
                 namesAL = db.getAllNames(groupid);
 
-                //Log.e("NAMESAL", String.valueOf(namesAL.size()));
                 // checks whether there are members to sort the names by
                 if (namesAL.size() != 0) {
                     int namePos = 0;
@@ -247,7 +245,6 @@ public class ChoresList extends AppCompatActivity {
                         if (sortedBy.equals(namesAL.get(namePos).getName()))
                             break foundName;
                     }
-                    //Log.e("NAMEFOUND", String.valueOf(namePos));
                     // gets the updated choreName list
                     choreNameCheck = db.getAllChoreNames(groupid);
                     if (choreNameCheck.size() != 0) {
@@ -255,7 +252,6 @@ public class ChoresList extends AppCompatActivity {
                         for (int i = 0; i < choreNameCheck.size(); i++) {
                             if (namePos == choreNameCheck.get(i).geti()) {
                                 sortedChoresList.add(choreNameCheck.get(i).getChoreName());
-                                //Log.e("CHORENAME", choreNameCheck.get(i).getChoreName());
                             }
                         }
                     }

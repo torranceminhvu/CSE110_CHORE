@@ -1,21 +1,25 @@
 package cse110.com.cse110_chores;
 
 /**
- * Created by Matthew on 11/22/2015.
+ * Parse strings of frequency to ints
  */
 public class Parser {
+    //vars
     Chores toParse;
     int parsed;
 
+    // empty constructor
     public Parser(){
     }
 
+    // parse the frequency of a chore from string to int
     public int parse(Chores chore){
         String current;
 
         this.toParse = chore;
         current = toParse.getFrequency();
 
+        /* check which case, and return its int form */
         if (current.equals("Weekly")) {
             parsed = 7;
         }

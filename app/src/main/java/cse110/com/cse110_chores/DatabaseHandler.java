@@ -485,7 +485,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     //Deleting names
     public void deleteChoreName(ChoreName choreName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Log.e("deleteid", String.valueOf(choreName.getId()));
         db.delete(TABLE_CHORENAME, KEY_ID + " = ?",
                 new String[]{String.valueOf(choreName.getId())});
         db.close();
